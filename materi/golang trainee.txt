@@ -1,0 +1,67 @@
+week 1, day 1:
+
+-static type tidak bisa mengubah tipe datanya, 
+-golang adalah bahasa complier
+-interpreter adalah istilah utuk bahasa yang tidak perlu di compile
+-go root adalah untuk menyimpan di goroot pada `go env`
+-variabel adalah wadah atau tempat untuk penyimpanan sementara
+iota
+
+week 1, day 2:
+- atoi dan itoa,  atoi untuk mengubah string to integer, sedangkan itoa integer to string
+- jika banyak kondisi menggunakan switch jika kondisinya hanya sedikit menggunakan if
+-slice adalh potongan dari array
+-jika slice melebihi kapasitas maka si parent tidak akan ikut berubah
+-mapping mirip seperti array api bedanya dia memiliki key dan value yang bisa kita buat sendiri
+
+week 1, day3:
+-basic: number, string, boolean
+-aggregate = array, struct
+-reference type = slice, map, function, channel
+-jika slice melebihi batas, maka dia akan bertambah dua kali lipat
+-func = sekumpulan koda yang ingin dijalankan
+-method = ada pemilikan
+-func main = adalah func utama untuk menjalankan 
+-procedure = menjalankan tidak ada return, sedangkan func ada return dan ditampung
+-public bisa dipake di mana-mana sedangkan private hanya untuk satu package yang sama
+-func public huruhf kecil, private huruf besar di awal
+-exception dan konversi
+-variadic hanya bisa diakhir dan setiap parameter hanya bisa satu
+-semua tipe data bisa jadi paraeter
+-annonymous func digunakan didalam func
+
+week 1, day4:
+-struct untuk menyimpan tipe data pada variable
+-fungsi pada struct disebut method
+-interface, slice, map, pointer, channel
+-assertions adalah cara untuk mengubah interface kosong
+
+<=====+++=====>
+
+week 2, day 1:
+unmarshal = json - struct/interface golang
+marshal = golang - json
+
+tipe data yang bisa diunmarshal
+-int
+-bool
+-slice
+-map
+-struct
+
+pascalcase = diawali dengan huruf besar
+camelcase = kesil - besar
+snakecase = garis bawah
+
+streaming decoder & coder
+header untuk mengirim requests
+query parameter itu sensitive
+
+week 2, day 2 :
+-Fungsi http.NewRequest() digunakan untuk membuat request baru. Fungsi tersebut memiliki 3 parameter yang wajib diisi:
+(Parameter pertama, berisikan tipe request POST atau GET atau lainnya
+Parameter kedua, adalah URL tujuan request
+Parameter ketiga, form data request (jika ada))
+-curl digunakan untuk memindahkan data dari url tertentu
+atau website lain
+-

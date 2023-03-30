@@ -28,9 +28,12 @@ func main() {
 	fmt.Println()
 	fmt.Println("==========Data slice==========")
 
-	months := [...]string{
+	months := []string{
 		"januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november,", "desember",
 	}
+
+	sliceMake := []rune("test")
+	// letters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 	slice1 := months[4:7]
 	fmt.Println(slice1, len(slice1), cap(slice1))
@@ -268,6 +271,7 @@ func main() {
 	phrase := "test anjing"
 	printSpeach(phrase, filter_)
 
+	fmt.Println(len(sliceMake))
 }
 
 // func as a param

@@ -1,4 +1,4 @@
-package main
+package belajar
 
 import (
 	"cari-nama-goroutine/helper"
@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func main() {
+func test1() {
 	helper.CallClear()
 	var wg sync.WaitGroup
 	const timeoutDuration = 3 * time.Second
@@ -49,7 +49,7 @@ func readNamesWorker(ctx context.Context, wg *sync.WaitGroup, names []string) {
 						}
 					}
 				}
-				
+
 				duration := time.Since(start)
 				fmt.Println("worker", workerIndex, "found", total, "of Wina. Done in", duration.Seconds(), "seconds")
 

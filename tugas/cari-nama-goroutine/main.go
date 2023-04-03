@@ -20,13 +20,17 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), timeoutDuration)
 	defer cancel()
 
-	// wg.Add(2)
+	wg.Add(1)
 
-	getNames := getName(ctx, model.Names)
-	filterName(getNames, ctx)
-	var input string
-	fmt.Scanln(&input)
-	// wg.Wait()
+	go func() {
+		start := time.Now()
+		getNames := getName(ctx, model.Names)
+		filterName(getNames, ctx, start)
+
+		wg.Done()
+	}()
+
+	wg.Wait()
 }
 
 func getName(ctx context.Context, names []string) <-chan string {
@@ -39,7 +43,6 @@ func getName(ctx context.Context, names []string) <-chan string {
 		default:
 			for _, v := range names {
 				chanOut <- v
-				// time.Sleep(1 * time.Second)
 			}
 		}
 		defer close(chanOut)
@@ -48,7 +51,7 @@ func getName(ctx context.Context, names []string) <-chan string {
 	return chanOut
 }
 
-func filterName(chanIn <-chan string, ctx context.Context) {
+func filterName(chanIn <-chan string, ctx context.Context, start time.Time) {
 	numberOfWorkers := 5
 	wg.Add(numberOfWorkers)
 
@@ -56,32 +59,27 @@ func filterName(chanIn <-chan string, ctx context.Context) {
 		fmt.Println("start check name with worker", numberOfWorkers)
 		for workerIndex := 1; workerIndex <= numberOfWorkers; workerIndex++ {
 			var total int
-			// time.Sleep(1 * time.Second)
 			go func(workerIndex int) {
 				defer wg.Done()
-				start := time.Now()
 			L:
 				for name := range chanIn {
 					// fmt.Println(name)
-
 					select {
 					case <-ctx.Done():
 						break L
 					default:
-						if strings.Contains(strings.ToLower(name), "wina") {
+						if strings.Contains(strings.ToLower(name), "andreasti") {
 							total++
 						}
 					}
 				}
+
 				duration := time.Since(start)
-				fmt.Println("worker", workerIndex, "found", total, "of Wina. Done in", duration.Seconds(), "seconds")
+				fmt.Println("worker", workerIndex, "found", total, "duration", duration.Microseconds(), "seconds")
 			}(workerIndex)
 		}
-
-	}()
-
-	go func() {
 		wg.Wait()
 		fmt.Println("end check name")
 	}()
+
 }

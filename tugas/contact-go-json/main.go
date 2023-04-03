@@ -30,11 +30,16 @@ func NewServer(handle handler.ContactHandlerHttp) {
 	config := config.LoadConfig()
 	// server
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "GET" {
-			handle.HandlerGet(w, r)
-		} else if r.Method == "POST" {
+
+	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPut {
+			handle.HandlerUpdate(w, r)
+		} else if r.Method == http.MethodPost {
 			handle.HandlerPost(w, r)
+		} else if r.Method == http.MethodGet {
+			handle.HandlerGet(w, r)
+		} else if r.Method == http.MethodDelete {
+			handle.HandlerDelete(w, r)
 		}
 	})
 

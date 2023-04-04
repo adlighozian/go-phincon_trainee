@@ -36,10 +36,10 @@ func (handler *inventoryHandler) ShowPurchaseOrderDetail() {
 	helper.CallClear()
 	fmt.Println("Show purchase order detail")
 	fmt.Println("==========================")
-	model := model.PurchaseOrders
+	model := model.PurchaseOrderDetails
 	fmt.Println("Order Number")
 	for _, v := range model {
-		fmt.Printf("%s ", v.OrderNumber)
+		fmt.Printf("%s ", v.PurchaseOrder.OrderNumber)
 	}
 	fmt.Println()
 	fmt.Println()
@@ -56,8 +56,8 @@ func (handler *inventoryHandler) ShowPurchaseOrderDetail() {
 		fmt.Println(err)
 	} else {
 		fmt.Println()
-		fmt.Printf("Order Number\t\t| From\t\t| Item\t\t| Price\t\t| Total\t\t\n")
-		fmt.Printf("%s\t\t| %s\t\t| %s\t\t| %d\t\t| %d\t\t\n", inventory.OrderNumber, inventory.From, inventory.PurchaseOrderDetail.Item, inventory.PurchaseOrderDetail.Price, inventory.Total)
+		fmt.Printf("Order Number\t\t| From\t\t| Item\t\t| Price\t\t| Quantity\t\t\n")
+		fmt.Printf("%s\t\t| %s\t\t| %s\t\t| %d\t\t| %d\t\t\n", inventory.PurchaseOrder.OrderNumber, inventory.PurchaseOrder.From, inventory.Item, inventory.Price, inventory.Quantity)
 	}
 
 }
@@ -95,18 +95,18 @@ func (handler *inventoryHandler) InputPurchaseOrder() {
 		helper.CallClear()
 		fmt.Println("clear input 2")
 		fmt.Printf("Order Number\t| From\t| Item\t| Price\t| Quantity\t| Total\t\n")
-		fmt.Printf("%s\t| %s\t| %s\t| %d\t| %d\t| %d\t\n", val.OrderNumber, val.From, val.PurchaseOrderDetail.Item, val.PurchaseOrderDetail.Price, val.Quantity, val.Total)
+		fmt.Printf("%s\t| %s\t| %s\t| %d\t| %d\t| %d\t\n", val.PurchaseOrder.OrderNumber, val.PurchaseOrder.From, val.Item, val.Price, val.Quantity, val.Total)
 		fmt.Scanln(&test)
 	}
 	fmt.Println()
-	fmt.Println("2. utnuk input lagi")
+	fmt.Println("2. untuk input lagi")
 }
 
 func (handler *inventoryHandler) ShowSalesOrderDetail() {
 	helper.CallClear()
 	fmt.Println("Show sales order detail")
 	fmt.Println("==========================")
-	model := handler.PurchaseOrderRepository.DecodePurchaseOrder()
+	model := handler.SalesOrderRepository.DecodeSalesOrder()
 	fmt.Println("Order Number")
 	for _, v := range model {
 		fmt.Printf("%s ", v.OrderNumber)
@@ -114,12 +114,12 @@ func (handler *inventoryHandler) ShowSalesOrderDetail() {
 	fmt.Println()
 	fmt.Println()
 	fmt.Print("Masukkan order mumber: ")
-	var orderNumber int
+	var orderNumber string
 	fmt.Scanln(&orderNumber)
 	inventory, err := handler.SalesOrderRepository.ShowSalesOrderDetail(orderNumber)
 
 	helper.CallClear()
-	fmt.Printf("Order number %d", orderNumber)
+	fmt.Printf("Order number %s", orderNumber)
 	fmt.Println()
 
 	if err != nil {
@@ -127,7 +127,7 @@ func (handler *inventoryHandler) ShowSalesOrderDetail() {
 	} else {
 		fmt.Println()
 		fmt.Printf("Order Number\t\t| From\t\t| Item\t\t| Price\t\t| Total\t\t\n")
-		fmt.Printf("%d\t\t| %s\t\t| %s\t\t| %d\t\t| %d\t\t\n", inventory.OrderNumber, inventory.From, inventory.SalesOrderDetail.Item, inventory.SalesOrderDetail.Price, inventory.Total)
+		fmt.Printf("%s\t\t| %s\t\t| %s\t\t| %d\t\t| %d\t\t\n", inventory.SalesOrder.OrderNumber, inventory.SalesOrder.From, inventory.Item, inventory.Price, inventory.Quantity)
 	}
 
 }
@@ -165,7 +165,7 @@ func (handler *inventoryHandler) InputSalesOrder() {
 		helper.CallClear()
 		// fmt.Println("clear input 2")
 		fmt.Printf("Order Number\t| From\t| Item\t| Price\t| Quantity\t| Total\t\n")
-		fmt.Printf("%d\t| %s\t| %s\t| %d\t| %d\t| %d\t\n", val.OrderNumber, val.From, val.SalesOrderDetail.Item, val.SalesOrderDetail.Price, val.Quantity, val.Total)
+		fmt.Printf("%s\t| %s\t| %s\t| %d\t| %d\t| %d\t\n", val.SalesOrder.OrderNumber, val.SalesOrder.From, val.Item, val.Price, val.Quantity, val.Total)
 		fmt.Scanln(&test)
 	}
 	fmt.Println()

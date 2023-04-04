@@ -3,26 +3,27 @@ package main
 import (
 	"contact-go/config"
 	"contact-go/handler"
+	"contact-go/repository"
 	"fmt"
 	"net/http"
 )
 
 func main() {
-	// config := config.LoadConfig()
-	// var contactRepo repository.ContactRepository
+	config := config.LoadConfig()
+	var contactRepo repository.ContactRepository
 
-	// switch config.Storage {
-	// case "json":
-	// 	contactRepo = repository.NewContactRepository()
-	// default:
+	switch config.Storage {
+	case "json":
+		contactRepo = repository.NewContactRepository()
+	default:
 
-	// }
+	}
 
-	// ContactHandler := handler.NewcontactHandler(contactRepo)
-	// handler.Menu(ContactHandler)
+	ContactHandler := handler.NewcontactHandler(contactRepo)
+	handler.Menu(ContactHandler)
 
-	ContactHandler := handler.NewContactHandlerHttp()
-	NewServer(ContactHandler)
+	// ContactHandler := handler.NewContactHandlerHttp()
+	// NewServer(ContactHandler)
 
 }
 

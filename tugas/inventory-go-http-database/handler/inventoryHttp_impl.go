@@ -26,7 +26,7 @@ func (handler *HandlerHttp) ProductGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Println("Success", http.StatusOK)
 
-	contacts := handler.ProductRepository.DecodeProduct()
+	contacts := handler.ProductRepository.ShowProduct()
 	result, err := json.Marshal(contacts)
 
 	if err != nil {

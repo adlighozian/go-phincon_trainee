@@ -42,7 +42,7 @@ func NewServer(handle handler.InventoryHandlerHttp) {
 	})
 
 	server := http.Server{
-		Addr:    config.Port,
+		Addr:    config.JsonPort,
 		Handler: mux,
 	}
 

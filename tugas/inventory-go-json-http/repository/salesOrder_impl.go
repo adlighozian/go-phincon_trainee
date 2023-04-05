@@ -47,6 +47,20 @@ func (repo *salesOrderRepository) getIdSales() int {
 	return tempId
 }
 
+func (repo *salesOrderRepository) randomizerSales() string {
+	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
+
+	letters := []rune("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+	b := make([]rune, 7)
+
+	for i := range b {
+		b[i] = letters[randomizer.Intn(len(letters))]
+	}
+	rand := string(b)
+	return rand
+}
+
 func (repo *salesOrderRepository) ShowSalesOrderDetail(order string) (model.SalesOrderDetail, error) {
 	sod := repo.DecodeSalesOrder()
 
@@ -76,16 +90,7 @@ func (repo *salesOrderRepository) InputSalesOrder(req model.ReqSalesOrder) (mode
 	// Get Id
 	var orderDetail model.SalesOrderDetail
 
-	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
-
-	letters := []rune("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-	b := make([]rune, 7)
-
-	for i := range b {
-		b[i] = letters[randomizer.Intn(len(letters))]
-	}
-	rand := string(b)
+	rand := repo.randomizerSales()
 
 	switch repo.ProductRepository.SearchItem(req.Item) {
 	case false:

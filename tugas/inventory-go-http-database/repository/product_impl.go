@@ -1,9 +1,13 @@
 package repository
 
 import (
+	"context"
 	"encoding/json"
+	"inventory/db"
 	"inventory/model"
+	"log"
 	"os"
+	"time"
 )
 
 type productRepository struct {
@@ -52,5 +56,22 @@ func (repo *productRepository) SearchItem(param string) bool {
 }
 
 func (repo *productRepository) ShowProduct() []model.Product {
+
+	db := db.GetConnection()
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	name := "adli2"
+	price := 15000
+	stock := 52021
+
+	query := `INSERT INTO products(name,price,stock) VALUES (?,?,?)`
+	_, err := db.ExecContext(ctx, query, name, price, stock)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("berhasil input")
+	log.Println("asd")
+
 	return repo.DecodeProduct()
 }

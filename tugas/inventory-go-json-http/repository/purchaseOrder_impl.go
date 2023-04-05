@@ -47,6 +47,20 @@ func (repo *purchaseOrderRepository) getIdPurchase() int {
 	return tempId
 }
 
+func (repo *purchaseOrderRepository) randomizerPurchase() string {
+	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
+
+	letters := []rune("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+	b := make([]rune, 7)
+
+	for i := range b {
+		b[i] = letters[randomizer.Intn(len(letters))]
+	}
+	rand := string(b)
+	return rand
+}
+
 func (repo *purchaseOrderRepository) ShowPurchaseOrderDetail(order string) (model.PurchaseOrderDetail, error) {
 	pod := repo.DecodePurchaseOrder()
 
@@ -76,16 +90,7 @@ func (repo *purchaseOrderRepository) InputPurchaseOrder(req model.ReqPurchaseOrd
 
 	var orderDetail model.PurchaseOrderDetail
 
-	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
-
-	letters := []rune("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-	b := make([]rune, 7)
-
-	for i := range b {
-		b[i] = letters[randomizer.Intn(len(letters))]
-	}
-	rand := string(b)
+	rand := repo.randomizerPurchase()
 
 	switch repo.ProductRepository.SearchItem(req.Item) {
 	case false:

@@ -36,23 +36,23 @@ func (repo *contactRepository) List() []model.Contact {
 	return repo.DecodeJson()
 }
 
-func (repo *contactRepository) GetLastID() int64 {
+func (repo *contactRepository) GetLastID() int {
 	contacts := repo.List()
 
-	var tempID int64
+	var tempID int
 	for _, v := range contacts {
-		if tempID < v.ID {
-			tempID = v.ID
+		if tempID < v.Id {
+			tempID = v.Id
 		}
 	}
 	return tempID
 }
 
-func (repo *contactRepository) GetIndexByID(id int64) (int, error) {
+func (repo *contactRepository) GetIndexByID(id int) (int, error) {
 	contacts := repo.List()
 
 	for i, v := range contacts {
-		if id == v.ID {
+		if id == v.Id {
 			return i, nil
 		}
 	}
@@ -64,7 +64,7 @@ func (repo *contactRepository) Add(req model.ContactRequest) (model.Contact, err
 	id := repo.GetLastID()
 
 	contact := model.Contact{
-		ID:     id + 1,
+		Id:     id + 1,
 		Name:   req.Name,
 		NoTelp: req.NoTelp,
 	}
@@ -75,7 +75,7 @@ func (repo *contactRepository) Add(req model.ContactRequest) (model.Contact, err
 	return contact, nil
 }
 
-func (repo *contactRepository) Update(id int64, req model.ContactRequest) (model.Contact, error) {
+func (repo *contactRepository) Update(id int, req model.ContactRequest) (model.Contact, error) {
 	contacts := repo.List()
 	index, err := repo.GetIndexByID(id)
 
@@ -92,7 +92,7 @@ func (repo *contactRepository) Update(id int64, req model.ContactRequest) (model
 	return *contact, nil
 }
 
-func (repo *contactRepository) Delete(id int64) error {
+func (repo *contactRepository) Delete(id int) error {
 	index, err := repo.GetIndexByID(id)
 
 	if err != nil {

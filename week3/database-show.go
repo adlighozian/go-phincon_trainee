@@ -9,7 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func getConnection() *sql.DB {
+func getConnectionShow() *sql.DB {
 	connString := "root:@tcp(localhost:3306)/golang-trainee"
 	db, err := sql.Open("mysql", connString)
 	if err != nil {
@@ -23,8 +23,8 @@ func getConnection() *sql.DB {
 	return db
 }
 
-func main() {
-	db := getConnection()
+func test() {
+	db := getConnectionShow()
 	defer db.Close()
 
 	ctx := context.Background()

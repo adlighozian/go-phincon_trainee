@@ -7,9 +7,9 @@ import (
 type ContactRepository interface {
 	List() []model.Contact
 	Add(req model.ContactRequest) (model.Contact, error)
-	Update(id int64, req model.ContactRequest) (model.Contact, error)
-	Delete(id int64) error
-	GetLastID() int64
+	Update(id int, req model.ContactRequest) (model.Contact, error)
+	Delete(id int) error
+	GetLastID() int
 	DecodeJson() []model.Contact
 	EncodeJson()
 }

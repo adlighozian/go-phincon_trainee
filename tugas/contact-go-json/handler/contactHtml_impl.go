@@ -6,21 +6,24 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 )
 
-type contactHandlerHttp struct{}
-
-func NewContactHandlerHttp() ContactHandlerHttp {
-	return new(contactHandlerHttp)
+type contactHandlerHttp struct {
+	contactRepository repository.ContactRepository
 }
 
-// Http GET
-func (repo *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request *http.Request) {
+func NewContactHandlerHttp(contact repository.ContactRepository) ContactHandlerHttp {
+	return &contactHandlerHttp{
+		contactRepository: contact,
+	}
+}
+
+// Http list
+func (handle *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request *http.Request) {
 	write.WriteHeader(http.StatusOK)
 	fmt.Println("Success", http.StatusOK)
 
-	contacts := repository.NewContactRepository().List()
+	contacts := handle.contactRepository.List()
 	result, err := json.Marshal(contacts)
 
 	if err != nil {
@@ -30,140 +33,86 @@ func (repo *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request *h
 	write.Write(result)
 }
 
-// Http POST
-func (repo *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request *http.Request) {
-	id := repository.NewContactRepository().GetLastID()
-
+// Http add
+func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request *http.Request) {
 	err := request.ParseForm()
-
 	if err != nil {
 		write.WriteHeader(http.StatusBadRequest)
 		write.Write([]byte("kesalahan bad request"))
 	}
-
 	encoder_ := json.NewDecoder(request.Body)
-
 	var respon = make(map[string]interface{})
-
 	err = encoder_.Decode(&respon)
-
 	if err != nil {
 		panic(err)
 	}
 
-	// fmt.Printf(respon["name"].(string))
-
 	name := respon["name"].(string)
-
 	telp := respon["telp"].(string)
 
-	fmt.Printf("name: %s ", name)
-
-	contact := model.Contact{
-		ID:     id + 1,
+	contact := model.ContactRequest{
 		Name:   name,
 		NoTelp: telp,
 	}
 
-	model.Contacts = append(repository.NewContactRepository().DecodeJson(), contact)
-	repository.NewContactRepository().EncodeJson()
+	data, _ := handle.contactRepository.Add(contact)
+
+	result, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
 
 	write.WriteHeader(http.StatusCreated)
-	fmt.Println("Success", http.StatusCreated)
-	fmt.Printf("name: %s dan telp: %s Berhasil\n", name, telp)
-	fmt.Fprintf(write, "name: %s dan telp: %s Berhasil\n", name, telp)
+	write.Write(result)
 }
 
-func (repo *contactHandlerHttp) HandlerUpdate(write http.ResponseWriter, request *http.Request) {
-
+// http update
+func (handle *contactHandlerHttp) HandlerUpdate(write http.ResponseWriter, request *http.Request) {
 	err := request.ParseForm()
-
 	if err != nil {
 		write.WriteHeader(http.StatusBadRequest)
 		write.Write([]byte("kesalahan bad request"))
 		fmt.Printf("error")
 	}
-
-	encoder_ := json.NewDecoder(request.Body)
-
+	data := json.NewDecoder(request.Body)
 	var respon = make(map[string]interface{})
-
-	err = encoder_.Decode(&respon)
-
+	err = data.Decode(&respon)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf(respon["id"].(string))
-	fmt.Printf(respon["name"].(string))
-	fmt.Printf(respon["notelp"].(string))
-
-	id := respon["id"].(string)
+	id := int(respon["id"].(float64))
 	name := respon["name"].(string)
 	telp := respon["notelp"].(string)
 
-	a, _ := strconv.Atoi(id)
-
-	var index int
-	for i, v := range model.Contacts {
-		if name == v.Name {
-			index = i
-		}
+	contact := model.ContactRequest{
+		Name:   name,
+		NoTelp: telp,
 	}
 
-	if index == 0 {
-		fmt.Fprintf(write, "Nama tidak ditemukan")
-	}
-
-	contacts := model.Contacts
-	contact := &contacts[a]
-	contact.Name = name
-	contact.NoTelp = telp
-
-	repository.NewContactRepository().EncodeJson()
+	handle.contactRepository.Update(id, contact)
 
 	write.WriteHeader(http.StatusCreated)
 	fmt.Println("Success", http.StatusCreated)
-	fmt.Printf("name: %s dan telp: %s Berhasil\n", name, telp)
-	fmt.Fprintf(write, "name: %s dan telp: %s Berhasil\n", name, telp)
 }
 
-func (repo *contactHandlerHttp) HandlerDelete(write http.ResponseWriter, request *http.Request) {
+// http delete
+func (handle *contactHandlerHttp) HandlerDelete(write http.ResponseWriter, request *http.Request) {
 	err := request.ParseForm()
-
 	if err != nil {
 		write.WriteHeader(http.StatusBadRequest)
 		write.Write([]byte("kesalahan bad request"))
 	}
-
 	encoders := json.NewDecoder(request.Body)
-
 	var respon = make(map[string]interface{})
-
 	err = encoders.Decode(&respon)
-
 	if err != nil {
 		panic(err)
 	}
 
-	id := respon["id"].(string)
+	id := int(respon["id"].(float64))
 
-	a, _ := strconv.Atoi(id)
-
-	val := a - 1
-	var index int
-	for i := range model.Contacts {
-		if a == i {
-			index = i
-		}
-	}
-
-	if index == 0 {
-		fmt.Fprintf(write, "Nama tidak ditemukan")
-	}
-
-	model.Contacts = append(model.Contacts[:val], model.Contacts[val+1:]...)
-	repository.NewContactRepository().EncodeJson()
+	handle.contactRepository.Delete(id)
 
 	write.WriteHeader(http.StatusCreated)
 	fmt.Println("Success", http.StatusCreated)

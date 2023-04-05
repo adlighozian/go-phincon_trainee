@@ -59,15 +59,14 @@ func (handler *HandlerHttp) PurchaseGet(w http.ResponseWriter, r *http.Request) 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Order tidak ditemukan"))
+	} else {
+		result, err := json.Marshal(showPurchaseDetail)
+		if err != nil {
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write(result)
 	}
-
-	result, err := json.Marshal(showPurchaseDetail)
-	if err != nil {
-		panic(err)
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write(result)
 
 }
 
@@ -102,15 +101,15 @@ func (handler *HandlerHttp) PurchasePost(w http.ResponseWriter, r *http.Request)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("kesalahan input"))
+	} else {
+		result, err := json.Marshal(inputPurchase)
+		if err != nil {
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write(result)
 	}
 
-	result, err := json.Marshal(inputPurchase)
-	if err != nil {
-		panic(err)
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write(result)
 }
 
 func (handler *HandlerHttp) SalesGet(w http.ResponseWriter, r *http.Request) {
@@ -136,15 +135,14 @@ func (handler *HandlerHttp) SalesGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Order tidak ditemukan"))
+	} else {
+		result, err := json.Marshal(showPurchaseDetail)
+		if err != nil {
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write(result)
 	}
-
-	result, err := json.Marshal(showPurchaseDetail)
-	if err != nil {
-		panic(err)
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write(result)
 
 }
 
@@ -178,14 +176,15 @@ func (handler *HandlerHttp) SalesPost(w http.ResponseWriter, r *http.Request) {
 	inputPurchase, err := handler.SalesRepository.InputSalesOrder(inputReq)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("kesalahan input"))
+		w.Write([]byte("Stok tidak cukup"))
+	} else {
+		result, err := json.Marshal(inputPurchase)
+		if err != nil {
+			panic(err)
+		}
+
+		w.WriteHeader(http.StatusOK)
+		w.Write(result)
 	}
 
-	result, err := json.Marshal(inputPurchase)
-	if err != nil {
-		panic(err)
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write(result)
 }

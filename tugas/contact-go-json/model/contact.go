@@ -1,7 +1,7 @@
 package model
 
 type Contact struct {
-	ID     int64
+	Id     int
 	Name   string
 	NoTelp string
 }
@@ -12,5 +12,3 @@ type ContactRequest struct {
 }
 
 var Contacts []Contact
-
-

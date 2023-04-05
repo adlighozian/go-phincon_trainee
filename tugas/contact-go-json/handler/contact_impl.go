@@ -23,7 +23,7 @@ func (handler *contactHandler) List() {
 
 	contacts := handler.ContactRepository.List()
 	for _, v := range contacts {
-		fmt.Printf("|\t%d\t|\t%s\t\t|\t%s\t\t|\n", v.ID, v.Name, v.NoTelp)
+		fmt.Printf("|\t%d\t|\t%s\t\t|\t%s\t\t|\n", v.Id, v.Name, v.NoTelp)
 	}
 	fmt.Printf("|---------------|-----------------------|-----------------------|\n")
 }
@@ -48,7 +48,7 @@ func (handler *contactHandler) Add() {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println("Berhasil add contact with id", contact.ID)
+		fmt.Println("Berhasil add contact with id", contact.Id)
 	}
 }
 
@@ -56,7 +56,7 @@ func (handler *contactHandler) Update() {
 	fmt.Println("Update a contact")
 
 	fmt.Print("ID = ")
-	var id int64
+	var id int
 	fmt.Scanln(&id)
 
 	fmt.Print("Name = ")
@@ -76,7 +76,7 @@ func (handler *contactHandler) Update() {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println("Berhasil update contact with id", contact.ID)
+		fmt.Println("Berhasil update contact with id", contact.Id)
 	}
 }
 
@@ -84,7 +84,7 @@ func (handler *contactHandler) Delete() {
 	fmt.Println("Delete a contact")
 
 	fmt.Print("ID = ")
-	var id int64
+	var id int
 	fmt.Scanln(&id)
 
 	err := handler.ContactRepository.Delete(id)

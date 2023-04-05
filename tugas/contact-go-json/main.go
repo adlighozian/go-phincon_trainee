@@ -4,26 +4,17 @@ import (
 	"contact-go/config"
 	"contact-go/handler"
 	"contact-go/repository"
+	"database/sql"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
-	config := config.LoadConfig()
-	var contactRepo repository.ContactRepository
 
-	switch config.Storage {
-	case "json":
-		contactRepo = repository.NewContactRepository()
-	default:
-
-	}
-
-	ContactHandler := handler.NewcontactHandler(contactRepo)
-	handler.Menu(ContactHandler)
-
-	// ContactHandler := handler.NewContactHandlerHttp()
-	// NewServer(ContactHandler)
+	contactHandlerHttp := repository.NewContactRepository()
+	contactHandler := handler.NewContactHandlerHttp(contactHandlerHttp)
+	NewServer(contactHandler)
 
 }
 
@@ -55,4 +46,18 @@ func NewServer(handle handler.ContactHandlerHttp) {
 	}
 
 	fmt.Println("Server running")
+}
+
+func getConnectionShow() *sql.DB {
+	connString := "root:@tcp(localhost:3306)/golang-trainee"
+	db, err := sql.Open("mysql", connString)
+	if err != nil {
+		panic(err)
+	}
+
+	db.SetMaxIdleConns(10)
+	db.SetMaxOpenConns(100)
+	db.SetConnMaxIdleTime(5 * time.Minute)
+	db.SetConnMaxLifetime(60 * time.Minute)
+	return db
 }

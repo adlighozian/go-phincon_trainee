@@ -8,6 +8,13 @@ type ReqPurchaseOrder struct {
 	Total       int
 }
 
+type ReqPurchase struct {
+	Item  string
+	Price int
+	From  string
+	Total int
+}
+
 type PurchaseOrderDetail struct {
 	Id       int
 	Item     string
@@ -18,10 +25,10 @@ type PurchaseOrderDetail struct {
 }
 
 type PurchaseOrder struct {
-	Id          int
+	Id_po       int
 	OrderNumber string
 	From        string
-	Total       int
+	Total_po    int
 }
 
 // Mengganti model

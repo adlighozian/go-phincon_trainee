@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"inventory/model"
 	"inventory/repository"
+	"log"
 	"net/http"
+	"time"
 )
 
 type HandlerHttp struct {
@@ -72,42 +74,35 @@ func (handler *HandlerHttp) PurchaseGet(w http.ResponseWriter, r *http.Request) 
 
 func (handler *HandlerHttp) PurchasePost(w http.ResponseWriter, r *http.Request) {
 	// cek form dan membuat tampungan untuk body request
-	err := r.ParseForm()
+	req := []model.ReqPurchaseOrder{}
+	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("kesalahan bad request"))
-		panic(err)
-	}
-	data := json.NewDecoder(r.Body)
-	var respon = make(map[string]interface{})
-	err = data.Decode(&respon)
-	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+		log.Println("[ERROR] decode request :", err.Error())
+		return
 	}
 
-	item := respon["item"].(string)
-	price := int(respon["price"].(float64))
-	from := respon["from"].(string)
-	total := int(respon["total"].(float64))
-
-	inputReq := model.ReqPurchaseOrder{
-		Item:  item,
-		Price: price,
-		From:  from,
-		Total: total,
-	}
-
-	inputPurchase, err := handler.PurchaseRepository.InputPurchaseOrder(inputReq)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("kesalahan input"))
-	} else {
-		result, err := json.Marshal(inputPurchase)
-		if err != nil {
-			panic(err)
+	for _, v := range req {
+		inputReq := model.ReqPurchaseOrder{
+			Item:  v.Item,
+			Price: v.Price,
+			From:  v.From,
+			Total: v.Total,
 		}
-		w.WriteHeader(http.StatusOK)
-		w.Write(result)
+		inputPurchase, err := handler.PurchaseRepository.InputPurchaseOrder(inputReq)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("kesalahan input"))
+		} else {
+			result, err := json.Marshal(inputPurchase)
+			if err != nil {
+				panic(err)
+			}
+			w.WriteHeader(http.StatusOK)
+			w.Write(result)
+		}
+		time.Sleep(1 * time.Second)
 	}
 
 }

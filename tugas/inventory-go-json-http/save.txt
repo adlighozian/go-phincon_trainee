@@ -1,0 +1,42 @@
+func (handler *HandlerHttp) PurchasePost(w http.ResponseWriter, r *http.Request) {
+	// cek form dan membuat tampungan untuk body request
+	err := r.ParseForm()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("kesalahan bad request"))
+		panic(err)
+	}
+
+	data := json.NewDecoder(r.Body)
+	var respon = make(map[string]interface{})
+	err = data.Decode(&respon)
+	if err != nil {
+		panic(err)
+	}
+
+	item := respon["item"].(string)
+	price := int(respon["price"].(float64))
+	from := respon["from"].(string)
+	total := int(respon["total"].(float64))
+
+	inputReq := model.ReqPurchaseOrder{
+		Item:  item,
+		Price: price,
+		From:  from,
+		Total: total,
+	}
+
+	inputPurchase, err := handler.PurchaseRepository.InputPurchaseOrder(inputReq)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("kesalahan input"))
+	} else {
+		result, err := json.Marshal(inputPurchase)
+		if err != nil {
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write(result)
+	}
+
+}

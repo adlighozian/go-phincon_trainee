@@ -76,7 +76,7 @@ func (repo *purchaseOrderRepository) ShowPurchaseOrderDetail(order string) (mode
 				PurchaseOrder: model.PurchaseOrder{
 					OrderNumber: v.PurchaseOrder.OrderNumber,
 					From:        v.PurchaseOrder.From,
-					Total:       v.PurchaseOrder.Total,
+					Total_po:    v.PurchaseOrder.Total_po,
 				},
 			}
 			return kotak, nil
@@ -101,24 +101,23 @@ func (repo *purchaseOrderRepository) InputPurchaseOrder(req model.ReqPurchaseOrd
 			Stock: req.Total,
 		}
 
-		order := model.PurchaseOrder{
-			Id:          repo.getIdPurchase(),
-			OrderNumber: rand,
-			From:        req.From,
-			Total:       req.Total,
-		}
-
 		orderDetail = model.PurchaseOrderDetail{
-			Id:            repo.getIdPurchase(),
-			Item:          req.Item,
-			Price:         req.Price,
-			Quantity:      req.Total,
-			Total:         req.Total,
-			PurchaseOrder: order,
+			Id:       repo.getIdPurchase(),
+			Item:     req.Item,
+			Price:    req.Price,
+			Quantity: req.Total,
+			Total:    req.Total,
+			PurchaseOrder: model.PurchaseOrder{
+				Id_po:       repo.getIdPurchase(),
+				OrderNumber: rand,
+				From:        req.From,
+				Total_po:    req.Total,
+			},
 		}
 
 		model.Products = append(repo.ProductRepository.DecodeProduct(), product)
-		model.PurchaseOrderDetails = append(repo.DecodePurchaseOrder(), orderDetail)
+		model.PurchaseOrderDetails = append(model.PurchaseOrderDetails, orderDetail)
+
 		repo.ProductRepository.EncodeProduct()
 		repo.EncodePurchaseOrder()
 
@@ -138,10 +137,10 @@ func (repo *purchaseOrderRepository) InputPurchaseOrder(req model.ReqPurchaseOrd
 		repo.ProductRepository.EncodeProduct()
 
 		order := model.PurchaseOrder{
-			Id:          repo.getIdPurchase(),
+			Id_po:       repo.getIdPurchase(),
 			OrderNumber: rand,
 			From:        req.From,
-			Total:       inven.Stock,
+			Total_po:    inven.Stock,
 		}
 
 		orderDetail = model.PurchaseOrderDetail{

@@ -1,1 +1,32 @@
-[{"Id":1,"Name":"test1","Price":15000,"Stock":6},{"Id":2,"Name":"test2","Price":15000,"Stock":5}]
+[
+    {
+        "Id": 1,
+        "Name": "test1",
+        "Price": 521354,
+        "Stock": 20
+    },
+    {
+        "Id": 2,
+        "Name": "test2",
+        "Price": 521354,
+        "Stock": 10
+    },
+    {
+        "Id": 3,
+        "Name": "test3",
+        "Price": 521354,
+        "Stock": 5
+    },
+    {
+        "Id": 4,
+        "Name": "test5",
+        "Price": 521354,
+        "Stock": 5
+    },
+    {
+        "Id": 5,
+        "Name": "test6",
+        "Price": 521354,
+        "Stock": 5
+    }
+]

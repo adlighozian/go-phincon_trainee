@@ -14,6 +14,8 @@ import (
 func mysql() {
 	db := db.GetConnectionMysql()
 
+	MakeSlice(2)
+
 	// insert exec
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -83,7 +85,7 @@ func mysql() {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println("id: ", id, "nama: ", nama, "no telp: ", noTelp)
+		// fmt.Println("id: ", id, "nama: ", nama, "no telp: ", noTelp)
 	}
 
 	defer db.Close()
@@ -102,4 +104,35 @@ func Randomizer() string {
 	rand := string(b)
 
 	return rand
+}
+
+func RandomizerName() string {
+	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
+
+	letters := []rune("qwertyuioplkjhgfdsazxcvbnm")
+
+	b := make([]rune, 7)
+
+	for i := range b {
+		b[i] = letters[randomizer.Intn(len(letters))]
+	}
+	rand := string(b)
+
+	return rand
+}
+
+func MakeSlice(param int) model.Client {
+	var slice model.Client
+
+	for i := 1; i <= param; i++ {
+		time.Sleep(1 * time.Second)
+		slice = model.Client{
+			Nama:    RandomizerName(),
+			No_telp: Randomizer(),
+		}
+		model.Clients = append(model.Clients, slice)
+		fmt.Println(slice)
+	}
+
+	return slice
 }

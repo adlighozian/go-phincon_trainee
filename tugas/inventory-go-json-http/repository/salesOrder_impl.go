@@ -110,20 +110,18 @@ func (repo *salesOrderRepository) InputSalesOrder(req model.ReqSalesOrder) (mode
 		inven.Stock = inven.Stock - req.Total
 		repo.ProductRepository.EncodeProduct()
 
-		order := model.SalesOrder{
-			Id:          repo.getIdSales(),
-			OrderNumber: rand,
-			From:        req.From,
-			Total:       inven.Stock,
-		}
-
 		orderDetail = model.SalesOrderDetail{
-			Id:         repo.getIdSales(),
-			Item:       req.Item,
-			Price:      req.Price,
-			Quantity:   req.Total,
-			Total:      inven.Stock,
-			SalesOrder: order,
+			Id:       repo.getIdSales(),
+			Item:     req.Item,
+			Price:    req.Price,
+			Quantity: req.Total,
+			Total:    inven.Stock,
+			SalesOrder: model.SalesOrder{
+				Id:          repo.getIdSales(),
+				OrderNumber: rand,
+				From:        req.From,
+				Total:       inven.Stock,
+			},
 		}
 
 		model.SalesOrderDetails = append(repo.DecodeSalesOrder(), orderDetail)

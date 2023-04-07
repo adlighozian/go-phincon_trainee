@@ -76,7 +76,7 @@ func (repo *purchaseOrderRepository) ShowPurchaseOrderDetail(order string) (mode
 				PurchaseOrder: model.PurchaseOrder{
 					OrderNumber: v.PurchaseOrder.OrderNumber,
 					From:        v.PurchaseOrder.From,
-					Total_po:    v.PurchaseOrder.Total_po,
+					Total:       v.PurchaseOrder.Total,
 				},
 			}
 			return kotak, nil
@@ -108,10 +108,10 @@ func (repo *purchaseOrderRepository) InputPurchaseOrder(req model.ReqPurchaseOrd
 			Quantity: req.Total,
 			Total:    req.Total,
 			PurchaseOrder: model.PurchaseOrder{
-				Id_po:       repo.getIdPurchase(),
+				Id:          repo.getIdPurchase(),
 				OrderNumber: rand,
 				From:        req.From,
-				Total_po:    req.Total,
+				Total:       req.Total,
 			},
 		}
 
@@ -137,10 +137,10 @@ func (repo *purchaseOrderRepository) InputPurchaseOrder(req model.ReqPurchaseOrd
 		repo.ProductRepository.EncodeProduct()
 
 		order := model.PurchaseOrder{
-			Id_po:       repo.getIdPurchase(),
+			Id:          repo.getIdPurchase(),
 			OrderNumber: rand,
 			From:        req.From,
-			Total_po:    inven.Stock,
+			Total:       inven.Stock,
 		}
 
 		orderDetail = model.PurchaseOrderDetail{

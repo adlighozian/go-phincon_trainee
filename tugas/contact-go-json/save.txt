@@ -1,0 +1,55 @@
+func (repo *contactRepository) List() []model.Contact {
+    return repo.DecodeJson()	
+}
+
+================================================================
+func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request *http.Request) {
+err := request.ParseForm()
+	if err != nil {
+		write.WriteHeader(http.StatusBadRequest)
+		write.Write([]byte("kesalahan bad request"))
+	}
+	encoder_ := json.NewDecoder(request.Body)
+	var respon = make(map[string]interface{})
+	err = encoder_.Decode(&respon)
+	if err != nil {
+		panic(err)
+	}
+
+	name := respon["name"].(string)
+	telp := respon["no_telp"].(string)
+
+	contact := model.ContactRequest{
+		Name:   name,
+		NoTelp: telp,
+	}
+
+	data, _ := handle.contactRepository.Add(contact)
+
+	result, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+
+	write.WriteHeader(http.StatusCreated)
+	write.Write(result)
+    }
+
+	db := db.GetConnectionMysql()
+	
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+
+	query := `INSERT INTO client(nama,no_telp) VALUES (?,?)`
+	result, err := db.ExecContext(ctx, query, req.Name, req.NoTelp)
+	if err != nil {
+		panic(err)
+	}
+
+	lastInsertId, _ := result.LastInsertId()
+	contact := model.Contact{
+		Id:     int(lastInsertId),
+		Name:   req.Name,
+		NoTelp: req.NoTelp,
+	}
+	return contact, nil

@@ -9,12 +9,12 @@ type ReqSalesOrder struct {
 }
 
 type SalesOrderDetail struct {
-	Id       int
-	Item     string
-	Price    int
-	Quantity int
-	Total    int
-	SalesOrder
+	Id         int
+	Item       string
+	Price      int
+	Quantity   int
+	Total      int
+	SalesOrder SalesOrder
 }
 
 type SalesOrder struct {

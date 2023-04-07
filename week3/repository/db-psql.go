@@ -1,10 +1,10 @@
-package main
+package repository
 
 import (
 	"fmt"
 )
 
-func psql() {
+func Psql() {
 	// db := db.GetConnectionPsql()
 
 	fmt.Println("halo ini psql")

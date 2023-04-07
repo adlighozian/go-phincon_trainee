@@ -1,4 +1,4 @@
-package main
+package repository
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func mysql() {
+func Mysql() {
 	db := db.GetConnectionMysql()
 
 	MakeSlice(2)

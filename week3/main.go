@@ -2,6 +2,7 @@ package main
 
 import (
 	"week3/config"
+	"week3/repository"
 )
 
 func main() {
@@ -9,9 +10,9 @@ func main() {
 
 	switch {
 	case config.DbStart == "mysql":
-		mysql()
+		repository.Mysql()
 	case config.DbStart == "psql":
-		psql()
+		repository.Psql()
 	}
 
 }

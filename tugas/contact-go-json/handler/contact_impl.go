@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"contact-go/model"
 	"contact-go/repository"
 	"fmt"
 )
@@ -29,68 +28,71 @@ func (handler *contactHandler) List() {
 }
 
 func (handler *contactHandler) Add() {
-	fmt.Println("Add new contact")
+	// fmt.Println("Add new contact")
 
-	fmt.Print("Name = ")
-	var name string
-	fmt.Scanln(&name)
+	// fmt.Print("Name = ")
+	// var name string
+	// fmt.Scanln(&name)
 
-	fmt.Print("NoTelp = ")
-	var noTelp string
-	fmt.Scanln(&noTelp)
+	// fmt.Print("NoTelp = ")
+	// var noTelp string
+	// fmt.Scanln(&noTelp)
 
-	contactRequest := model.ContactRequest{
-		Name:   name,
-		NoTelp: noTelp,
-	}
+	// contactRequest := model.ContactRequest{
+	// 	Name:   name,
+	// 	NoTelp: noTelp,
+	// }
 
-	contact, err := handler.ContactRepository.Add(contactRequest)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("Berhasil add contact with id", contact.Id)
-	}
+	// contact, err := handler.ContactRepository.Add(contactRequest)
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// } else {
+	// 	fmt.Println("Berhasil add contact with id", contact.Id)
+	// }
 }
 
 func (handler *contactHandler) Update() {
-	fmt.Println("Update a contact")
-
-	fmt.Print("ID = ")
-	var id int
-	fmt.Scanln(&id)
-
-	fmt.Print("Name = ")
-	var name string
-	fmt.Scanln(&name)
-
-	fmt.Print("NoTelp = ")
-	var noTelp string
-	fmt.Scanln(&noTelp)
-
-	contactRequest := model.ContactRequest{
-		Name:   name,
-		NoTelp: noTelp,
-	}
-
-	contact, err := handler.ContactRepository.Update(id, contactRequest)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("Berhasil update contact with id", contact.Id)
-	}
+	return
 }
 
+// 	fmt.Println("Update a contact")
+
+// 	fmt.Print("ID = ")
+// 	var id int
+// 	fmt.Scanln(&id)
+
+// 	fmt.Print("Name = ")
+// 	var name string
+// 	fmt.Scanln(&name)
+
+// 	fmt.Print("NoTelp = ")
+// 	var noTelp string
+// 	fmt.Scanln(&noTelp)
+
+// 	contactRequest := model.ContactRequest{
+// 		Name:   name,
+// 		NoTelp: noTelp,
+// 	}
+
+// 	contact err := handler.ContactRepository.Update(id, contactRequest)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	} else {
+// 		fmt.Println("Berhasil update contact with id", contact.Id)
+// 	}
+// }
+
 func (handler *contactHandler) Delete() {
-	fmt.Println("Delete a contact")
+	// fmt.Println("Delete a contact")
 
-	fmt.Print("ID = ")
-	var id int
-	fmt.Scanln(&id)
+	// fmt.Print("ID = ")
+	// var id int
+	// fmt.Scanln(&id)
 
-	err := handler.ContactRepository.Delete(id)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("Berhasil delete contact with id", id)
-	}
+	// err := handler.ContactRepository.Delete(id)
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// } else {
+	// 	fmt.Println("Berhasil delete contact with id", id)
+	// }
 }

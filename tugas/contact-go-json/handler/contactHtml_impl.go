@@ -3,18 +3,22 @@ package handler
 import (
 	"contact-go/model"
 	"contact-go/repository"
+	"contact-go/usecase"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
 
 type contactHandlerHttp struct {
 	contactRepository repository.ContactRepository
+	contactUseCase    usecase.ContactUseCase
 }
 
-func NewContactHandlerHttp(contact repository.ContactRepository) ContactHandlerHttp {
+func NewContactHandlerHttp(repository repository.ContactRepository, usecase usecase.ContactUseCase) ContactHandlerHttp {
 	return &contactHandlerHttp{
-		contactRepository: contact,
+		contactRepository: repository,
+		contactUseCase:    usecase,
 	}
 }
 
@@ -23,47 +27,53 @@ func (handle *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request 
 	write.WriteHeader(http.StatusOK)
 	fmt.Println("Success", http.StatusOK)
 
-	contacts := handle.contactRepository.List()
-	result, err := json.Marshal(contacts)
+	contacts, _ := handle.contactUseCase.List()
 
+	result, err := json.Marshal(contacts)
 	if err != nil {
-		panic(err)
+		write.WriteHeader(contacts.Status)
+		write.Write(nil)
+		return
 	}
-	write.WriteHeader(200)
+
+	write.WriteHeader(contacts.Status)
 	write.Write(result)
 }
 
 // Http add
 func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request *http.Request) {
-	err := request.ParseForm()
+	req := []model.ContactRequest{}
+	err := json.NewDecoder(request.Body).Decode(&req)
+	if err != nil {
+		write.WriteHeader(http.StatusInternalServerError)
+		write.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+		log.Println("[ERROR] decode request :", err.Error())
+		return
+	}
+	var slices []model.ContactRequest
+	for _, v := range req {
+
+		inputReq := model.ContactRequest{
+			Name:   v.Name,
+			NoTelp: v.NoTelp,
+		}
+		slices = append(slices, inputReq)
+	}
+
+	inputPurchase, err := handle.contactUseCase.Add(slices)
 	if err != nil {
 		write.WriteHeader(http.StatusBadRequest)
-		write.Write([]byte("kesalahan bad request"))
-	}
-	encoder_ := json.NewDecoder(request.Body)
-	var respon = make(map[string]interface{})
-	err = encoder_.Decode(&respon)
-	if err != nil {
-		panic(err)
-	}
-
-	name := respon["name"].(string)
-	telp := respon["telp"].(string)
-
-	contact := model.ContactRequest{
-		Name:   name,
-		NoTelp: telp,
+		write.Write([]byte("kesalahan input"))
+		return
+	} else {
+		result, err := json.Marshal(inputPurchase)
+		if err != nil {
+			panic(err)
+		}
+		write.WriteHeader(http.StatusCreated)
+		write.Write(result)
 	}
 
-	data, _ := handle.contactRepository.Add(contact)
-
-	result, err := json.Marshal(data)
-	if err != nil {
-		panic(err)
-	}
-
-	write.WriteHeader(http.StatusCreated)
-	write.Write(result)
 }
 
 // http update
@@ -90,10 +100,19 @@ func (handle *contactHandlerHttp) HandlerUpdate(write http.ResponseWriter, reque
 		NoTelp: telp,
 	}
 
-	handle.contactRepository.Update(id, contact)
-
-	write.WriteHeader(http.StatusCreated)
-	fmt.Println("Success", http.StatusCreated)
+	updateContact, err := handle.contactUseCase.Update(id, contact)
+	if err != nil {
+		write.WriteHeader(updateContact.Status)
+		write.Write([]byte(updateContact.Message))
+		return
+	} else {
+		result, err := json.Marshal(updateContact)
+		if err != nil {
+			panic(err)
+		}
+		write.WriteHeader(updateContact.Status)
+		write.Write(result)
+	}
 }
 
 // http delete
@@ -112,10 +131,18 @@ func (handle *contactHandlerHttp) HandlerDelete(write http.ResponseWriter, reque
 
 	id := int(respon["id"].(float64))
 
-	handle.contactRepository.Delete(id)
-
-	write.WriteHeader(http.StatusCreated)
-	fmt.Println("Success", http.StatusCreated)
-	fmt.Fprintf(write, "Id berhasil dihapus")
+	updateContact, err := handle.contactUseCase.Delete(id)
+	if err != nil {
+		write.WriteHeader(updateContact.Status)
+		write.Write([]byte(updateContact.Message))
+		return
+	} else {
+		result, err := json.Marshal(updateContact)
+		if err != nil {
+			panic(err)
+		}
+		write.WriteHeader(updateContact.Status)
+		write.Write(result)
+	}
 
 }

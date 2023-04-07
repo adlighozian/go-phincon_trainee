@@ -4,6 +4,7 @@ import (
 	"contact-go/config"
 	"contact-go/handler"
 	"contact-go/repository"
+	"contact-go/usecase"
 	"database/sql"
 	"fmt"
 	"net/http"
@@ -12,8 +13,9 @@ import (
 
 func main() {
 
+	contactUseCase := usecase.NewContactUseCase()
 	contactHandlerHttp := repository.NewContactRepository()
-	contactHandler := handler.NewContactHandlerHttp(contactHandlerHttp)
+	contactHandler := handler.NewContactHandlerHttp(contactHandlerHttp, contactUseCase)
 	NewServer(contactHandler)
 
 }

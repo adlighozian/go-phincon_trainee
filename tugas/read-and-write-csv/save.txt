@@ -1,0 +1,89 @@
+package main
+
+import (
+	"encoding/csv"
+	"fmt"
+	"log"
+	"math/rand"
+	"os"
+	"readAndWriteCsv/model"
+	"time"
+)
+
+func main() {
+	jumlahData := 100
+
+	var sliceName = []string{"ulil", "bagas", "nandy", "fian"}
+	var Socials []model.Social
+	for i := 0; i < jumlahData; i++ {
+		Socials = append(Socials, model.Social{
+			User:    sliceName[rand.Intn(4)],
+			Comment: randomString(20),
+		})
+		fmt.Println(i+1,":",Socials[i])
+	}
+
+
+	
+	csvfile, err := os.Create("file/Social.csv")
+	if err != nil {
+		log.Panicln("Error create data", err)
+	}
+
+	defer func() {
+		err := csvfile.Close()
+		if err != nil {
+			log.Panicln("Error closing file", err)
+		}
+	}()
+
+	csvwriter := csv.NewWriter(csvfile)
+	defer csvwriter.Flush()
+
+	WriteAllData(Socials, csvwriter)
+
+	csvfile2, err := os.Open("file/bookstore.csv")
+	if err != nil {
+		log.Panicln("Error open data", err)
+	}
+	csvreader := csv.NewReader(csvfile2)
+
+	ReadAllData(csvreader)
+
+}
+
+func randomString(length int) string {
+	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
+	letters := []rune(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+	b := make([]rune, length)
+	for i := range b {
+		b[i] = letters[randomizer.Intn(len(letters))]
+	}
+
+	return string(b)
+}
+
+func WriteAllData(booksData []model.Social, csvwriter *csv.Writer) {
+	var dataTempSlice [][]string
+	for _, v := range booksData {
+		var temp = []string{v.User, v.Comment}
+		dataTempSlice = append(dataTempSlice, temp)
+	}
+	if err := csvwriter.WriteAll(dataTempSlice); err != nil {
+		log.Fatalln("Error writing data", err)
+	}
+}
+
+func ReadAllData(csvreader *csv.Reader) {
+	if booksDataSlice, err := csvreader.ReadAll(); err != nil {
+		log.Fatalln("Error cant read data from csv")
+	} else {
+		for _, v := range booksDataSlice {
+			fmt.Println("Name of books :", v[0])
+			fmt.Println("Books of quantity :", v[1])
+			fmt.Println("Location :", v[2])
+			fmt.Println()
+		}
+	}
+}

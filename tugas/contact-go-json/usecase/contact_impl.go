@@ -64,6 +64,14 @@ func (usecase *contactUseCase) Update(id int, req model.ContactRequest) (model.C
 
 func (usecase *contactUseCase) Delete(id int) (model.ContactResponse, error) {
 
+	if id <= 0 {
+		return model.ContactResponse{
+			Status:  http.StatusNotFound,
+			Message: "id tidak ditemukan",
+			Data:    nil,
+		}, nil
+	}
+
 	collection_contact, err := repository.NewContactRepository().Delete(id)
 	if err != nil {
 		return model.ContactResponse{

@@ -50,8 +50,13 @@ func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request
 		log.Println("[ERROR] decode request :", err.Error())
 		return
 	}
+
 	var slices []model.ContactRequest
 	for _, v := range req {
+
+		if v.Name == "" || v.NoTelp == "" {
+			continue
+		}
 
 		inputReq := model.ContactRequest{
 			Name:   v.Name,
@@ -62,7 +67,7 @@ func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request
 
 	inputPurchase, err := handle.contactUseCase.Add(slices)
 	if err != nil {
-		write.WriteHeader(http.StatusBadRequest)
+		write.WriteHeader(http.StatusInternalServerError)
 		write.Write([]byte("kesalahan input"))
 		return
 	} else {

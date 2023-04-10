@@ -160,12 +160,34 @@ func (repo *contactRepository) Delete(id int) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
+	// validasi := `SELECT * FROM client WHERE id = ?`
+	// rows, errs := db.QueryContext(ctx, validasi, id)
+	// if errs != nil {
+	// 	return id, errors.New("gagal delete")
+	// }
+	// defer rows.Close()
+	// for rows.Next() {
+	// 	var nama, telp string
+	// 	var ids int
+	// 	err := rows.Scan(&ids, &nama, &telp)
+	// 	if err != nil {
+	// 		fmt.Println("error delete 1", id)
+	// 		return id, errors.New("gagal delete")
+	// 	}
+	// 	fmt.Println("error delete 1", nama)
+	// 	fmt.Println("error delete 1", telp)
+	// 	fmt.Println("error delete 1", ids)
+	// 	if ids == nil {
+
+	// 	}
+	// }
+
 	query := `DELETE FROM client WHERE id = ?`
 	_, err := db.ExecContext(ctx, query, id)
-
 	if err != nil {
-		fmt.Println("error delete", id)
-		return id, errors.New("gagal update")
+		fmt.Println("error delete 3", id)
+		return id, errors.New("gagal delete")
 	}
+
 	return id, nil
 }

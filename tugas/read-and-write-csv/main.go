@@ -14,17 +14,17 @@ import (
 var wg = new(sync.WaitGroup)
 
 func main() {
-	// jumlahData := 1000000
-	// jumlahWorker := 1
+	jumlahData := 1000000
+	jumlahWorker := 1
 
 	start := time.Now()
-	// wg.Add(1)
-	// go func() {
-	// 	chanFile := insertToChannel(jumlahData, jumlahWorker)
-	// 	insertToCsv(chanFile, jumlahWorker)
-	// 	wg.Done()
-	// }()
-	// wg.Wait()
+	wg.Add(1)
+	go func() {
+		chanFile := insertToChannel(jumlahData, jumlahWorker)
+		insertToCsv(chanFile, jumlahWorker)
+		wg.Done()
+	}()
+	wg.Wait()
 
 	csvfile2, err := os.Open("file/social.csv")
 	if err != nil {
@@ -79,10 +79,8 @@ func insertToCsv(chanIn <-chan model.Social, worker int) {
 		if err != nil {
 			log.Panicln("Error create data", err)
 		}
-
+		csvwriter := csv.NewWriter(csvfile)
 		for worker := 1; worker <= numberOfWorkers; worker++ {
-			csvwriter := csv.NewWriter(csvfile)
-			defer csvwriter.Flush()
 			go func(chanwork <-chan model.Social, i int) {
 				var dataTempSlice [][]string
 				defer wg.Done()
@@ -96,13 +94,14 @@ func insertToCsv(chanIn <-chan model.Social, worker int) {
 					log.Fatalln("Error writing data", err)
 				}
 			}(chanIn, worker)
-			defer func() {
-				err := csvfile.Close()
-				if err != nil {
-					log.Panicln("Error closing file", err)
-				}
-			}()
 		}
+		defer csvwriter.Flush()
+		defer func() {
+			err := csvfile.Close()
+			if err != nil {
+				log.Panicln("Error closing file", err)
+			}
+		}()
 
 		wg.Wait()
 	}()

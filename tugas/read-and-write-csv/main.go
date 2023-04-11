@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"readAndWriteCsv/helper"
 	"readAndWriteCsv/model"
 	"sync"
 	"time"
@@ -18,6 +19,7 @@ func main() {
 	jumlahWorker := 1
 
 	start := time.Now()
+
 	wg.Add(1)
 	go func() {
 		chanFile := insertToChannel(jumlahData, jumlahWorker)
@@ -38,18 +40,6 @@ func main() {
 
 }
 
-func randomString(length int) string {
-	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
-	letters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-	b := make([]rune, length)
-	for i := range b {
-		b[i] = letters[randomizer.Intn(len(letters))]
-	}
-
-	return string(b)
-}
-
 func insertToChannel(jumlahData int, worker int) <-chan model.Social {
 
 	chanOut := make(chan model.Social, worker)
@@ -60,7 +50,7 @@ func insertToChannel(jumlahData int, worker int) <-chan model.Social {
 		for i := 0; i < jumlahData; i++ {
 			chanOut <- model.Social{
 				User:    sliceName[rand.Intn(len(sliceName))],
-				Comment: randomString(30),
+				Comment: helper.RandomString(30),
 			}
 		}
 		close(chanOut)
@@ -84,7 +74,6 @@ func insertToCsv(chanIn <-chan model.Social, worker int) {
 			go func(chanwork <-chan model.Social, i int) {
 				var dataTempSlice [][]string
 				defer wg.Done()
-
 				for v := range chanwork {
 					var temp = []string{v.User, v.Comment}
 					dataTempSlice = append(dataTempSlice, temp)
@@ -113,10 +102,10 @@ func ReadAllData(csvreader *csv.Reader) {
 		log.Fatalln("Error cant read data from csv")
 	} else {
 		for _, v := range booksDataSlice {
-			fmt.Println(number, "User :", v[0], "| Comment :", v[1])
+			fmt.Println(number+1, "User :", v[0], "| Comment :", v[1])
 			number++
 
-			if number == 100+1 {
+			if number == 100 {
 				break
 			}
 		}

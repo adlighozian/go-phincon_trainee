@@ -3,40 +3,45 @@ package usecase
 import (
 	"contact-go/model"
 	"contact-go/repository"
-	"errors"
+	"fmt"
 	"net/http"
 )
 
-type contactUseCase struct{}
+type contactUseCase struct {
+	Repository repository.ContactRepository
+}
 
 func NewContactUseCase() ContactUseCase {
 	return new(contactUseCase)
 }
 
 func (usecase *contactUseCase) List() (model.ContactResponse, error) {
-	collection_contact := repository.NewContactRepository().List()
-	if collection_contact == nil {
+	collection_contact, err := repository.NewContactRepository().List()
+	if err != nil {
+		fmt.Println("error")
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
 			Message: "Internal Database Error",
 			Data:    nil,
-		}, errors.New("internal Database Error")
+		}, err
+	} else {
+		return model.ContactResponse{
+			Status:  http.StatusOK,
+			Message: "oke",
+			Data:    collection_contact,
+		}, nil
 	}
-	return model.ContactResponse{
-		Status:  http.StatusOK,
-		Message: "oke",
-		Data:    collection_contact,
-	}, nil
+
 }
 
 func (usecase *contactUseCase) Add(req []model.ContactRequest) (model.ContactResponse, error) {
-	collection_contact, _ := repository.NewContactRepository().Add(req)
-	if collection_contact == nil {
+	collection_contact, err := repository.NewContactRepository().Add(req)
+	if err != nil {
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
 			Message: "Internal Database Error",
 			Data:    nil,
-		}, errors.New("internal Database Error")
+		}, err
 	}
 	return model.ContactResponse{
 		Status:  http.StatusOK,

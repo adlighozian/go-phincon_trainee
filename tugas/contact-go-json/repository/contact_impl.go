@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"contact-go/config"
 	"contact-go/db"
 	"contact-go/model"
 	"context"
@@ -38,7 +37,7 @@ func (repo *contactRepository) EncodeJson() {
 }
 
 func (repo *contactRepository) GetLastID() int {
-	contacts := repo.List()
+	contacts, _ := repo.List()
 
 	var tempID int
 	for _, v := range contacts {
@@ -50,7 +49,7 @@ func (repo *contactRepository) GetLastID() int {
 }
 
 func (repo *contactRepository) GetIndexByID(id int) (int, error) {
-	contacts := repo.List()
+	contacts, _ := repo.List()
 
 	for i, v := range contacts {
 		if id == v.Id {
@@ -61,31 +60,27 @@ func (repo *contactRepository) GetIndexByID(id int) (int, error) {
 	return -1, errors.New("ID tidak ditemukan")
 }
 
-func (repo *contactRepository) List() (data []model.Contact) {
+func (repo *contactRepository) List() ([]model.Contact, error) {
 
-	switch {
-	case config.LoadConfig().Storage == "db":
-		db := db.GetConnectionMysql()
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
+	var data []model.Contact
+	db := db.GetConnectionMysql()
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
-		query := `SELECT * FROM client`
-		rows, err := db.QueryContext(ctx, query)
-		if err != nil {
-			panic(err)
-		}
-
-		var temp model.Contact
-		for rows.Next() {
-			rows.Scan(&temp.Id, &temp.Name, &temp.NoTelp)
-			data = append(data, temp)
-		}
-		return data
-	case config.LoadConfig().Storage == "json":
-		return repo.DecodeJson()
+	query := `SELECT * FROM client`
+	rows, err := db.QueryContext(ctx, query)
+	if err != nil {
+		panic(err)
 	}
 
-	return
+	var temp model.Contact
+	for rows.Next() {
+		rows.Scan(&temp.Id, &temp.Name, &temp.NoTelp)
+		data = append(data, temp)
+	}
+
+	return data, nil
+
 }
 
 func (repo *contactRepository) Add(req []model.ContactRequest) ([]model.Contact, error) {
@@ -126,7 +121,12 @@ func (repo *contactRepository) Add(req []model.ContactRequest) ([]model.Contact,
 		txr.Commit()
 	}
 
-	return contacts, nil
+	if contacts == nil {
+		return nil, errors.New("gagal menambahkan data")
+	} else {
+		return contacts, nil
+	}
+
 }
 
 func (repo *contactRepository) Update(id int, req model.ContactRequest) (model.Contact, error) {

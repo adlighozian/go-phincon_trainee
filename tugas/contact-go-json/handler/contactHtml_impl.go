@@ -24,20 +24,17 @@ func NewContactHandlerHttp(repository repository.ContactRepository, usecase usec
 
 // Http list
 func (handle *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request *http.Request) {
-	write.WriteHeader(http.StatusOK)
-	fmt.Println("Success", http.StatusOK)
-
 	contacts, _ := handle.contactUseCase.List()
-
 	result, err := json.Marshal(contacts)
 	if err != nil {
 		write.WriteHeader(contacts.Status)
 		write.Write(nil)
-		return
+		panic(err)
 	}
 
 	write.WriteHeader(contacts.Status)
 	write.Write(result)
+
 }
 
 // Http add

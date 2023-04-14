@@ -1,6 +1,6 @@
 package model
 
-type ReqPurchaseOrder struct {
+type ReqPurchase struct {
 	Item        string
 	Price       int
 	OrderNumber string
@@ -8,16 +8,16 @@ type ReqPurchaseOrder struct {
 	Total       int
 }
 
-type PurchaseOrderDetail struct {
+type PurchaseDetail struct {
 	Id       int
 	Item     string
 	Price    int
 	Quantity int
 	Total    int
-	PurchaseOrder
+	Purchase Purchase
 }
 
-type PurchaseOrder struct {
+type Purchase struct {
 	Id          int
 	OrderNumber string
 	From        string
@@ -26,6 +26,6 @@ type PurchaseOrder struct {
 
 // Mengganti model
 
-var PurchaseOrderDetails []PurchaseOrderDetail
+var PurchaseDetails []PurchaseDetail
 
-var PurchaseOrders []PurchaseOrder
+var Purchases []Purchase

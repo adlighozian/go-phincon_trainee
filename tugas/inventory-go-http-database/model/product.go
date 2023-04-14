@@ -8,3 +8,9 @@ type Product struct {
 }
 
 var Products []Product
+
+type InventoryResponse struct {
+	Status  int
+	Message string
+	Data    any
+}

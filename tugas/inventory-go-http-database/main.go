@@ -3,43 +3,44 @@ package main
 import (
 	"fmt"
 	"inventory/config"
-	"inventory/handler"
-	"inventory/repository"
+	"inventory/controller"
+	"inventory/service"
 	"net/http"
 )
 
 func main() {
-	productRepo := repository.NewProductRepository()
-	purchaseOrderRepo := repository.NewPurchaseOrderRepository(productRepo)
-	salesOrderRepo := repository.NewSalesOrderRepository(productRepo)
-	Inventory := handler.NewHandlerHttp(productRepo, purchaseOrderRepo, salesOrderRepo)
+	product := service.NewProductService()
+	purchase := service.NewPurchaseService()
+	// salesOrderRepo := repository.NewSalesOrderRepository(productRepo)
+	Inventory := controller.NewHandlerHttp(product, purchase)
 	NewServer(Inventory)
 }
 
-func NewServer(handle handler.InventoryHandlerHttp) {
+func NewServer(handle controller.InventoryHandlerHttp) {
 	config := config.LoadConfig()
 	// server
+	fmt.Println("Server running...")
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodGet {
-			handle.ProductGet(w, r)
+			handle.ProductShow(w, r)
 		}
 	})
 	mux.HandleFunc("/purchase", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodGet {
-			handle.PurchaseGet(w, r)
+			handle.PurchaseDetail(w, r)
 		} else if r.Method == http.MethodPost {
-			handle.PurchasePost(w, r)
+			handle.PurchaseInput(w, r)
 		}
 	})
-	mux.HandleFunc("/sales", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			handle.SalesGet(w, r)
-		} else if r.Method == http.MethodPost {
-			handle.SalesPost(w, r)
-		}
-	})
+	// mux.HandleFunc("/sales", func(w http.ResponseWriter, r *http.Request) {
+	// 	if r.Method == http.MethodGet {
+	// 		handle.SalesGet(w, r)
+	// 	} else if r.Method == http.MethodPost {
+	// 		handle.SalesPost(w, r)
+	// 	}
+	// })
 
 	server := http.Server{
 		Addr:    config.JsonPort,
@@ -50,6 +51,4 @@ func NewServer(handle handler.InventoryHandlerHttp) {
 	if err != nil {
 		panic(err.Error())
 	}
-
-	fmt.Println("Server running")
 }

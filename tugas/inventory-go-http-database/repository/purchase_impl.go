@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"fmt"
 	"inventory/db"
 	"inventory/model"
 	"math/rand"
@@ -17,6 +16,7 @@ func NewPurchaseRepository() PurchaseRepository {
 }
 
 func (repo *purchaseRepository) randomizerPurchase() string {
+	time.Sleep(1 * time.Second)
 	randomizer := rand.New(rand.NewSource(time.Now().Unix()))
 
 	letters := []rune("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -30,13 +30,13 @@ func (repo *purchaseRepository) randomizerPurchase() string {
 	return rand
 }
 
-func (repo *purchaseRepository) searchItem(req string) bool {
+func (repo *purchaseRepository) searchItemPurchase(req string) bool {
 
 	db := db.GetConnection()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	query := `SELECT * FROM product WHERE name = ? `
+	query := `SELECT id FROM product WHERE name = ? `
 	rows, err := db.QueryContext(ctx, query, req)
 	if err != nil {
 		panic(err)
@@ -74,10 +74,8 @@ func (repo *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.
 
 	for _, v := range req {
 		order := repo.randomizerPurchase()
-		if !repo.searchItem(v.Item) {
+		if !repo.searchItemPurchase(v.Item) {
 			// bikin baru
-			time.Sleep(1 * time.Second)
-
 			result, err := stmt.ExecContext(ctx, order, v.From, v.Total)
 			if err != nil {
 				panic(err)
@@ -158,7 +156,6 @@ func (repo *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.
 }
 
 func (repo *purchaseRepository) DetailPurchase(req string) (model.PurchaseDetail, error) {
-	fmt.Println("repo")
 	db := db.GetConnection()
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()

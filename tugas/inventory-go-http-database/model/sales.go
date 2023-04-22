@@ -1,6 +1,6 @@
 package model
 
-type ReqSalesOrder struct {
+type ReqSales struct {
 	Item        string
 	Price       int
 	OrderNumber string
@@ -8,22 +8,22 @@ type ReqSalesOrder struct {
 	Total       int
 }
 
-type SalesOrderDetail struct {
+type SalesDetail struct {
 	Id       int
 	Item     string
 	Price    int
 	Quantity int
 	Total    int
-	SalesOrder
+	Sales    Sales
 }
 
-type SalesOrder struct {
+type Sales struct {
 	Id          int
 	OrderNumber string
 	From        string
 	Total       int
 }
 
-var SalesOrderDetails []SalesOrderDetail
+var SalesDetails []SalesDetail
 
-var SalesOrders []SalesOrder
+var Saless []Sales

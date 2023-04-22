@@ -6,14 +6,15 @@ import (
 	"net/http"
 )
 
-type purchaseService struct{}
+type salesService struct{}
 
-func NewPurchaseService() PurchaseService {
-	return new(purchaseService)
+func NewSalesService() SalesService {
+	return new(salesService)
 }
 
-func (service *purchaseService) InputPurchase(req []model.ReqPurchase) (model.InventoryResponse, error) {
-	data, err := repository.NewPurchaseRepository().InputPurchase(req)
+func (service *salesService) InputSales(req []model.ReqSales) (model.InventoryResponse, error) {
+	// fmt.Println("service : sales input")
+	data, err := repository.NewSalesRepository().InputSales(req)
 	if err != nil {
 		return model.InventoryResponse{
 			Status:  http.StatusBadGateway,
@@ -29,8 +30,8 @@ func (service *purchaseService) InputPurchase(req []model.ReqPurchase) (model.In
 	}
 }
 
-func (service *purchaseService) DetailPurchase(req string) (model.InventoryResponse, error) {
-	data, err := repository.NewPurchaseRepository().DetailPurchase(req)
+func (service *salesService) ShowSales(req string) (model.InventoryResponse, error) {
+	data, err := repository.NewSalesRepository().ShowSales(req)
 	if err != nil {
 		return model.InventoryResponse{
 			Status:  http.StatusBadGateway,

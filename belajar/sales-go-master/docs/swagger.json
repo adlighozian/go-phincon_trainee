@@ -1,0 +1,345 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Sales Rest API",
+        "description": "Sales Rest API",
+        "version": "1.0",
+        "contact": {},
+        "license": {}
+    },
+    "definitions": {
+            "model.Product": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "model.ProductRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "model.Voucher": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "model.VoucherRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "model.Transaction": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "TransactionNumber": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "discount": {
+                        "type": "number"
+                    },
+                    "total": {
+                        "type": "number"
+                    },
+                    "pay": {
+                        "type": "number"
+                    }
+                },
+                "type": "object"
+            },
+            "model.TransactionDetail": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "item": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "total": {
+                        "type": "number"
+                    },
+                    "transaction": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "model.TransactionDetailBulkRequest": {
+                "properties": {
+                    "item": {
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "integer"
+                    },
+                    "pay": {
+                        "type": "number"
+                    }
+                },
+                "type": "object"
+            },
+            "model.TransactionDetailItemRequest": {
+                "properties": {
+                    "item": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+    },
+    "paths": {
+            "/product": {
+                "get": {
+                    "description": "Get list product",
+                    "responses": {
+                        "200": {
+                            "description": "Success",
+                            "schema": {
+                                "$ref": "#/definitions/model.Product"
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "500": {
+                            "description": "Internal Server Error",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "summary": "Get List Product",
+                    "tags": [
+                        "Product"
+                    ]
+                },
+                "post": {
+                    "description": "Add new product",
+                    "parameters": [
+                        {
+                            "description": "Payload",
+                            "in": "body",
+                            "name": "Payload",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/model.ProductRequest"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "201": {
+                            "description": "Created",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "500": {
+                            "description": "Internal Server Error",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "summary": "Add New Product",
+                    "tags": [
+                        "Product"
+                    ]
+                }
+            },
+            "/voucher": {
+                "get": {
+                    "description": "Get list voucher",
+                    "produces": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "$ref": "#/definitions/model.Voucher"
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "500": {
+                            "description": "Internal Server Error",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "summary": "Get List Vouhcer",
+                    "tags": [
+                        "Voucher"
+                    ]
+                },
+                "post": {
+                    "description": "Add new voucher",
+                    "parameters": [
+                        {
+                            "description": "Payload",
+                            "in": "body",
+                            "name": "Payload",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/model.VoucherRequest"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "201": {
+                            "description": "Created",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "500": {
+                            "description": "Internal Server Error",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "summary": "Add New Voucher",
+                    "tags": [
+                        "Voucher"
+                    ]
+                }
+            },
+            "/transaction": {
+                "get": {
+                    "description": "Get list transaction by transaction number",
+                    "produces": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "$ref": "#/definitions/model.TransactionDetail"
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "500": {
+                            "description": "Internal Server Error",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "summary": "Get Transaction By Transaction Number",
+                    "tags": [
+                        "Transaction"
+                    ]
+                },
+                "post": {
+                    "description": "Add new transaction",
+                    "parameters": [
+                        {
+                            "description": "Payload",
+                            "in": "body",
+                            "name": "Payload",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/model.TransactionDetailBulkRequest"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "201": {
+                            "description": "Created",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "400": {
+                            "description": "Bad Request",
+                            "schema": {
+                                "type": "string"
+                            }
+                        },
+                        "500": {
+                            "description": "Internal Server Error",
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "summary": "Add New Transaction",
+                    "tags": [
+                        "Transaction"
+                    ]
+                }
+            }
+    }
+}

@@ -47,6 +47,10 @@ func (handler *handlerHttp) PurchaseInput(w http.ResponseWriter, r *http.Request
 	var purchase []model.ReqPurchase
 	for _, v := range req {
 
+		if v.Item == "" || v.Price == 0 || v.From == "" || v.Total <= 0 {
+			continue
+		}
+
 		input := model.ReqPurchase{
 			Item:  v.Item,
 			Price: v.Price,
@@ -109,6 +113,9 @@ func (handler *handlerHttp) SalesInput(w http.ResponseWriter, r *http.Request) {
 
 	var sales []model.ReqSales
 	for _, v := range req {
+		if v.Item == "" || v.Price == 0 || v.From == "" || v.Total <= 0 {
+			continue
+		}
 		input := model.ReqSales{
 			Item:  v.Item,
 			Price: v.Price,
@@ -116,7 +123,6 @@ func (handler *handlerHttp) SalesInput(w http.ResponseWriter, r *http.Request) {
 			Total: v.Total,
 		}
 		sales = append(sales, input)
-
 	}
 
 	data, _ := handler.salesSerivce.InputSales(sales)
@@ -148,7 +154,7 @@ func (handler *handlerHttp) SalesDetail(w http.ResponseWriter, r *http.Request) 
 
 	order := respon["order"].(string)
 
-	data, _ := handler.salesSerivce.ShowSales(order)
+	data, _ := handler.salesSerivce.DetailSales(order)
 	result, err := json.Marshal(data)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

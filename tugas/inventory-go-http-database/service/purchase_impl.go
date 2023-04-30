@@ -16,14 +16,14 @@ func (service *purchaseService) InputPurchase(req []model.ReqPurchase) (model.In
 	data, err := repository.NewPurchaseRepository().InputPurchase(req)
 	if err != nil {
 		return model.InventoryResponse{
-			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Status:  http.StatusBadRequest,
+			Message: "Bad Request",
 			Data:    nil,
 		}, err
 	} else {
 		return model.InventoryResponse{
 			Status:  http.StatusOK,
-			Message: "oke",
+			Message: "Oke",
 			Data:    data,
 		}, nil
 	}
@@ -33,14 +33,14 @@ func (service *purchaseService) DetailPurchase(req string) (model.InventoryRespo
 	data, err := repository.NewPurchaseRepository().DetailPurchase(req)
 	if err != nil {
 		return model.InventoryResponse{
-			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Status:  http.StatusNotFound,
+			Message: "Resource not found",
 			Data:    nil,
 		}, err
 	} else {
 		return model.InventoryResponse{
 			Status:  http.StatusOK,
-			Message: "oke",
+			Message: "Oke",
 			Data:    data,
 		}, nil
 	}

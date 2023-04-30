@@ -8,7 +8,7 @@ import (
 
 func LoggingHandler(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		logger.Infof(fmt.Sprintf("Started %s localhost:5000%s", r.Method, r.URL.Path))
+		Infof(fmt.Sprintf("Started %s localhost:5000%s", r.Method, r.URL.Path))
 
 		handler.ServeHTTP(w, r)
 
@@ -17,9 +17,9 @@ func LoggingHandler(handler http.Handler) http.Handler {
 			err := recover()
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
-				logger.Errorf("gagal")
+				Errorf(err.(error))
 			} else {
-				logger.Infof(fmt.Sprintf("Completed %s localhost:5000%s in %v", r.Method, r.URL.Path, time.Since(time.Now())))
+				Infof(fmt.Sprintf("Completed %s localhost:5000%s in %v", r.Method, r.URL.Path, time.Since(time.Now())))
 			}
 		}()
 	})

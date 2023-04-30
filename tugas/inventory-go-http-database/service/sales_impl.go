@@ -17,31 +17,31 @@ func (service *salesService) InputSales(req []model.ReqSales) (model.InventoryRe
 	data, err := repository.NewSalesRepository().InputSales(req)
 	if err != nil {
 		return model.InventoryResponse{
-			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Status:  http.StatusBadRequest,
+			Message: "Bad Request",
 			Data:    nil,
 		}, err
 	} else {
 		return model.InventoryResponse{
 			Status:  http.StatusOK,
-			Message: "oke",
+			Message: "Oke",
 			Data:    data,
 		}, nil
 	}
 }
 
-func (service *salesService) ShowSales(req string) (model.InventoryResponse, error) {
+func (service *salesService) DetailSales(req string) (model.InventoryResponse, error) {
 	data, err := repository.NewSalesRepository().ShowSales(req)
 	if err != nil {
 		return model.InventoryResponse{
-			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Status:  http.StatusNotFound,
+			Message: "Resource not found",
 			Data:    nil,
 		}, err
 	} else {
 		return model.InventoryResponse{
 			Status:  http.StatusOK,
-			Message: "oke",
+			Message: "Oke",
 			Data:    data,
 		}, nil
 	}

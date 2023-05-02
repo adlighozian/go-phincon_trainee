@@ -84,11 +84,16 @@ func (repo *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.
 			if err != nil {
 				panic(err)
 			}
-			stmt1.ExecContext(ctx, lastInsertId, v.Item, v.Price, v.Total, v.Total)
+			results, _ := stmt1.ExecContext(ctx, lastInsertId, v.Item, v.Price, v.Total, v.Total)
+			lastInsertIds, err := results.LastInsertId()
+			if err != nil {
+				panic(err)
+			}
+
 			stmt2.ExecContext(ctx, v.Item, v.Price, v.Total)
 
 			orderDetail := model.PurchaseDetail{
-				Id:       int(lastInsertId),
+				Id:       int(lastInsertIds),
 				Item:     v.Item,
 				Price:    v.Price,
 				Quantity: v.Total,

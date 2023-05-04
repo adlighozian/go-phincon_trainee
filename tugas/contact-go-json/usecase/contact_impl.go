@@ -11,11 +11,7 @@ type contactUseCase struct {
 	Repository repository.ContactRepository
 }
 
-//	func NewContactUseCase() ContactUseCase {
-//		return new(contactUseCase)
-//	}
-
-func NewContactUseCase(repository repository.ContactRepository) *contactUseCase {
+func NewContactUseCase(repository repository.ContactRepository) ContactUseCase {
 	return &contactUseCase{
 		Repository: repository,
 	}

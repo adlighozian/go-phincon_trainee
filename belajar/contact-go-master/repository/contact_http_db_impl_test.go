@@ -36,6 +36,7 @@ func (client *Mysqlclient) SetupTest() {
 
 func (client *Mysqlclient) TestGetListContact() {
 	row := sqlmock.NewRows([]string{"id","name","no_telp"}).AddRow(1, "Andi", "0834234235244").AddRow(2, "Umar", "0894339843943")
+	
 	client.mock.ExpectBegin()
 	client.mock.ExpectPrepare("SELECT id, name, no_telp FROM contact").WillBeClosed().ExpectQuery().WillReturnRows(row)
 	client.mock.ExpectCommit()
@@ -99,6 +100,6 @@ func (client *Mysqlclient) TestDeleteContact() {
 	require.NoError(client.T(), err)
 }
 
-func TestInitMySQL(t *testing.T) {
+func TestRepoHTTP(t *testing.T) {
 	suite.Run(t, new(Mysqlclient))
 }

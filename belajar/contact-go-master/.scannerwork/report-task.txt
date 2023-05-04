@@ -1,0 +1,6 @@
+projectKey=Contact-Go
+serverUrl=http://localhost:9000
+serverVersion=10.0.0.68432
+dashboardUrl=http://localhost:9000/dashboard?id=Contact-Go
+ceTaskId=AYflCLhJkAM0X_T6SFeO
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYflCLhJkAM0X_T6SFeO

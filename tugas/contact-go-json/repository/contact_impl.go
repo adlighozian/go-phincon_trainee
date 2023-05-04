@@ -1,76 +1,28 @@
 package repository
 
 import (
+	"contact-go/db"
 	"contact-go/model"
-	"context"
 	"database/sql"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"os"
-	"time"
 )
 
 type contactRepository struct {
 	Conn *sql.DB
-	Db   string
 }
 
-func NewContactRepository(connection *sql.DB, db string) ContactRepository {
+func NewContactRepository(connection *sql.DB) ContactRepository {
 	return &contactRepository{
 		Conn: connection,
-		Db:   db,
 	}
-}
-
-func (repo *contactRepository) DecodeJson() []model.Contact {
-	reader, err := os.Open("./assets/contacts.json")
-	if err != nil {
-		panic(err)
-	}
-	decoder := json.NewDecoder(reader)
-	decoder.Decode(&model.Contacts)
-	return model.Contacts
-}
-
-func (repo *contactRepository) EncodeJson() {
-	writer, err := os.Create("./assets/contacts.json")
-	if err != nil {
-		panic(err)
-	}
-	encoder := json.NewEncoder(writer)
-	encoder.Encode(repo.DecodeJson())
-}
-
-func (repo *contactRepository) GetLastID() int {
-	contacts, _ := repo.List()
-
-	var tempID int
-	for _, v := range contacts {
-		if tempID < v.Id {
-			tempID = v.Id
-		}
-	}
-	return tempID
-}
-
-func (repo *contactRepository) GetIndexByID(id int) (int, error) {
-	contacts, _ := repo.List()
-
-	for i, v := range contacts {
-		if id == v.Id {
-			return i, nil
-		}
-	}
-
-	return -1, errors.New("ID tidak ditemukan")
 }
 
 func (repo *contactRepository) List() ([]model.Contact, error) {
 
 	var data []model.Contact
-	// db := db.GetConnectionMysql()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+
+	ctx, cancel := db.NewMysqlContext()
 	defer cancel()
 
 	query := `SELECT * FROM client`
@@ -92,7 +44,7 @@ func (repo *contactRepository) List() ([]model.Contact, error) {
 func (repo *contactRepository) Add(req []model.ContactRequest) ([]model.Contact, error) {
 
 	var contacts []model.Contact
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	ctx, cancel := db.NewMysqlContext()
 	defer cancel()
 
 	query := `INSERT INTO client(nama,no_telp) VALUES (?,?)`
@@ -137,7 +89,7 @@ func (repo *contactRepository) Add(req []model.ContactRequest) ([]model.Contact,
 func (repo *contactRepository) Update(id int, req model.ContactRequest) (model.Contact, error) {
 
 	defer repo.Conn.Close()
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	ctx, cancel := db.NewMysqlContext()
 	defer cancel()
 	contact := model.Contact{
 		Id:     id,
@@ -161,30 +113,8 @@ func (repo *contactRepository) Update(id int, req model.ContactRequest) (model.C
 func (repo *contactRepository) Delete(id int) (int, error) {
 
 	defer repo.Conn.Close()
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	ctx, cancel := db.NewMysqlContext()
 	defer cancel()
-
-	// validasi := `SELECT * FROM client WHERE id = ?`
-	// rows, errs := db.QueryContext(ctx, validasi, id)
-	// if errs != nil {
-	// 	return id, errors.New("gagal delete")
-	// }
-	// defer rows.Close()
-	// for rows.Next() {
-	// 	var nama, telp string
-	// 	var ids int
-	// 	err := rows.Scan(&ids, &nama, &telp)
-	// 	if err != nil {
-	// 		fmt.Println("error delete 1", id)
-	// 		return id, errors.New("gagal delete")
-	// 	}
-	// 	fmt.Println("error delete 1", nama)
-	// 	fmt.Println("error delete 1", telp)
-	// 	fmt.Println("error delete 1", ids)
-	// 	if ids == nil {
-
-	// 	}
-	// }
 
 	query := `DELETE FROM client WHERE id = ?`
 	_, err := repo.Conn.ExecContext(ctx, query, id)

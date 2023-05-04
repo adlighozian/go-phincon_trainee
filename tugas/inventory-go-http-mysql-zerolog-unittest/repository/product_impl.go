@@ -1,30 +1,31 @@
 package repository
 
 import (
-	"context"
+	"database/sql"
 	"errors"
-	"inventory/db"
+	"inventory/config/db"
 	"inventory/model"
-	"time"
 )
 
 type productRepository struct {
+	Db *sql.DB
 }
 
-func NewProductRepository() ProductRepository {
-	return new(productRepository)
+func NewProductRepository(db *sql.DB) ProductRepository {
+	return &productRepository{
+		Db: db,
+	}
 }
 
 func (repo *productRepository) ShowProduct() ([]model.Product, error) {
 	var result []model.Product
 	var temp model.Product
 
-	db := db.GetConnection()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := db.NewMysqlContext()
 	defer cancel()
 
 	query := `SELECT * FROM product`
-	rows, err := db.QueryContext(ctx, query)
+	rows, err := repo.Db.QueryContext(ctx, query)
 	if err != nil {
 		return result, errors.New("error melakukan query")
 	}

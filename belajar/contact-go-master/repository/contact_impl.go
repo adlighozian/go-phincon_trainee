@@ -24,7 +24,6 @@ func (repo *repository) getLastID() (lastID int, err error) {
 			}
 		}
 	}
-
 	return
 }
 

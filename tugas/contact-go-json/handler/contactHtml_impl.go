@@ -2,7 +2,6 @@ package handler
 
 import (
 	"contact-go/model"
-	"contact-go/repository"
 	"contact-go/usecase"
 	"encoding/json"
 	"fmt"
@@ -11,14 +10,13 @@ import (
 )
 
 type contactHandlerHttp struct {
-	contactRepository repository.ContactRepository
-	contactUseCase    usecase.ContactUseCase
+	// contactRepository repository.ContactRepository
+	contactUseCase usecase.ContactUseCase
 }
 
-func NewContactHandlerHttp(repository repository.ContactRepository, usecase usecase.ContactUseCase) ContactHandlerHttp {
+func NewContactHandlerHttp(usecase usecase.ContactUseCase) ContactHandlerHttp {
 	return &contactHandlerHttp{
-		contactRepository: repository,
-		contactUseCase:    usecase,
+		contactUseCase: usecase,
 	}
 }
 

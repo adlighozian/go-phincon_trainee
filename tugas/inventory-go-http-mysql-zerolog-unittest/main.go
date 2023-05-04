@@ -10,12 +10,20 @@ import (
 )
 
 func main() {
+	config := config.LoadConfig()
+
+	inventoryServ := createInventoryService(config)
+
 	product := service.NewProductService()
 	purchase := service.NewPurchaseService()
 	sales := service.NewSalesService()
 
 	Inventory := controller.NewHandlerHttp(product, purchase, sales)
 	NewServer(Inventory)
+}
+
+func createInventoryService(cfg *config.Config) service {
+
 }
 
 func NewServer(handle controller.InventoryHandlerHttp) {

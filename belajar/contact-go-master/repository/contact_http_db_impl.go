@@ -3,10 +3,8 @@ package repository
 import (
 	"contact-go/model"
 	"context"
-	"log"
-	
 	"database/sql"
-	"fmt"
+	"log"
 	"time"
 )
 
@@ -115,12 +113,11 @@ func (repo *contacthttp) Update(id int, req model.ContactRequest) (err error) {
 		return
 	}
 
-	res, err := stmt.ExecContext(ctx, req.Name, req.NoTelp, id)
+	_, err = stmt.ExecContext(ctx, req.Name, req.NoTelp, id)
 	if err != nil {
 		trx.Rollback()
 		return
 	}
-	fmt.Println(res.RowsAffected())
 
 	trx.Commit()
 	
@@ -149,11 +146,10 @@ func (repo *contacthttp) Delete(id int) (err error) {
 		trx.Rollback()
 	}
 
-	rowAffected, err := res.RowsAffected()
+	_, err = res.RowsAffected()
 	if err != nil {
 		return
 	}
-	fmt.Println(rowAffected)
 
 	trx.Commit()
 

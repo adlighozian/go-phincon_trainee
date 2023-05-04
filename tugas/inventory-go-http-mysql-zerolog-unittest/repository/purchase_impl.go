@@ -1,18 +1,22 @@
 package repository
 
 import (
-	"context"
+	"database/sql"
 	"errors"
-	"inventory/db"
+	"inventory/config/db"
 	"inventory/model"
 	"math/rand"
 	"time"
 )
 
-type purchaseRepository struct{}
+type purchaseRepository struct {
+	Db *sql.DB
+}
 
-func NewPurchaseRepository() PurchaseRepository {
-	return new(purchaseRepository)
+func NewPurchaseRepository(db *sql.DB) PurchaseRepository {
+	return &purchaseRepository{
+		Db: db,
+	}
 }
 
 func (repo *purchaseRepository) randomizerPurchase() string {
@@ -32,12 +36,12 @@ func (repo *purchaseRepository) randomizerPurchase() string {
 
 func (repo *purchaseRepository) searchItemPurchase(req string) bool {
 
-	db := db.GetConnection()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := db.NewMysqlContext()
+	defer cancel()
 	defer cancel()
 
 	query := `SELECT id FROM product WHERE name = ? `
-	rows, err := db.QueryContext(ctx, query, req)
+	rows, err := repo.Db.QueryContext(ctx, query, req)
 	if err != nil {
 		panic(err)
 	}
@@ -57,8 +61,7 @@ func (repo *purchaseRepository) searchItemPurchase(req string) bool {
 func (repo *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.PurchaseDetail, error) {
 	var dataReturn []model.PurchaseDetail
 
-	db := db.GetConnection()
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	ctx, cancel := db.NewMysqlContext()
 	defer cancel()
 
 	query := `INSERT INTO purchase(order_number,orang,total) VALUES (?,?,?)`
@@ -66,7 +69,7 @@ func (repo *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.
 	query2 := `INSERT INTO product(name,price,stock) VALUES (?,?,?)`
 	query3 := `UPDATE product SET stock = ? WHERE name = ?;`
 
-	txr, errs := db.BeginTx(ctx, nil)
+	txr, errs := repo.Db.BeginTx(ctx, nil)
 	stmt, _ := txr.PrepareContext(ctx, query)
 	stmt1, _ := txr.PrepareContext(ctx, query1)
 	stmt2, _ := txr.PrepareContext(ctx, query2)
@@ -111,7 +114,7 @@ func (repo *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.
 			// update barang
 			var stock int
 			query := `SELECT stock FROM product WHERE name = ? `
-			rows, _ := db.QueryContext(ctx, query, v.Item)
+			rows, _ := repo.Db.QueryContext(ctx, query, v.Item)
 			for rows.Next() {
 				rows.Scan(&stock)
 			}
@@ -161,19 +164,18 @@ func (repo *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.
 }
 
 func (repo *purchaseRepository) DetailPurchase(req string) (model.PurchaseDetail, error) {
-	db := db.GetConnection()
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	ctx, cancel := db.NewMysqlContext()
 	defer cancel()
 	var kotak model.PurchaseDetail
 
 	modelp := new(model.Purchase)
 	query := `SELECT id, order_number, orang, total FROM purchase WHERE order_number = ? `
-	rows := db.QueryRowContext(ctx, query, req)
+	rows := repo.Db.QueryRowContext(ctx, query, req)
 	rows.Scan(&modelp.Id, &modelp.OrderNumber, &modelp.From, &modelp.Total)
 
 	modelpd := new(model.PurchaseDetail)
 	sqlQuery := "SELECT id, item, price, quantity, total FROM purchase_detail WHERE purchase_id = ?"
-	row := db.QueryRowContext(ctx, sqlQuery, modelp.Id)
+	row := repo.Db.QueryRowContext(ctx, sqlQuery, modelp.Id)
 	row.Scan(&modelpd.Id, &modelpd.Item, &modelpd.Price, &modelpd.Quantity, &modelpd.Total)
 
 	kotak = model.PurchaseDetail{

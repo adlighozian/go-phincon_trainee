@@ -4,7 +4,6 @@ import (
 	"contact-go/config"
 	"contact-go/db"
 	"contact-go/handler"
-	"contact-go/helper"
 	"contact-go/repository"
 	"contact-go/usecase"
 	"fmt"
@@ -12,18 +11,19 @@ import (
 )
 
 func main() {
+	config := config.LoadConfig()
 
-	dbms, _ := helper.GetEnv("dbms", "mysql")
-	db, err := db.GetDB(dbms).GetConnectionMysql()
-	if err != nil {
-		panic(err)
-	}
+	contactUC := createContactUseCase(config)
+	contactHTTPHandler := handler.NewContactHandlerHttp(contactUC)
+	NewServer(contactHTTPHandler)
+}
 
-	contactHandlerHttp := repository.NewContactRepository(db, dbms)
-	contactUseCase := usecase.NewContactUseCase(contactHandlerHttp)
-	contactHandler := handler.NewContactHandlerHttp(contactHandlerHttp, contactUseCase)
-	NewServer(contactHandler)
+func createContactUseCase(config *config.Config) usecase.ContactUseCase {
+	var contactRepo repository.ContactRepository
+	db := db.GetMysql(config)
+	contactRepo = repository.NewContactRepository(db)
 
+	return usecase.NewContactUseCase(contactRepo)
 }
 
 func NewServer(handle handler.ContactHandlerHttp) {
@@ -53,17 +53,3 @@ func NewServer(handle handler.ContactHandlerHttp) {
 		panic(err.Error())
 	}
 }
-
-// func getConnectionShow() *sql.DB {
-// 	connString := "root:@tcp(localhost:3306)/golang-trainee"
-// 	db, err := sql.Open("mysql", connString)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	db.SetMaxIdleConns(10)
-// 	db.SetMaxOpenConns(100)
-// 	db.SetConnMaxIdleTime(5 * time.Minute)
-// 	db.SetConnMaxLifetime(60 * time.Minute)
-// 	return db
-// }

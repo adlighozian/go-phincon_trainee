@@ -9,20 +9,22 @@ type RepoMock struct {
 	mock.Mock
 }
 
-func NewContactRepoMock() *RepoMock {
+func NewRepoMock() *RepoMock {
 	return &RepoMock{}
 }
 
 func (m *RepoMock) List() (result []model.Contact, err error) {
 	ret := m.Called()
 	result = ret.Get(0).([]model.Contact)
-	return result, nil
+	err = ret.Error(1)
+	return result, err
 }
 
 func (m *RepoMock) Add(req []model.ContactRequest) (result []model.Contact, err error) {
 	ret := m.Called(req)
 	result = ret.Get(0).([]model.Contact)
-	return result, nil
+	err = ret.Error(1)
+	return result, err
 }
 
 func (m *RepoMock) Update(id int, req model.ContactRequest) (err error) {

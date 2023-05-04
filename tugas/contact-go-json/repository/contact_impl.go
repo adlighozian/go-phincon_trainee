@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"contact-go/db"
 	"contact-go/model"
 	"context"
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -11,10 +11,16 @@ import (
 	"time"
 )
 
-type contactRepository struct{}
+type contactRepository struct {
+	Conn *sql.DB
+	Db   string
+}
 
-func NewContactRepository() ContactRepository {
-	return new(contactRepository)
+func NewContactRepository(connection *sql.DB, db string) ContactRepository {
+	return &contactRepository{
+		Conn: connection,
+		Db:   db,
+	}
 }
 
 func (repo *contactRepository) DecodeJson() []model.Contact {
@@ -63,12 +69,12 @@ func (repo *contactRepository) GetIndexByID(id int) (int, error) {
 func (repo *contactRepository) List() ([]model.Contact, error) {
 
 	var data []model.Contact
-	db := db.GetConnectionMysql()
+	// db := db.GetConnectionMysql()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	query := `SELECT * FROM client`
-	rows, err := db.QueryContext(ctx, query)
+	rows, err := repo.Conn.QueryContext(ctx, query)
 	if err != nil {
 		panic(err)
 	}
@@ -85,14 +91,13 @@ func (repo *contactRepository) List() ([]model.Contact, error) {
 
 func (repo *contactRepository) Add(req []model.ContactRequest) ([]model.Contact, error) {
 
-	db := db.GetConnectionMysql()
 	var contacts []model.Contact
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
 	query := `INSERT INTO client(nama,no_telp) VALUES (?,?)`
 
-	txr, errs := db.BeginTx(ctx, nil)
+	txr, errs := repo.Conn.BeginTx(ctx, nil)
 	stmt, _ := txr.PrepareContext(ctx, query)
 	defer stmt.Close()
 
@@ -131,8 +136,7 @@ func (repo *contactRepository) Add(req []model.ContactRequest) ([]model.Contact,
 
 func (repo *contactRepository) Update(id int, req model.ContactRequest) (model.Contact, error) {
 
-	db := db.GetConnectionMysql()
-	defer db.Close()
+	defer repo.Conn.Close()
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 	contact := model.Contact{
@@ -143,7 +147,7 @@ func (repo *contactRepository) Update(id int, req model.ContactRequest) (model.C
 
 	query := `UPDATE client SET nama = ?, no_telp = ? WHERE id = ?`
 
-	_, err := db.ExecContext(ctx, query, req.Name, req.NoTelp, id)
+	_, err := repo.Conn.ExecContext(ctx, query, req.Name, req.NoTelp, id)
 	if err != nil {
 		fmt.Println("error update", id, req.Name, req.NoTelp)
 		return contact, errors.New("gagal update")
@@ -155,8 +159,8 @@ func (repo *contactRepository) Update(id int, req model.ContactRequest) (model.C
 }
 
 func (repo *contactRepository) Delete(id int) (int, error) {
-	db := db.GetConnectionMysql()
-	defer db.Close()
+
+	defer repo.Conn.Close()
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
@@ -183,7 +187,7 @@ func (repo *contactRepository) Delete(id int) (int, error) {
 	// }
 
 	query := `DELETE FROM client WHERE id = ?`
-	_, err := db.ExecContext(ctx, query, id)
+	_, err := repo.Conn.ExecContext(ctx, query, id)
 	if err != nil {
 		fmt.Println("error delete 3", id)
 		return id, errors.New("gagal delete")

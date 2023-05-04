@@ -9,9 +9,24 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetConnectionMysql() *sql.DB {
+type dbOpt struct {
+	Database string
+}
+
+func GetDB(db string) dbOpt {
+	return dbOpt{
+		Database: db,
+	}
+}
+
+func (dbs dbOpt) GetConnectionMysql() (*sql.DB, error) {
 	config := config.LoadConfig()
-	connStrings := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", config.DbUsername, config.DbPassword, config.DbHost, config.DbPort, config.DbName)
+
+	var connStrings = ""
+	if dbs.Database == "mysql" {
+		connStrings = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", config.DbUsername, config.DbPassword, config.DbHost, config.DbPort, config.DbName)
+	}
+
 	db, err := sql.Open(config.DbMain, connStrings)
 	if err != nil {
 		panic(err)
@@ -23,5 +38,5 @@ func GetConnectionMysql() *sql.DB {
 	db.SetConnMaxIdleTime(5 * time.Minute)
 	db.SetConnMaxLifetime(60 * time.Minute)
 
-	return db
+	return db, nil
 }

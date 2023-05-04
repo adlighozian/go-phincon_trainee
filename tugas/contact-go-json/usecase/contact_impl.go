@@ -11,12 +11,18 @@ type contactUseCase struct {
 	Repository repository.ContactRepository
 }
 
-func NewContactUseCase() ContactUseCase {
-	return new(contactUseCase)
+//	func NewContactUseCase() ContactUseCase {
+//		return new(contactUseCase)
+//	}
+
+func NewContactUseCase(repository repository.ContactRepository) *contactUseCase {
+	return &contactUseCase{
+		Repository: repository,
+	}
 }
 
 func (usecase *contactUseCase) List() (model.ContactResponse, error) {
-	collection_contact, err := repository.NewContactRepository().List()
+	collection_contact, err := usecase.Repository.List()
 	if err != nil {
 		fmt.Println("error")
 		return model.ContactResponse{
@@ -35,7 +41,7 @@ func (usecase *contactUseCase) List() (model.ContactResponse, error) {
 }
 
 func (usecase *contactUseCase) Add(req []model.ContactRequest) (model.ContactResponse, error) {
-	collection_contact, err := repository.NewContactRepository().Add(req)
+	collection_contact, err := usecase.Repository.Add(req)
 	if err != nil {
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
@@ -52,7 +58,7 @@ func (usecase *contactUseCase) Add(req []model.ContactRequest) (model.ContactRes
 
 func (usecase *contactUseCase) Update(id int, req model.ContactRequest) (model.ContactResponse, error) {
 
-	collection_contact, err := repository.NewContactRepository().Update(id, req)
+	collection_contact, err := usecase.Repository.Update(id, req)
 	if err != nil {
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
@@ -77,7 +83,7 @@ func (usecase *contactUseCase) Delete(id int) (model.ContactResponse, error) {
 		}, nil
 	}
 
-	collection_contact, err := repository.NewContactRepository().Delete(id)
+	collection_contact, err := usecase.Repository.Delete(id)
 	if err != nil {
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,

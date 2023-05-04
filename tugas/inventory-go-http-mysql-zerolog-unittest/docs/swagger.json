@@ -1,0 +1,585 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Inventory Go",
+        "version": "1.0",
+        "description": "Untuk tugas inventory go pada golang trainee",
+        "contact": {
+            "name": "Adli",
+            "email": "adlihozian1@gmail.com",
+            "url": "https://github.com/adlighozian/go-phincon_trainee/tree/main/tugas/inventory-go-http-database"
+        }
+    },
+    "servers": [
+        {
+            "description": "Inventory Api Server",
+            "url": "http://localhost:{port}",
+            "variables": {
+                "port": {
+                    "description": "Server Port",
+                    "default": "5000",
+                    "enum": [
+                        "5000",
+                        "3000",
+                        "4880"
+                    ]
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/product": {
+            "get": {
+                "summary": "Get List Product",
+                "description": "Get list product",
+                "responses": {
+                    "200": {
+                        "description": "Success Get List Product",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/product.list"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example Success Get List Product",
+                                        "value": {
+                                            "Status": 200,
+                                            "Message": "oke",
+                                            "Data": [
+                                                {
+                                                    "Item": "Laptop",
+                                                    "Price": 15000000,
+                                                    "From": "Ardhi",
+                                                    "Total": 5
+                                                },
+                                                {
+                                                    "Item": "Handphone",
+                                                    "Price": 5000000,
+                                                    "From": "Bagas",
+                                                    "Total": 2
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Product"
+                ]
+            }
+        },
+        "/purchase/detail": {
+            "post": {
+                "summary": "Get Purchase Detail",
+                "description": "Get Purchase Detail by Order Number",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/purchase.detail"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/purchase.response"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example Success Get Detail Purchase Order",
+                                        "value": {
+                                            "Status": 200,
+                                            "Message": "oke",
+                                            "Data": {
+                                                "Id": 35,
+                                                "Item": "laptop 3",
+                                                "Price": 1000,
+                                                "Quantity": 5,
+                                                "Total": 13,
+                                                "Purchase": {
+                                                    "Id": 38,
+                                                    "OrderNumber": "JcX8yWw",
+                                                    "From": "ari",
+                                                    "Total": 5
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "failed": {
+                                        "description": "Example Resource not found Get Detail Purchase Order",
+                                        "value": {
+                                            "Status": 404,
+                                            "Message": "Resource not found",
+                                            "Data": null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Purchase"
+                ]
+            }
+        },
+        "/purchase/input": {
+            "post": {
+                "summary": "Add Purchase",
+                "description": "Add Purchase",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/request"
+                            },
+                            "examples": {
+                                "Success": {
+                                    "description": "Example Add Purchase Order Success",
+                                    "value": [
+                                        {
+                                            "item": "Laptop",
+                                            "price": 15000000,
+                                            "from": "Ardhi",
+                                            "total": 5
+                                        }
+                                    ]
+                                },
+                                "Failed": {
+                                    "description": "Example Add Purchase Order Failed",
+                                    "value": [
+                                        {
+                                            "items": "Laptop",
+                                            "prices": 15000000,
+                                            "froms": "Ardhi",
+                                            "totals": 5
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/purchase.response"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example Success Get Detail Purchase Order",
+                                        "value": {
+                                            "Status": 200,
+                                            "Message": "oke",
+                                            "Data": [
+                                                {
+                                                    "Id": 35,
+                                                    "Item": "Laptop",
+                                                    "Price": 15000000,
+                                                    "Quantity": 5,
+                                                    "Total": 13,
+                                                    "Purchase": {
+                                                        "Id": 38,
+                                                        "OrderNumber": "JcX8yWw",
+                                                        "From": "Ardhi",
+                                                        "Total": 5
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "failed": {
+                                        "description": "Example Bad Request Input Purchase Orderr",
+                                        "value": {
+                                            "Status": 400,
+                                            "Message": "Bad Request",
+                                            "Data": null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Purchase"
+                ]
+            }
+        },
+        "/sales/detail": {
+            "post": {
+                "summary": "Get Sales Detail",
+                "description": "Get Sales Detail by Order Number",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/sales.detail"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/sales.response"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example Success Get Detail Sales Order",
+                                        "value": {
+                                            "Status": 200,
+                                            "Message": "Oke",
+                                            "Data": {
+                                                "Id": 5,
+                                                "Item": "laptop 2",
+                                                "Price": 1000,
+                                                "Quantity": 5,
+                                                "Total": 14,
+                                                "Sales": {
+                                                    "Id": 8,
+                                                    "OrderNumber": "BNEFNPq",
+                                                    "From": "ari",
+                                                    "Total": 5
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "failed": {
+                                        "description": "Example Resource not found Get Detail Sales Order",
+                                        "value": {
+                                            "Status": 404,
+                                            "Message": "Resource not found",
+                                            "Data": null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Sales"
+                ]
+            }
+        },
+        "/sales/input": {
+            "post": {
+                "summary": "Add Sales",
+                "description": "Add Sales",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/request"
+                            },
+                            "examples": {
+                                "Success": {
+                                    "description": "Example Add Sales Order Success",
+                                    "value": [
+                                        {
+                                            "item": "Laptop",
+                                            "price": 2000000,
+                                            "from": "Fahmi",
+                                            "total": 1
+                                        }
+                                    ]
+                                },
+                                "Failed": {
+                                    "description": "Example Add Sales Order Failed",
+                                    "value": [
+                                        {
+                                            "items": "Laptop",
+                                            "prices": 15000000,
+                                            "froms": "Ardhi",
+                                            "totals": 5
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/sales.response"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example Success Get Detail Sales Order",
+                                        "value": {
+                                            "Status": 200,
+                                            "Message": "oke",
+                                            "Data": [
+                                                {
+                                                    "Id": 35,
+                                                    "Item": "Laptop",
+                                                    "Price": 2000000,
+                                                    "Quantity": 1,
+                                                    "Total": 12,
+                                                    "Sales": {
+                                                        "Id": 38,
+                                                        "OrderNumber": "BNEFNPq",
+                                                        "From": "Fahmi",
+                                                        "Total": 1
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "failed": {
+                                        "description": "Example Bad Request Input Sales Orderr",
+                                        "value": {
+                                            "Status": 400,
+                                            "Message": "Bad Request",
+                                            "Data": null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Sales"
+                ]
+            }
+        }
+    },
+    "components": {
+        "requestBodies": {
+            "purchase.detail": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/order.detail"
+                        },
+                        "examples": {
+                            "Success": {
+                                "description": "Example Order Number Success",
+                                "value": {
+                                    "order": "JcX8yWw"
+                                }
+                            },
+                            "Failed": {
+                                "description": "Example Order Number Failed",
+                                "value": {
+                                    "order": "JcX8yWwas"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "sales.detail": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/order.detail"
+                        },
+                        "examples": {
+                            "Success": {
+                                "description": "Example Order Number Success",
+                                "value": {
+                                    "order": "BNEFNPq"
+                                }
+                            },
+                            "Failed": {
+                                "description": "Example Order Number Failed",
+                                "value": {
+                                    "order": "BNEFNPqas"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "order.detail": {
+                "type": "object",
+                "properties": {
+                    "order": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                }
+            },
+            "product.list": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Item": {
+                            "type": "string"
+                        },
+                        "Price": {
+                            "type": "integer"
+                        },
+                        "From": {
+                            "type": "string"
+                        },
+                        "Total": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            },
+            "purchase.response": {
+                "type": "object",
+                "properties": {
+                    "Id": {
+                        "type": "integer"
+                    },
+                    "Item": {
+                        "type": "string"
+                    },
+                    "Price": {
+                        "type": "integer"
+                    },
+                    "Quantity": {
+                        "type": "integer"
+                    },
+                    "Total": {
+                        "type": "integer"
+                    },
+                    "Purchase": {
+                        "type": "object",
+                        "properties": {
+                            "Id": {
+                                "type": "integer"
+                            },
+                            "OrderNumber": {
+                                "type": "string"
+                            },
+                            "From": {
+                                "type": "string"
+                            },
+                            "Total": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "sales.response": {
+                "type": "object",
+                "properties": {
+                    "Id": {
+                        "type": "integer"
+                    },
+                    "Item": {
+                        "type": "string"
+                    },
+                    "Price": {
+                        "type": "integer"
+                    },
+                    "Quantity": {
+                        "type": "integer"
+                    },
+                    "Total": {
+                        "type": "integer"
+                    },
+                    "Sales": {
+                        "type": "object",
+                        "properties": {
+                            "Id": {
+                                "type": "integer"
+                            },
+                            "OrderNumber": {
+                                "type": "string"
+                            },
+                            "From": {
+                                "type": "string"
+                            },
+                            "Total": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "request": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "item": {
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "price": {
+                            "type": "integer"
+                        },
+                        "from": {
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "total": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

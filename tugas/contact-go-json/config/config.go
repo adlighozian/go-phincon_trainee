@@ -15,6 +15,7 @@ type Config struct {
 	DbMain     string `mapstructure:"db_main"`
 	Port       string `mapstructure:"port"`
 	Storage    string `mapstructure:"storage"`
+	Gorm       string `mapstructure:"gorm"`
 }
 
 func LoadConfig() *Config {

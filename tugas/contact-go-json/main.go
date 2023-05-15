@@ -6,24 +6,27 @@ import (
 	"contact-go/handler"
 	"contact-go/repository"
 	"contact-go/usecase"
-	"fmt"
 	"net/http"
 )
 
 func main() {
 	config := config.LoadConfig()
 
-	contactUC := createContactUseCase(config)
-	contactHTTPHandler := handler.NewContactHandlerHttp(contactUC)
-	NewServer(contactHTTPHandler)
-}
+	switch config.Gorm {
+	case "true":
+		db := db.GetMysqlGorm(config)
+		contactRepo := repository.NewContactRepositoryGorm(db)
+		usecase := usecase.NewContactUseCase(contactRepo)
+		contactHTTPHandler := handler.NewContactHandlerHttp(usecase)
+		NewServer(contactHTTPHandler)
+	default:
+		db := db.GetMysql(config)
+		contactRepo := repository.NewContactRepository(db)
+		usecase := usecase.NewContactUseCase(contactRepo)
+		contactHTTPHandler := handler.NewContactHandlerHttp(usecase)
+		NewServer(contactHTTPHandler)
+	}
 
-func createContactUseCase(config *config.Config) usecase.ContactUseCase {
-	var contactRepo repository.ContactRepository
-	db := db.GetMysql(config)
-	contactRepo = repository.NewContactRepository(db)
-
-	return usecase.NewContactUseCase(contactRepo)
 }
 
 func NewServer(handle handler.ContactHandlerHttp) {
@@ -47,7 +50,7 @@ func NewServer(handle handler.ContactHandlerHttp) {
 		Addr:    config.Port,
 		Handler: mux,
 	}
-	fmt.Println("Server running localhost:", server.Addr)
+
 	err := server.ListenAndServe()
 	if err != nil {
 		panic(err.Error())

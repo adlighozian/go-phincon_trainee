@@ -1,6 +1,6 @@
-projectKey=phincon-contact-go
-serverUrl=http://localhost:9555
-serverVersion=9.9.0.65466
-dashboardUrl=http://localhost:9555/dashboard?id=phincon-contact-go
-ceTaskId=AYbrAC4sIHriMkzW2gS7
-ceTaskUrl=http://localhost:9555/api/ce/task?id=AYbrAC4sIHriMkzW2gS7
+projectKey=contact-service
+serverUrl=http://localhost:9000
+serverVersion=10.0.0.68432
+dashboardUrl=http://localhost:9000/dashboard?id=contact-service
+ceTaskId=AYfvSQtTz6nlW4E1kahS
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYfvSQtTz6nlW4E1kahS

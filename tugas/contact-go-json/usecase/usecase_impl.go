@@ -3,7 +3,8 @@ package usecase
 import (
 	"contact-go/model"
 	"contact-go/repository"
-	"fmt"
+	"errors"
+	"log"
 	"net/http"
 )
 
@@ -17,13 +18,15 @@ func NewContactUseCase(repository repository.ContactRepository) ContactUseCase {
 	}
 }
 
+const sresult string = "Internal Database Error"
+
 func (usecase *contactUseCase) List() (model.ContactResponse, error) {
+	log.Println("list usecase")
 	collection_contact, err := usecase.Repository.List()
 	if err != nil {
-		fmt.Println("error")
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Message: sresult,
 			Data:    nil,
 		}, err
 	} else {
@@ -37,16 +40,24 @@ func (usecase *contactUseCase) List() (model.ContactResponse, error) {
 }
 
 func (usecase *contactUseCase) Add(req []model.ContactRequest) (model.ContactResponse, error) {
+	log.Println("add usecase")
+	if req == nil {
+		return model.ContactResponse{
+			Status:  http.StatusBadRequest,
+			Message: "Status Bad Request",
+			Data:    nil,
+		}, errors.New("data tidak ada")
+	}
 	collection_contact, err := usecase.Repository.Add(req)
 	if err != nil {
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Message: sresult,
 			Data:    nil,
 		}, err
 	}
 	return model.ContactResponse{
-		Status:  http.StatusOK,
+		Status:  http.StatusCreated,
 		Message: "oke",
 		Data:    collection_contact,
 	}, nil
@@ -54,18 +65,18 @@ func (usecase *contactUseCase) Add(req []model.ContactRequest) (model.ContactRes
 
 func (usecase *contactUseCase) Update(id int, req model.ContactRequest) (model.ContactResponse, error) {
 
-	collection_contact, err := usecase.Repository.Update(id, req)
+	err := usecase.Repository.Update(id, req)
 	if err != nil {
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Message: sresult,
 			Data:    nil,
 		}, err
 	}
 	return model.ContactResponse{
 		Status:  http.StatusOK,
-		Message: "Berhasil diupdate",
-		Data:    collection_contact,
+		Message: "oke",
+		Data:    nil,
 	}, nil
 }
 
@@ -79,17 +90,17 @@ func (usecase *contactUseCase) Delete(id int) (model.ContactResponse, error) {
 		}, nil
 	}
 
-	collection_contact, err := usecase.Repository.Delete(id)
+	err := usecase.Repository.Delete(id)
 	if err != nil {
 		return model.ContactResponse{
 			Status:  http.StatusBadGateway,
-			Message: "Internal Database Error",
+			Message: sresult,
 			Data:    nil,
 		}, err
 	}
 	return model.ContactResponse{
 		Status:  http.StatusOK,
-		Message: "Berhasil Dihapus",
-		Data:    collection_contact,
+		Message: "oke",
+		Data:    nil,
 	}, nil
 }

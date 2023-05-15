@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>config: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">contact-go/config/config.go (0.0%)</option>
+				
+				<option value="file1">contact-go/db/contact.go (5.9%)</option>
+				
+				<option value="file2">contact-go/handler/handler_impl.go (36.5%)</option>
+				
+				<option value="file3">contact-go/helper/clear_terminal.go (0.0%)</option>
+				
+				<option value="file4">contact-go/helper/helper.go (0.0%)</option>
+				
+				<option value="file5">contact-go/helper/show_menu.go (0.0%)</option>
+				
+				<option value="file6">contact-go/main.go (0.0%)</option>
+				
+				<option value="file7">contact-go/mocks/mock_handler.go (52.9%)</option>
+				
+				<option value="file8">contact-go/mocks/mock_usecase.go (100.0%)</option>
+				
+				<option value="file9">contact-go/repository/repository_gorm_impl.go (0.0%)</option>
+				
+				<option value="file10">contact-go/repository/repository_impl.go (100.0%)</option>
+				
+				<option value="file11">contact-go/usecase/usecase_impl.go (95.7%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package config
+
+import (
+        "fmt"
+
+        "github.com/spf13/viper"
+)
+
+type Config struct {
+        DbUsername string `mapstructure:"db_username"`
+        DbPassword string `mapstructure:"db_password"`
+        DbHost     string `mapstructure:"db_host"`
+        DbPort     string `mapstructure:"db_port"`
+        DbName     string `mapstructure:"db_name"`
+        DbMain     string `mapstructure:"db_main"`
+        Port       string `mapstructure:"port"`
+        Storage    string `mapstructure:"storage"`
+        Gorm       string `mapstructure:"gorm"`
+}
+
+func LoadConfig() *Config <span class="cov0" title="0">{
+        viper.SetConfigFile(".env")
+        err := viper.ReadInConfig()
+        if err != nil </span><span class="cov0" title="0">{
+                panic(fmt.Sprintf("fatal error config file: %s", err))</span>
+        }
+        <span class="cov0" title="0">config := Config{}
+        err = viper.Unmarshal(&amp;config)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(fmt.Sprintf("fatal error decode file: %s", err))</span>
+        }
+
+        <span class="cov0" title="0">return &amp;config</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package db
+
+import (
+        "contact-go/config"
+        "context"
+        "database/sql"
+        "fmt"
+        "time"
+
+        _ "github.com/go-sql-driver/mysql"
+        "gorm.io/driver/mysql"
+        "gorm.io/gorm"
+        "gorm.io/gorm/logger"
+)
+
+func GetMysql(cfg *config.Config) *sql.DB <span class="cov0" title="0">{
+
+        connStrings := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", cfg.DbUsername, cfg.DbPassword, cfg.DbHost, cfg.DbPort, cfg.DbName)
+
+        db, err := sql.Open(cfg.DbMain, connStrings)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        // pooling
+        <span class="cov0" title="0">db.SetMaxIdleConns(10)
+        db.SetMaxOpenConns(100)
+        db.SetConnMaxIdleTime(5 * time.Minute)
+        db.SetConnMaxLifetime(60 * time.Minute)
+
+        fmt.Println("Server running localhost:", cfg.Port, "| mysql")
+
+        return db</span>
+}
+
+func GetMysqlGorm(cfg *config.Config) *gorm.DB <span class="cov0" title="0">{
+
+        connStrings := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", cfg.DbUsername, cfg.DbPassword, cfg.DbHost, cfg.DbPort, cfg.DbName)
+        db, err := gorm.Open(mysql.Open(connStrings), &amp;gorm.Config{
+                Logger: logger.Default.LogMode(logger.Info),
+        })
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        <span class="cov0" title="0">fmt.Println("Server running localhost:", cfg.Port, "| mysql, gorm")
+        return db</span>
+}
+
+func NewMysqlContext() (context.Context, context.CancelFunc) <span class="cov8" title="1">{
+        return context.WithTimeout(context.Background(), 10*time.Second)
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package handler
+
+import (
+        "contact-go/model"
+        "contact-go/usecase"
+        "encoding/json"
+        "fmt"
+        "log"
+        "net/http"
+)
+
+type contactHandlerHttp struct {
+        // contactRepository repository.ContactRepository
+        contactUseCase usecase.ContactUseCase
+}
+
+func NewContactHandlerHttp(usecase usecase.ContactUseCase) *contactHandlerHttp <span class="cov8" title="1">{
+        return &amp;contactHandlerHttp{
+                contactUseCase: usecase,
+        }
+}</span>
+
+// Http list
+func (handle *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request *http.Request) <span class="cov8" title="1">{
+        log.Println("list handler")
+
+        contacts, err := handle.contactUseCase.List()
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println(err)
+        }</span>
+
+        <span class="cov8" title="1">result, err := json.Marshal(contacts)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println(err)
+        }</span>
+
+        <span class="cov8" title="1">write.WriteHeader(contacts.Status)
+        write.Write(result)</span>
+
+}
+
+// Http add
+func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request *http.Request) <span class="cov8" title="1">{
+        log.Println("add handler")
+        req := []model.ContactRequest{}
+        err := json.NewDecoder(request.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                write.WriteHeader(http.StatusInternalServerError)
+                log.Println(err)
+        }</span>
+        <span class="cov8" title="1">var slices []model.ContactRequest
+        for _, v := range req </span><span class="cov8" title="1">{
+
+                if v.Name == "" || v.NoTelp == "" </span><span class="cov0" title="0">{
+                        continue</span>
+                }
+                <span class="cov8" title="1">fmt.Println(v.Name)
+                fmt.Println(v.NoTelp)
+                inputReq := model.ContactRequest{
+                        Name:   v.Name,
+                        NoTelp: v.NoTelp,
+                }
+                slices = append(slices, inputReq)</span>
+        }
+
+        <span class="cov8" title="1">contacts, err := handle.contactUseCase.Add(slices)
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println(err)
+        }</span>
+
+        <span class="cov8" title="1">result, err := json.Marshal(contacts)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println(err)
+        }</span>
+
+        <span class="cov8" title="1">write.WriteHeader(contacts.Status)
+        write.Write(result)</span>
+
+}
+
+// http update
+func (handle *contactHandlerHttp) HandlerUpdate(write http.ResponseWriter, request *http.Request) <span class="cov0" title="0">{
+        err := request.ParseForm()
+        if err != nil </span><span class="cov0" title="0">{
+                write.WriteHeader(http.StatusBadRequest)
+                write.Write([]byte("kesalahan bad request"))
+                fmt.Printf("error")
+        }</span>
+        <span class="cov0" title="0">data := json.NewDecoder(request.Body)
+        var respon = make(map[string]interface{})
+        err = data.Decode(&amp;respon)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        <span class="cov0" title="0">id := int(respon["id"].(float64))
+        name := respon["name"].(string)
+        telp := respon["notelp"].(string)
+
+        contact := model.ContactRequest{
+                Name:   name,
+                NoTelp: telp,
+        }
+
+        updateContact, err := handle.contactUseCase.Update(id, contact)
+        if err != nil </span><span class="cov0" title="0">{
+                write.WriteHeader(updateContact.Status)
+                write.Write([]byte(updateContact.Message))
+        }</span> else<span class="cov0" title="0"> {
+                result, err := json.Marshal(updateContact)
+                if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+                <span class="cov0" title="0">write.WriteHeader(updateContact.Status)
+                write.Write(result)</span>
+        }
+}
+
+// http delete
+func (handle *contactHandlerHttp) HandlerDelete(write http.ResponseWriter, request *http.Request) <span class="cov0" title="0">{
+        err := request.ParseForm()
+        if err != nil </span><span class="cov0" title="0">{
+                write.WriteHeader(http.StatusBadRequest)
+                write.Write([]byte("kesalahan bad request"))
+        }</span>
+        <span class="cov0" title="0">encoders := json.NewDecoder(request.Body)
+        var respon = make(map[string]interface{})
+        err = encoders.Decode(&amp;respon)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        <span class="cov0" title="0">id := int(respon["id"].(float64))
+
+        updateContact, err := handle.contactUseCase.Delete(id)
+        if err != nil </span><span class="cov0" title="0">{
+                write.WriteHeader(updateContact.Status)
+                write.Write([]byte(updateContact.Message))
+        }</span> else<span class="cov0" title="0"> {
+                result, err := json.Marshal(updateContact)
+                if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+                <span class="cov0" title="0">write.WriteHeader(updateContact.Status)
+                write.Write(result)</span>
+        }
+
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package helper
+
+import (
+        "os"
+        "os/exec"
+        "runtime"
+)
+
+func ClearTerminal() <span class="cov0" title="0">{
+        switch runtime.GOOS </span>{
+        case "linux":<span class="cov0" title="0">
+                cmd := exec.Command("clear") //Linux example, its tested
+                cmd.Stdout = os.Stdout
+                cmd.Run()</span>
+        case "darwin":<span class="cov0" title="0">
+                cmd := exec.Command("clear") //Linux example, its tested
+                cmd.Stdout = os.Stdout
+                cmd.Run()</span>
+        case "windows":<span class="cov0" title="0">
+                cmd := exec.Command("cmd", "/c", "cls") //Windows example, its tested
+                cmd.Stdout = os.Stdout
+                cmd.Run()</span>
+        default:<span class="cov0" title="0">
+                panic("Your platform is unsupported! I can't clear terminal screen :(")</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package helper
+
+import (
+        "errors"
+
+        "github.com/joho/godotenv"
+)
+
+func GetEnv(key string, callback string) (string, error) <span class="cov0" title="0">{
+        err := godotenv.Load("C:\\Users\\user\\Documents\\GitHub\\go-phincon_trainee\\tugas\\contact-go-json\\.env")
+        if err != nil </span><span class="cov0" title="0">{
+                return callback, errors.New("error")
+        }</span>
+        <span class="cov0" title="0">return key, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package helper
+
+import "fmt"
+
+func ShowMenuList() <span class="cov0" title="0">{
+        fmt.Println("Menu")
+        fmt.Println("1. List contact")
+        fmt.Println("2. Add contact")
+        fmt.Println("3. Update contact")
+        fmt.Println("4. Delete contact")
+        fmt.Println("5. Exit")
+        fmt.Println()
+        fmt.Println("Pilih menu")
+}</span>
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package main
+
+import (
+        "contact-go/config"
+        "contact-go/db"
+        "contact-go/handler"
+        "contact-go/repository"
+        "contact-go/usecase"
+        "net/http"
+)
+
+func main() <span class="cov0" title="0">{
+        config := config.LoadConfig()
+
+        switch config.Gorm </span>{
+        case "true":<span class="cov0" title="0">
+                db := db.GetMysqlGorm(config)
+                contactRepo := repository.NewContactRepositoryGorm(db)
+                usecase := usecase.NewContactUseCase(contactRepo)
+                contactHTTPHandler := handler.NewContactHandlerHttp(usecase)
+                NewServer(contactHTTPHandler)</span>
+        default:<span class="cov0" title="0">
+                db := db.GetMysql(config)
+                contactRepo := repository.NewContactRepository(db)
+                usecase := usecase.NewContactUseCase(contactRepo)
+                contactHTTPHandler := handler.NewContactHandlerHttp(usecase)
+                NewServer(contactHTTPHandler)</span>
+        }
+
+}
+
+func NewServer(handle handler.ContactHandlerHttp) <span class="cov0" title="0">{
+        config := config.LoadConfig()
+        // server
+        mux := http.NewServeMux()
+
+        mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                if r.Method == http.MethodPut </span><span class="cov0" title="0">{
+                        handle.HandlerUpdate(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == http.MethodPost </span><span class="cov0" title="0">{
+                        handle.HandlerPost(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == http.MethodGet </span><span class="cov0" title="0">{
+                        handle.HandlerGet(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == http.MethodDelete </span><span class="cov0" title="0">{
+                        handle.HandlerDelete(w, r)
+                }</span>
+        })
+
+        <span class="cov0" title="0">server := http.Server{
+                Addr:    config.Port,
+                Handler: mux,
+        }
+
+        err := server.ListenAndServe()
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err.Error())</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package mocks
+
+import (
+        "contact-go/model"
+
+        "github.com/stretchr/testify/mock"
+)
+
+type HandlerMock struct {
+        mock.Mock
+}
+
+func NewHandlerMock() *HandlerMock <span class="cov8" title="1">{
+        return &amp;HandlerMock{}
+}</span>
+
+//mock usecase
+
+func (m *HandlerMock) List() (model.ContactResponse, error) <span class="cov8" title="1">{
+        ret := m.Called()
+        response := ret.Get(0).(model.ContactResponse)
+        err := ret.Error(1)
+
+        return response, err
+
+}</span>
+
+func (m *HandlerMock) Add(req []model.ContactRequest) (model.ContactResponse, error) <span class="cov8" title="1">{
+        ret := m.Called(req)
+        response := ret.Get(0).(model.ContactResponse)
+        err := ret.Error(1)
+
+        return response, err
+}</span>
+
+func (m *HandlerMock) Update(id int, req model.ContactRequest) (model.ContactResponse, error) <span class="cov0" title="0">{
+        ret := m.Called(id, req)
+        response := ret.Get(0).(model.ContactResponse)
+        err := ret.Error(1)
+
+        return response, err
+}</span>
+
+func (m *HandlerMock) Delete(id int) (model.ContactResponse, error) <span class="cov0" title="0">{
+        ret := m.Called(id)
+        response := ret.Get(0).(model.ContactResponse)
+        err := ret.Error(1)
+
+        return response, err
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package mocks
+
+import (
+        "contact-go/model"
+
+        "github.com/stretchr/testify/mock"
+)
+
+type RepoMock struct {
+        mock.Mock
+}
+
+func NewRepoMock() *RepoMock <span class="cov8" title="1">{
+        return &amp;RepoMock{}
+}</span>
+
+func (m *RepoMock) List() ([]model.Client, error) <span class="cov8" title="1">{
+        ret := m.Called()
+        result := ret.Get(0).([]model.Client)
+        err := ret.Error(1)
+        return result, err
+}</span>
+
+func (m *RepoMock) Add(req []model.ContactRequest) ([]model.Client, error) <span class="cov8" title="1">{
+        ret := m.Called(req)
+        result := ret.Get(0).([]model.Client)
+        err := ret.Error(1)
+        return result, err
+}</span>
+
+func (m *RepoMock) Update(id int, req model.ContactRequest) error <span class="cov8" title="1">{
+        ret := m.Called(id, req)
+        err := ret.Error(0)
+        return err
+}</span>
+
+func (m *RepoMock) Delete(id int) error <span class="cov8" title="1">{
+        ret := m.Called(id)
+        err := ret.Error(0)
+        return err
+}</span>
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package repository
+
+import (
+        "contact-go/model"
+        "log"
+
+        "gorm.io/gorm"
+)
+
+type gormRepository struct {
+        Conn *gorm.DB
+}
+
+func NewContactRepositoryGorm(connection *gorm.DB) *gormRepository <span class="cov0" title="0">{
+        return &amp;gormRepository{
+                Conn: connection,
+        }
+}</span>
+
+func (repo *gormRepository) List() ([]model.Client, error) <span class="cov0" title="0">{
+        log.Println("list repository")
+
+        var result []model.Client
+        query := repo.Conn.Model(&amp;model.Client{}).Find(&amp;result)
+
+        return result, query.Error
+}</span>
+func (repo *gormRepository) Add(req []model.ContactRequest) ([]model.Client, error) <span class="cov0" title="0">{
+        log.Println("add repository")
+
+        var result []model.Client
+
+        for _, data := range req </span><span class="cov0" title="0">{
+                result = append(result, model.Client{
+                        Name:   data.Name,
+                        NoTelp: data.NoTelp,
+                })
+        }</span>
+
+        <span class="cov0" title="0">query := repo.Conn.Model(&amp;model.Client{}).Create(&amp;result)
+
+        return result, query.Error</span>
+}
+func (repo *gormRepository) Update(id int, req model.ContactRequest) error <span class="cov0" title="0">{
+        log.Println("update repository")
+
+        query := repo.Conn.Model(&amp;model.Client{}).Where("id = ?", id).Updates(&amp;req)
+
+        return query.Error
+}</span>
+func (repo *gormRepository) Delete(id int) error <span class="cov0" title="0">{
+        log.Println("delete repository")
+
+        query := repo.Conn.Delete(&amp;model.Client{}, id)
+
+        return query.Error
+}</span>
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package repository
+
+import (
+        "contact-go/db"
+        "contact-go/model"
+        "database/sql"
+        "errors"
+        "fmt"
+        "log"
+)
+
+type contactRepository struct {
+        Conn *sql.DB
+}
+
+func NewContactRepository(connection *sql.DB) ContactRepository <span class="cov8" title="1">{
+        return &amp;contactRepository{
+                Conn: connection,
+        }
+}</span>
+
+func (repo *contactRepository) List() ([]model.Client, error) <span class="cov8" title="1">{
+        // defer repo.Conn.Close()
+        log.Println("list repository")
+        ctx, cancel := db.NewMysqlContext()
+        defer cancel()
+
+        var data []model.Client
+        query := `SELECT * FROM clients`
+        rows, err := repo.Conn.QueryContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println("list repository error query")
+                log.Println(err)
+                return data, errors.New("error")
+        }</span>
+
+        <span class="cov8" title="1">var temp model.Client
+        for rows.Next() </span><span class="cov8" title="1">{
+                rows.Scan(&amp;temp.Id, &amp;temp.Name, &amp;temp.NoTelp)
+                data = append(data, temp)
+        }</span>
+
+        <span class="cov8" title="1">return data, nil</span>
+
+}
+
+func (repo *contactRepository) Add(req []model.ContactRequest) ([]model.Client, error) <span class="cov8" title="1">{
+        // defer repo.Conn.Close()
+        ctx, cancel := db.NewMysqlContext()
+        defer cancel()
+
+        var contacts []model.Client
+
+        query := `INSERT INTO clients (name, no_telp) value (?,?)`
+        txr, err := repo.Conn.BeginTx(ctx, nil)
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println(err)
+                return contacts, errors.New("error")
+        }</span>
+
+        <span class="cov8" title="1">stmt, err := txr.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println(err)
+                return contacts, errors.New("error")
+        }</span>
+
+        <span class="cov8" title="1">defer stmt.Close()
+
+        for _, v := range req </span><span class="cov8" title="1">{
+
+                result, err := stmt.ExecContext(ctx, v.Name, v.NoTelp)
+                if err != nil </span><span class="cov8" title="1">{
+                        log.Println(err)
+                        txr.Rollback()
+                        return contacts, errors.New("error")
+                }</span>
+
+                <span class="cov8" title="1">lastInsertId, err := result.LastInsertId()
+                if err != nil </span><span class="cov8" title="1">{
+                        log.Println(err)
+                        return contacts, errors.New("error")
+                }</span>
+
+                <span class="cov8" title="1">fmt.Println("id:", lastInsertId)
+
+                contacts = append(contacts, model.Client{
+                        Id:     int(lastInsertId),
+                        Name:   v.Name,
+                        NoTelp: v.NoTelp,
+                })</span>
+        }
+
+        <span class="cov8" title="1">txr.Commit()
+
+        return contacts, nil</span>
+
+}
+
+func (repo *contactRepository) Update(id int, req model.ContactRequest) error <span class="cov8" title="1">{
+        // defer repo.Conn.Close()
+        ctx, cancel := db.NewMysqlContext()
+        defer cancel()
+
+        query := `UPDATE clients SET name = ?, no_telp = ? WHERE id = ?`
+        trx, err := repo.Conn.BeginTx(ctx, nil)
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println(err)
+                return errors.New("error")
+        }</span>
+
+        <span class="cov8" title="1">stmt, err := trx.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println(err)
+                return errors.New("error")
+        }</span>
+
+        <span class="cov8" title="1">_, err = stmt.ExecContext(ctx, req.Name, req.NoTelp, id)
+        if err != nil </span><span class="cov8" title="1">{
+                trx.Rollback()
+                log.Println(err)
+                return errors.New("error")
+        }</span>
+
+        <span class="cov8" title="1">trx.Commit()
+
+        return nil</span>
+
+}
+
+func (repo *contactRepository) Delete(id int) error <span class="cov8" title="1">{
+        // defer repo.Conn.Close()
+        ctx, cancel := db.NewMysqlContext()
+        defer cancel()
+
+        query := `DELETE FROM clients WHERE id = ?`
+        _, err := repo.Conn.ExecContext(ctx, query, id)
+        if err != nil </span><span class="cov8" title="1">{
+                log.Println(err)
+                return errors.New("gagal delete")
+        }</span>
+
+        <span class="cov8" title="1">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package usecase
+
+import (
+        "contact-go/model"
+        "contact-go/repository"
+        "errors"
+        "log"
+        "net/http"
+)
+
+type contactUseCase struct {
+        Repository repository.ContactRepository
+}
+
+func NewContactUseCase(repository repository.ContactRepository) ContactUseCase <span class="cov8" title="1">{
+        return &amp;contactUseCase{
+                Repository: repository,
+        }
+}</span>
+
+const sresult string = "Internal Database Error"
+
+func (usecase *contactUseCase) List() (model.ContactResponse, error) <span class="cov8" title="1">{
+        log.Println("list usecase")
+        collection_contact, err := usecase.Repository.List()
+        if err != nil </span><span class="cov8" title="1">{
+                return model.ContactResponse{
+                        Status:  http.StatusBadGateway,
+                        Message: sresult,
+                        Data:    nil,
+                }, err
+        }</span> else<span class="cov8" title="1"> {
+                return model.ContactResponse{
+                        Status:  http.StatusOK,
+                        Message: "oke",
+                        Data:    collection_contact,
+                }, nil
+        }</span>
+
+}
+
+func (usecase *contactUseCase) Add(req []model.ContactRequest) (model.ContactResponse, error) <span class="cov8" title="1">{
+        log.Println("add usecase")
+        if req == nil </span><span class="cov0" title="0">{
+                return model.ContactResponse{
+                        Status:  http.StatusBadRequest,
+                        Message: "Status Bad Request",
+                        Data:    nil,
+                }, errors.New("data tidak ada")
+        }</span>
+        <span class="cov8" title="1">collection_contact, err := usecase.Repository.Add(req)
+        if err != nil </span><span class="cov8" title="1">{
+                return model.ContactResponse{
+                        Status:  http.StatusBadGateway,
+                        Message: sresult,
+                        Data:    nil,
+                }, err
+        }</span>
+        <span class="cov8" title="1">return model.ContactResponse{
+                Status:  http.StatusCreated,
+                Message: "oke",
+                Data:    collection_contact,
+        }, nil</span>
+}
+
+func (usecase *contactUseCase) Update(id int, req model.ContactRequest) (model.ContactResponse, error) <span class="cov8" title="1">{
+
+        err := usecase.Repository.Update(id, req)
+        if err != nil </span><span class="cov8" title="1">{
+                return model.ContactResponse{
+                        Status:  http.StatusBadGateway,
+                        Message: sresult,
+                        Data:    nil,
+                }, err
+        }</span>
+        <span class="cov8" title="1">return model.ContactResponse{
+                Status:  http.StatusOK,
+                Message: "oke",
+                Data:    nil,
+        }, nil</span>
+}
+
+func (usecase *contactUseCase) Delete(id int) (model.ContactResponse, error) <span class="cov8" title="1">{
+
+        if id &lt;= 0 </span><span class="cov8" title="1">{
+                return model.ContactResponse{
+                        Status:  http.StatusNotFound,
+                        Message: "id tidak ditemukan",
+                        Data:    nil,
+                }, nil
+        }</span>
+
+        <span class="cov8" title="1">err := usecase.Repository.Delete(id)
+        if err != nil </span><span class="cov8" title="1">{
+                return model.ContactResponse{
+                        Status:  http.StatusBadGateway,
+                        Message: sresult,
+                        Data:    nil,
+                }, err
+        }</span>
+        <span class="cov8" title="1">return model.ContactResponse{
+                Status:  http.StatusOK,
+                Message: "oke",
+                Data:    nil,
+        }, nil</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

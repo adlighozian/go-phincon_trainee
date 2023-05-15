@@ -14,7 +14,7 @@ type contactHandlerHttp struct {
 	contactUseCase usecase.ContactUseCase
 }
 
-func NewContactHandlerHttp(usecase usecase.ContactUseCase) ContactHandlerHttp {
+func NewContactHandlerHttp(usecase usecase.ContactUseCase) *contactHandlerHttp {
 	return &contactHandlerHttp{
 		contactUseCase: usecase,
 	}
@@ -22,12 +22,16 @@ func NewContactHandlerHttp(usecase usecase.ContactUseCase) ContactHandlerHttp {
 
 // Http list
 func (handle *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request *http.Request) {
-	contacts, _ := handle.contactUseCase.List()
+	log.Println("list handler")
+
+	contacts, err := handle.contactUseCase.List()
+	if err != nil {
+		log.Println(err)
+	}
+
 	result, err := json.Marshal(contacts)
 	if err != nil {
-		write.WriteHeader(contacts.Status)
-		write.Write(nil)
-		panic(err)
+		log.Println(err)
 	}
 
 	write.WriteHeader(contacts.Status)
@@ -37,22 +41,19 @@ func (handle *contactHandlerHttp) HandlerGet(write http.ResponseWriter, request 
 
 // Http add
 func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request *http.Request) {
+	log.Println("add handler")
 	req := []model.ContactRequest{}
 	err := json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
 		write.WriteHeader(http.StatusInternalServerError)
-		write.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
-		log.Println("[ERROR] decode request :", err.Error())
-		return
+		log.Println(err)
 	}
-
 	var slices []model.ContactRequest
 	for _, v := range req {
 
 		if v.Name == "" || v.NoTelp == "" {
 			continue
 		}
-
 		inputReq := model.ContactRequest{
 			Name:   v.Name,
 			NoTelp: v.NoTelp,
@@ -60,19 +61,18 @@ func (handle *contactHandlerHttp) HandlerPost(write http.ResponseWriter, request
 		slices = append(slices, inputReq)
 	}
 
-	inputPurchase, err := handle.contactUseCase.Add(slices)
+	contacts, err := handle.contactUseCase.Add(slices)
 	if err != nil {
-		write.WriteHeader(http.StatusInternalServerError)
-		write.Write([]byte("kesalahan input"))
-		return
-	} else {
-		result, err := json.Marshal(inputPurchase)
-		if err != nil {
-			panic(err)
-		}
-		write.WriteHeader(http.StatusCreated)
-		write.Write(result)
+		log.Println(err)
 	}
+
+	result, err := json.Marshal(contacts)
+	if err != nil {
+		log.Println(err)
+	}
+
+	write.WriteHeader(contacts.Status)
+	write.Write(result)
 
 }
 
@@ -104,7 +104,6 @@ func (handle *contactHandlerHttp) HandlerUpdate(write http.ResponseWriter, reque
 	if err != nil {
 		write.WriteHeader(updateContact.Status)
 		write.Write([]byte(updateContact.Message))
-		return
 	} else {
 		result, err := json.Marshal(updateContact)
 		if err != nil {
@@ -135,7 +134,6 @@ func (handle *contactHandlerHttp) HandlerDelete(write http.ResponseWriter, reque
 	if err != nil {
 		write.WriteHeader(updateContact.Status)
 		write.Write([]byte(updateContact.Message))
-		return
 	} else {
 		result, err := json.Marshal(updateContact)
 		if err != nil {

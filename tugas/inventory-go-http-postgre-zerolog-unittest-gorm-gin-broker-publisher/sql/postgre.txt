@@ -1,0 +1,40 @@
+CREATE TABLE product (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name varchar(255) NOT NULL,
+  price int NOT NULL,
+  stock INT NOT NULL
+);
+
+CREATE TABLE purchase (
+  id SERIAL PRIMARY KEY NOT NULL,
+  order_number varchar(255) NOT NULL,
+  orang varchar(255) NOT NULL,
+  total INT NOT NULL
+);
+
+CREATE TABLE purchase_detail (
+  id SERIAL PRIMARY KEY NOT NULL,
+  purchase_id int NOT NULL,
+  item varchar(255) NOT NULL,
+  price INT NOT NULL,
+  quantity INT NOT NULL,
+  total INT NOT NULL,
+  foreign key (purchase_id) references purchase(id)
+);
+
+CREATE TABLE sales (
+  id SERIAL PRIMARY KEY NOT NULL,
+  order_number varchar(255) NOT NULL,
+  orang varchar(255) NOT NULL,
+  total INT NOT NULL
+);
+
+CREATE TABLE sales_detail (
+  id SERIAL PRIMARY KEY NOT NULL,
+  sales_id int NOT NULL,
+  item varchar(255) NOT NULL,
+  price INT NOT NULL,
+  quantity INT NOT NULL,
+  total INT NOT NULL,
+  foreign KEY (sales_id) references sales(id)
+);

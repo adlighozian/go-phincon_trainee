@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -34,17 +35,22 @@ func main() {
 
 	e.GET("/redirect", redirect)
 
-	e.File("/serve-file", "file/index.html")
-
+	e.File("/serve-file", "file/index1.html")
 	e.Static("/file-serve", "file")
+	e.Use(middleware.Static("file"))
 
 	e.GET("/file-download", downloadFile)
 	e.POST("/file-upload", uploadFile)
 
+	admin := e.Group("/admin", middleware.Logger())
+	admin.GET("/dashboard", func(e echo.Context) error {
+		return e.JSON(http.StatusOK, "anda berhasil login")
+	})
+
 	e.Logger.Fatal(e.Start(":1234"))
 }
 
-// e.POST("/file-upload", downloadFile)
+// e.POST("/file-upload", uploadFile)
 func uploadFile(c echo.Context) error {
 	// Read form fields
 	name := c.FormValue("name")
@@ -53,7 +59,6 @@ func uploadFile(c echo.Context) error {
 	//-----------
 	// Read file
 	//-----------
-
 	// Source
 	file, err := c.FormFile("file")
 	if err != nil {
@@ -139,7 +144,7 @@ func setCookie(c echo.Context) error {
 	return c.String(http.StatusOK, "cookies :"+cookie.Value)
 }
 
-// set cookies
+// get cookies
 func readCookie(c echo.Context) error {
 	cookie, err := c.Cookie("username")
 	if err != nil {
@@ -163,11 +168,8 @@ func handleGetUsers(c echo.Context) error {
 
 func getHeader(c echo.Context) error {
 	// Get the value of the "Authorization" header
-	header := c.Request().Header.Get("Date")
-	content := c.Request().Header.Get("Content-Type")
+	header := c.Request().Header.Get("name")
 
-	fmt.Println(header)
-	fmt.Println(content)
 	// Do something with the header value
 	// ...
 

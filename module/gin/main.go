@@ -116,7 +116,7 @@ func main() {
 		}
 
 		// Save the file to disk
-		err = c.SaveUploadedFile(file, file.Filename)
+		err = c.SaveUploadedFile(file, file.Filename)	
 		if err != nil {
 			c.JSON(500, gin.H{
 				"error": "Failed to save file",

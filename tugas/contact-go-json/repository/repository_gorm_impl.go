@@ -17,7 +17,7 @@ func NewContactRepositoryGorm(connection *gorm.DB) ContactRepository {
 	}
 }
 
-func (repo *gormRepository) List() ([]model.Client, error) {
+func (repo gormRepository) List() ([]model.Client, error) {
 	log.Println("list repository gorm")
 
 	var result []model.Client
@@ -25,6 +25,7 @@ func (repo *gormRepository) List() ([]model.Client, error) {
 
 	return result, query.Error
 }
+
 func (repo *gormRepository) Add(req []model.ContactRequest) ([]model.Client, error) {
 	log.Println("add repository gorm")
 

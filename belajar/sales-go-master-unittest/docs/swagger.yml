@@ -1,0 +1,318 @@
+openapi: '3.0.2'
+info:
+  title: Sales REST API
+  version: '1.0.0'
+servers:
+  - url: http://localhost:5000/
+components:
+  schemas:
+    model.Product:
+      type: array
+      items: 
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: Kaos_Phincon
+          price:
+            type: integer
+            example: 100000
+    model.ProductRequest:
+      type: array
+      items: 
+        type: object
+        properties:
+          name:
+            type: string
+            example: Kaos_Phincon
+          price:
+            type: integer
+            example: 100000
+    model.Voucher:
+      type: array
+      items: 
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          code:
+            type: string
+            example: Ph1ncon
+          persen:
+            type: number
+            example: 20
+    model.VoucherRequest:
+      type: array
+      items: 
+        type: object  
+        properties:
+          code:
+            type: string
+            example: Ph1ncon
+          persen:
+            type: number
+            example: 20
+    model.Transaction:
+      properties:
+        id:
+          type: integer
+        TransactionNumber:
+          type: integer
+        name:
+          type: string
+        quantity:
+          type: integer
+        discount:
+          type: number
+        total:
+          type: number
+        pay:
+          type: number
+      type: object
+    model.TransactionDetail:
+      type: array
+      items: 
+        type: object  
+        properties:
+          id:
+            type: integer
+            example: 1
+          item:
+            type: string
+            example: Kaos_Phincon
+          price:
+            type: number
+            example: 50000
+          quantity:
+            type: integer
+            example: 5
+          total:
+            type: number
+            example: 250000
+          transaction:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              TransactionNumber:
+                type: integer
+                example: 1312415315315
+              name:
+                type: string
+                example: Umar
+              quantity:
+                type: integer
+                example: 10
+              discount:
+                type: number
+                example: 25
+              total:
+                type: number
+                example: 1000000
+              pay:
+                type: number
+                example: 800000
+    model.TransactionDetailBulkRequest:
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              item:
+                type: string
+                example: Kaos_Phincon
+              quantity:
+                type: integer
+                example: 2
+        name:
+          type: integer
+          example: Umar
+        pay:
+          type: number
+          example: 1000000
+      type: object
+    model.TransactionDetailItemRequest:
+      properties:
+        item:
+          type: string
+        quantity:
+          type: integer
+      type: object
+paths: 
+  /product:
+    get:
+      description: Get list product
+      responses:
+        "200":
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.Product'
+        "400":
+          description: Bad Request
+          content: 
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema:
+                type: string
+      summary: Get List Product
+      tags:
+      - Product
+    post:
+      description: Add new product
+      requestBody: 
+        required: true
+        content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.ProductRequest'
+      responses:
+        "201":
+          description: Created
+          content: 
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content: 
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema:
+                type: string
+      summary: Add New Product
+      tags:
+      - Product
+
+  /voucher:
+    get:
+      description: Get list voucher
+      responses:
+        "200":
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.Voucher'
+        "400":
+          description: Bad Request
+          content: 
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema:
+                type: string
+      summary: Get List Vouhcer
+      tags:
+      - Voucher
+    post:
+      description: Add new voucher
+      requestBody: 
+        required: true
+        content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.VoucherRequest'
+      responses:
+        "201":
+          description: Created
+          content: 
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content: 
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema:
+                type: string
+      summary: Add New Voucher
+      tags:
+      - Voucher
+  /transaction:
+    get:
+      description: Get list transaction by transaction number
+      parameters:
+        - in : query
+          name : transaction_id
+          schema: 
+            type: string
+      responses:
+        "200":
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.TransactionDetail'
+        "400":
+          description: Bad Request
+          content: 
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema:
+                type: string
+      summary: Get Transaction By Transaction Number
+      tags:
+      - Transaction
+    post:
+      description: Add new transaction
+      requestBody: 
+        required: true
+        content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.TransactionDetailBulkRequest'
+      responses:
+        "201":
+          description: Created
+          content: 
+            application/json:
+              schema:                
+                $ref: '#/components/schemas/model.TransactionDetail'
+        "400":
+          description: Bad Request
+          content: 
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content: 
+            application/json:
+              schema:
+                type: string
+      summary: Add New Transaction
+      tags:
+      - Transaction

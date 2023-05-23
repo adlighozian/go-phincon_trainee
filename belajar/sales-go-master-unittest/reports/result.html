@@ -1,0 +1,3519 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>config: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">sales-go/config/env_db_config.go (100.0%)</option>
+				
+				<option value="file1">sales-go/config/env_var_config.go (0.0%)</option>
+				
+				<option value="file2">sales-go/db/client.go (0.0%)</option>
+				
+				<option value="file3">sales-go/handler/product/product_cli.go (0.0%)</option>
+				
+				<option value="file4">sales-go/handler/product/product_gin.go (0.0%)</option>
+				
+				<option value="file5">sales-go/handler/product/product_http_db.go (0.0%)</option>
+				
+				<option value="file6">sales-go/handler/product/product_http_json.go (0.0%)</option>
+				
+				<option value="file7">sales-go/handler/transaction/transaction_gin.go (0.0%)</option>
+				
+				<option value="file8">sales-go/handler/transaction/transaction_http_db.go (0.0%)</option>
+				
+				<option value="file9">sales-go/handler/transaction/transaction_http_json.go (0.0%)</option>
+				
+				<option value="file10">sales-go/handler/voucher/voucher_cli.go (0.0%)</option>
+				
+				<option value="file11">sales-go/handler/voucher/voucher_gin.go (0.0%)</option>
+				
+				<option value="file12">sales-go/handler/voucher/voucher_http_db.go (0.0%)</option>
+				
+				<option value="file13">sales-go/handler/voucher/voucher_http_json.go (0.0%)</option>
+				
+				<option value="file14">sales-go/helpers/bcrypt/bcrypt.go (0.0%)</option>
+				
+				<option value="file15">sales-go/helpers/clearscreen/clearscreen.go (0.0%)</option>
+				
+				<option value="file16">sales-go/helpers/gin-rest/rest.go (0.0%)</option>
+				
+				<option value="file17">sales-go/helpers/logging/logging.go (0.0%)</option>
+				
+				<option value="file18">sales-go/helpers/middleware/middleware.go (0.0%)</option>
+				
+				<option value="file19">sales-go/helpers/random/random.go (0.0%)</option>
+				
+				<option value="file20">sales-go/helpers/rest/rest.go (0.0%)</option>
+				
+				<option value="file21">sales-go/main.go (0.0%)</option>
+				
+				<option value="file22">sales-go/mocks/product/repo.go (100.0%)</option>
+				
+				<option value="file23">sales-go/mocks/publisher/publisher.go (100.0%)</option>
+				
+				<option value="file24">sales-go/mocks/random/random.go (100.0%)</option>
+				
+				<option value="file25">sales-go/mocks/transaction/repo.go (100.0%)</option>
+				
+				<option value="file26">sales-go/mocks/voucher/repo.go (100.0%)</option>
+				
+				<option value="file27">sales-go/publisher/publisher.go (0.0%)</option>
+				
+				<option value="file28">sales-go/repository/product/product_cli.go (0.0%)</option>
+				
+				<option value="file29">sales-go/repository/product/product_http_json_impl.go (0.0%)</option>
+				
+				<option value="file30">sales-go/repository/product/product_http_mysql_impl.go (0.0%)</option>
+				
+				<option value="file31">sales-go/repository/product/product_http_postgresql_impl.go (100.0%)</option>
+				
+				<option value="file32">sales-go/repository/transaction/transaction_cli.go (0.0%)</option>
+				
+				<option value="file33">sales-go/repository/transaction/transaction_http_json_impl.go (0.0%)</option>
+				
+				<option value="file34">sales-go/repository/transaction/transaction_http_mysql_impl.go (0.0%)</option>
+				
+				<option value="file35">sales-go/repository/transaction/transaction_http_postgresql_impl.go (100.0%)</option>
+				
+				<option value="file36">sales-go/repository/voucher/voucher_cli.go (0.0%)</option>
+				
+				<option value="file37">sales-go/repository/voucher/voucher_http_json_impl.go (0.0%)</option>
+				
+				<option value="file38">sales-go/repository/voucher/voucher_http_mysql_impl.go (0.0%)</option>
+				
+				<option value="file39">sales-go/repository/voucher/voucher_http_postgresql_impl.go (100.0%)</option>
+				
+				<option value="file40">sales-go/usecase/product/product_usecase.go (100.0%)</option>
+				
+				<option value="file41">sales-go/usecase/transaction/transaction_usecase.go (100.0%)</option>
+				
+				<option value="file42">sales-go/usecase/voucher/voucher_usecase.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package config
+
+import (
+        "os"
+        
+        "github.com/joho/godotenv"
+)
+
+type sql struct {
+        Username string
+        Password string
+        Host string
+        Port string
+        Database string
+}
+
+type configure struct {
+        MySQL           sql
+        PostgreSQL sql
+}
+
+func NewConfig() configure <span class="cov8" title="1">{
+        godotenv.Load()
+
+        return configure{
+                MySQL: sql{
+                        Username: os.Getenv("MYSQL_USERNAME"),
+                        Password: os.Getenv("MYSQL_PASSWORD"),
+                        Host:          os.Getenv("MYSQL_HOST"),
+                        Port:          os.Getenv("MYSQL_PORT"),
+                        Database: os.Getenv("MYSQL_DATABASE"),
+                },
+                PostgreSQL: sql{
+                        Username: os.Getenv("POSTGRES_USERNAME"),
+                        Password: os.Getenv("POSTGRES_PASSWORD"),
+                        Host:          os.Getenv("POSTGRES_HOST"),
+                        Port:          os.Getenv("POSTGRES_PORT"),
+                        Database: os.Getenv("POSTGRES_DATABASE"),
+                },
+        }
+}</pre>
+		
+		<pre class="file" id="file1" style="display: none">package config
+
+import (
+        "errors"
+        "fmt"
+        "github.com/spf13/viper"
+)
+
+type Config struct {
+        App                         string `mapStructure:"APP"`
+        Port             string `mapStructure:"PORT"`
+        Database         string `mapStructure:"DATABASE"`
+        RabbitMQURL        string `mapStructure:"RABBITMQURL"`
+}
+
+func LoadConfig() (*Config, error) <span class="cov0" title="0">{
+        viper.SetConfigFile(".env")
+
+        // search defined path of file
+        err := viper.ReadInConfig()
+        if err != nil </span><span class="cov0" title="0">{
+                _, ok := err.(viper.ConfigFileNotFoundError)
+                if ok </span><span class="cov0" title="0">{
+                        return nil, errors.New(".env not found")
+                }</span>
+                <span class="cov0" title="0">return nil, fmt.Errorf("fatal error config file %s", err)</span>
+        }
+
+        // unmarshal parameter file .env to struct
+        <span class="cov0" title="0">config := Config{}
+        err = viper.Unmarshal(&amp;config)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("fatal error decode : %s", err)
+        }</span>
+        <span class="cov0" title="0">return &amp;config, nil</span>
+}</pre>
+		
+		<pre class="file" id="file2" style="display: none">package client
+
+import (
+        "database/sql"
+        "fmt"
+        "net/http"
+        "os"
+        "time"
+
+        "sales-go/config"
+        "sales-go/helpers/logging"
+
+        _ "github.com/go-sql-driver/mysql"
+        _ "github.com/jackc/pgx/v5/stdlib"
+        "github.com/joho/godotenv"
+        "gorm.io/driver/postgres"
+        "gorm.io/gorm"
+        "gorm.io/gorm/logger"
+)
+
+var (
+        _ = godotenv.Load()
+
+        conDB                                 = config.NewConfig()
+        connString string         = ""
+        Database                         = os.Getenv("DATABASE")
+        req                                        = new(http.Request)
+)
+
+type dbOption struct {
+        Database string
+}
+
+func NewConnection(database string) dbOption <span class="cov0" title="0">{
+        return dbOption{
+                Database: database,
+        }
+}</span>
+
+func (dbOpt dbOption) GetDBConnection() (db *sql.DB, err error) <span class="cov0" title="0">{
+        var driver string
+        if dbOpt.Database == "mysql" </span><span class="cov0" title="0">{
+                // format : "username:password@tcp(host:port)/database_name"
+                driver = "mysql"
+                connString = fmt.Sprintf("%s:%s@tcp(%s:%v)/%v", conDB.MySQL.Username, conDB.MySQL.Password, conDB.MySQL.Host, conDB.MySQL.Port, conDB.MySQL.Database)
+        }</span> else<span class="cov0" title="0"> if dbOpt.Database == "postgresql" </span><span class="cov0" title="0">{
+                // format : "postgres://username:password@localhost:5432/database_name"
+                driver = "pgx"
+                connString = fmt.Sprintf("postgres://%s:%s@%s:%v/%v", conDB.PostgreSQL.Username, conDB.PostgreSQL.Password, conDB.PostgreSQL.Host, conDB.PostgreSQL.Port, conDB.PostgreSQL.Database)
+                fmt.Println(connString)
+        }</span>
+
+        <span class="cov0" title="0">db, err = sql.Open(driver, connString)
+        if err != nil </span><span class="cov0" title="0">{
+                logging.Errorf(fmt.Errorf("unable to connect to database: %v", err), req)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if dbOpt.Database == "mysql" </span><span class="cov0" title="0">{
+                logging.Infof(fmt.Sprintf("Running %s on %s on port %s\n", dbOpt.Database, conDB.MySQL.Host, conDB.MySQL.Port), req)
+        }</span> else<span class="cov0" title="0"> if dbOpt.Database == "postgresql" </span><span class="cov0" title="0">{
+                logging.Infof(fmt.Sprintf("Running %s on %s on port %s\n", dbOpt.Database, conDB.PostgreSQL.Host, conDB.PostgreSQL.Port), req)
+        }</span> 
+
+        <span class="cov0" title="0">db.SetMaxIdleConns(2)
+        db.SetMaxOpenConns(5)
+        db.SetConnMaxIdleTime(10*time.Minute)
+        db.SetConnMaxLifetime(60*time.Minute)
+
+        return</span>
+}
+
+func (dbOpt dbOption) GetDBGormConnection() (*gorm.DB, error) <span class="cov0" title="0">{
+        var connString string
+        if dbOpt.Database == "mysql" </span><span class="cov0" title="0">{
+                // "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&amp;parseTime=True&amp;loc=Local"
+                connString = fmt.Sprintf("%s:%s@tcp(%s:%v)/%v?charset=utf8mb4&amp;parseTime=True&amp;loc=Local", 
+                        conDB.MySQL.Username, 
+                        conDB.MySQL.Password, 
+                        conDB.MySQL.Host, 
+                        conDB.MySQL.Port, 
+                        conDB.MySQL.Database,
+                )
+        }</span> else<span class="cov0" title="0"> if dbOpt.Database == "postgresql" </span><span class="cov0" title="0">{
+                // "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
+                connString = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
+                        conDB.PostgreSQL.Host,
+                        conDB.PostgreSQL.Username,
+                        conDB.PostgreSQL.Password,
+                        conDB.PostgreSQL.Database,
+                        conDB.PostgreSQL.Port,
+                )
+        }</span>
+
+        <span class="cov0" title="0">db, err := gorm.Open(
+                postgres.Open(connString), &amp;gorm.Config{
+                        Logger:                                 logger.Default.LogMode(logger.Info),
+                        SkipDefaultTransaction: true,
+                        PrepareStmt:                        false,
+                },
+        )
+        if err != nil </span><span class="cov0" title="0">{
+                logging.Errorf(fmt.Errorf("unable to connect to database: %v", err), req)
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">logging.Infof(fmt.Sprintf("Running mysql on %s on port %s\n", conDB.MySQL.Host, conDB.MySQL.Port), req)
+
+        return db, nil</span>
+}</pre>
+		
+		<pre class="file" id="file3" style="display: none">package product
+
+import (
+        "fmt"
+        "net/http"
+        "sales-go/model"
+        "sales-go/repository/product"
+)
+
+type handler struct {
+        repo product.Repositorier
+}
+
+func NewHandler(repositorier product.Repositorier) *handler <span class="cov0" title="0">{
+        return &amp;handler{
+                repo: repositorier,
+        }
+}</span>
+
+func (handler *handler) GetList(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        result, err := handler.repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Println(err)
+        }</span>
+        
+        <span class="cov0" title="0">fmt.Printf("\nId\t\t|Name\t\t\t|Price\t\t")
+        for _, v := range result </span><span class="cov0" title="0">{
+                if len(v.Name) &gt; 13 </span><span class="cov0" title="0">{
+                        fmt.Printf("\n%d\t\t|%s\t|%0.2f", v.Id, v.Name, v.Price)
+                }</span> else<span class="cov0" title="0"> if len(v.Name) &gt; 5 &amp;&amp; len(v.Name) &lt; 13 </span><span class="cov0" title="0">{
+                        fmt.Printf("\n%d\t\t|%s\t\t|%0.2f", v.Id, v.Name, v.Price)
+                }</span> else<span class="cov0" title="0"> {
+                        fmt.Printf("\n%d\t\t|%s\t\t\t|%0.2f", v.Id, v.Name, v.Price)
+                }</span>
+        }
+}
+
+func (handler *handler) Create(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        var name string
+        var price float64
+        fmt.Println("\nInput name data : ")
+        fmt.Scanln(&amp;name)
+        fmt.Println("\nInput price data : ")
+        fmt.Scanln(&amp;price)
+
+        data := model.ProductRequest{
+                Name:  name,
+                Price: price,
+        }
+        result, err := handler.repo.Create([]model.ProductRequest{data})
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Println(err)
+                handler.Create(w, r)
+        }</span>
+
+        <span class="cov0" title="0">fmt.Println("Product has been added : ", result)</span>
+}</pre>
+		
+		<pre class="file" id="file4" style="display: none">package product
+
+import (
+        "net/http"
+
+        "github.com/gin-gonic/gin"
+        "sales-go/helpers/gin-rest"
+        "sales-go/model"
+        "sales-go/usecase/product"
+)
+
+type gindbhttphandler struct {
+        usecase product.ProductUseCase
+}
+
+func NewGinDBHTTPHandler(usecase product.ProductUseCase) *gindbhttphandler <span class="cov0" title="0">{
+        return &amp;gindbhttphandler{
+                usecase: usecase,
+        }
+}</span>
+
+func (handler gindbhttphandler) GetList(ctx *gin.Context) <span class="cov0" title="0">{
+        res, err := handler.usecase.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                return
+        }</span>
+        <span class="cov0" title="0">rest.ResponseData(ctx, http.StatusOK, res)</span>
+}
+
+func (handler gindbhttphandler) Create(ctx *gin.Context) <span class="cov0" title="0">{
+        req := []model.ProductRequest{}
+
+        err := ctx.ShouldBind(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                return
+        }</span> else<span class="cov0" title="0"> if req == nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusBadRequest, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := handler.usecase.Create(req)
+        if err != nil </span><span class="cov0" title="0">{
+                if err.Error() == "name should not be empty" || err.Error() == "price should be &gt; 0" </span><span class="cov0" title="0">{
+                        rest.ResponseError(ctx, http.StatusBadRequest, err)
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                        return
+                }</span>
+        }
+
+        <span class="cov0" title="0">rest.ResponseData(ctx, http.StatusCreated, res)</span>
+}</pre>
+		
+		<pre class="file" id="file5" style="display: none">package product
+
+import (
+        "encoding/json"
+        "net/http"
+        "sales-go/helpers/rest"
+        "sales-go/model"
+        "sales-go/usecase/product"
+)
+
+type dbhttphandler struct {
+        usecase product.ProductUseCase
+}
+
+func NewDBHTTPHandler(usecase product.ProductUseCase) *dbhttphandler <span class="cov0" title="0">{
+        return &amp;dbhttphandler{
+                usecase: usecase,
+        }
+}</span>
+
+func (handler *dbhttphandler) GetList(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        res, err := handler.usecase.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                return
+        }</span>
+        <span class="cov0" title="0">rest.ResponseData(w, r, http.StatusOK, res)</span>
+}
+
+func (handler *dbhttphandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        req := []model.ProductRequest{}
+
+        err := json.NewDecoder(r.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := handler.usecase.Create(req)
+        if err != nil </span><span class="cov0" title="0">{
+                if err.Error() == "name should not be empty" || err.Error() == "price should be &gt; 0" </span><span class="cov0" title="0">{
+                        rest.ResponseError(w, r, http.StatusBadRequest, err)
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                        return
+                }</span>
+        }
+        <span class="cov0" title="0">rest.ResponseData(w, r, http.StatusOK, res)</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package product
+
+import (
+        "encoding/json"
+        "fmt"
+        "log"
+        "net/http"
+        "sales-go/model"
+        "sales-go/repository/product"
+)
+
+type jsonhttphandler struct {
+        repo product.Repositorier
+}
+
+func NewJsonHTTPHandler(repositorier product.Repositorier) *jsonhttphandler <span class="cov0" title="0">{
+        return &amp;jsonhttphandler{
+                repo: repositorier,
+        }
+}</span>
+
+func (handler *jsonhttphandler) GetList(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        result, err := handler.repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] get list product :", err.Error())
+                return
+        }</span>
+        
+        <span class="cov0" title="0">jsonData, err := json.Marshal(result)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] marshal list product :", err.Error())
+                return
+        }</span>
+        <span class="cov0" title="0">w.WriteHeader(http.StatusOK)
+        w.Write(jsonData)</span>
+}
+
+func (handler *jsonhttphandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        req := []model.ProductRequest{}
+        err := json.NewDecoder(r.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] decode request :", err.Error())
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, v := range req </span><span class="cov0" title="0">{
+                if v.Price &lt;= 0 </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusBadRequest)
+                        w.Write([]byte("message : price must be &gt; 0"))
+                        return
+                }</span>
+
+                <span class="cov0" title="0">_, err = handler.repo.GetProductByName(v.Name)
+                if err == nil </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusConflict)
+                        w.Write([]byte("message : product already exist, pelase input another product name."))
+                        return
+                }</span> else<span class="cov0" title="0"> if err != nil </span><span class="cov0" title="0">{
+                        continue</span>
+                }
+        }
+
+        <span class="cov0" title="0">result, err := handler.repo.Create(req)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] create product :", err.Error())
+                return
+        }</span> else<span class="cov0" title="0"> if err == nil </span><span class="cov0" title="0">{
+                jsonData, err := json.Marshal(result)
+                if err != nil </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusInternalServerError)
+                        w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                        log.Println("[ERROR] marshal result create product :", err.Error())
+                        return
+                }</span>
+                <span class="cov0" title="0">w.WriteHeader(http.StatusCreated)
+                w.Write(jsonData)
+                return</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package transaction
+
+import (
+        "fmt"
+        "net/http"
+        "sales-go/helpers/gin-rest"
+        "sales-go/model"
+        "sales-go/usecase/transaction"
+        "strconv"
+
+        "github.com/gin-gonic/gin"
+)
+
+type gindbhttphandler struct {
+        usecase transaction.TransactionUseCase
+}
+
+func NewGinDBHTTPHandler(usecase transaction.TransactionUseCase) *gindbhttphandler <span class="cov0" title="0">{
+        return &amp;gindbhttphandler{
+                usecase: usecase,
+        }
+}</span>
+
+func (handler gindbhttphandler) GetTransactionByNumber(ctx *gin.Context) <span class="cov0" title="0">{
+        transactionNumberStr, ok := ctx.GetQuery("transaction_id")
+        if !ok </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusBadRequest, fmt.Errorf("transaction number should not be empty"))
+                return
+        }</span>
+
+        <span class="cov0" title="0">transactionNumber, err := strconv.Atoi(transactionNumberStr)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusBadRequest, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := handler.usecase.GetTransactionByNumber(transactionNumber)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                return
+        }</span>
+        <span class="cov0" title="0">rest.ResponseData(ctx, http.StatusOK, res)</span>
+}
+
+func (handler gindbhttphandler) CreateBulkTransactionDetail(ctx *gin.Context) <span class="cov0" title="0">{
+        req := model.TransactionDetailBulkRequest{}
+
+        err := ctx.ShouldBind(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">voucherCode, ok := ctx.GetQuery("voucher_code")
+        if !ok </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusBadRequest, fmt.Errorf("voucher_id should not be empty"))
+        }</span>
+
+        <span class="cov0" title="0">res, err := handler.usecase.CreateBulkTransactionDetail(voucherCode, req)
+        if err != nil </span><span class="cov0" title="0">{
+                if err.Error() == "name should not be empty" || err.Error() == "price should be &gt; 0" </span><span class="cov0" title="0">{
+                        rest.ResponseError(ctx, http.StatusBadRequest, err)
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                        return
+                }</span>
+        }
+
+        <span class="cov0" title="0">rest.ResponseData(ctx, http.StatusCreated, res)</span>
+}</pre>
+		
+		<pre class="file" id="file8" style="display: none">package transaction
+
+import (
+        "encoding/json"
+        "net/http"
+
+        "sales-go/helpers/rest"
+        "sales-go/model"
+        "sales-go/usecase/transaction"
+        "strconv"
+)
+
+type dbhttphandler struct {
+        usecase        transaction.TransactionUseCase
+}
+
+func NewDBHTTPHandler(
+        usecasesitorier transaction.TransactionUseCase,
+) *dbhttphandler <span class="cov0" title="0">{
+        return &amp;dbhttphandler{
+                usecase:        usecasesitorier,
+        }
+}</span>
+
+func (handler *dbhttphandler) GetTransactionByNumber(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        transactionNumberStr := r.URL.Query().Get("transaction_id")
+        transactionNumber, err := strconv.Atoi(transactionNumberStr)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">response, err := handler.usecase.GetTransactionByNumber(transactionNumber)
+        if err != nil </span><span class="cov0" title="0">{
+                if err.Error() == "id must be &gt; 0" </span><span class="cov0" title="0">{
+                        rest.ResponseError(w, r, http.StatusBadRequest, err)
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                        return
+                }</span>
+        }
+        <span class="cov0" title="0">rest.ResponseData(w, r, http.StatusOK, response)</span>
+}
+
+func (handler *dbhttphandler) CreateBulkTransactionDetail(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        req := model.TransactionDetailBulkRequest{}
+        err := json.NewDecoder(r.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">voucherCode := r.URL.Query().Get("voucher_code")
+
+        res, err := handler.usecase.CreateBulkTransactionDetail(voucherCode, req)
+        if err != nil </span><span class="cov0" title="0">{
+                if err.Error() == "quantity transaction should not be negative" || err.Error() == "item transaction hould not be empty" </span><span class="cov0" title="0">{
+                        rest.ResponseError(w, r, http.StatusBadRequest, err)
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                        return
+                }</span>
+        }
+        <span class="cov0" title="0">rest.ResponseData(w, r, http.StatusCreated, res)</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package transaction
+
+import (
+        "encoding/json"
+        "fmt"
+        "log"
+        "net/http"
+
+        "sales-go/model"
+        "sales-go/repository/product"
+        "sales-go/repository/transaction"
+        "sales-go/repository/voucher"
+        "strconv"
+        "strings"
+)
+
+type jsonhttphandler struct {
+        repo        transaction.Repositorier
+        productrepo product.Repositorier
+        voucherrepo voucher.Repositorier
+}
+
+func NewJsonHTTPHandler(
+        repositorier transaction.Repositorier,
+        productRepository product.Repositorier,
+        voucherRepository voucher.Repositorier,
+) *jsonhttphandler <span class="cov0" title="0">{
+        return &amp;jsonhttphandler{
+                repo:        repositorier,
+                productrepo: productRepository,
+                voucherrepo: voucherRepository,
+        }
+}</span>
+
+func (handler *jsonhttphandler) GetTransactionByNumber(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        transactionNumberStr := r.URL.Query().Get("transaction_id")
+        transactionNumber, err := strconv.Atoi(transactionNumberStr)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] convert string id to integer:", err.Error())
+                return
+        }</span>
+        <span class="cov0" title="0">if transactionNumber &lt; 0 </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusBadRequest)
+                w.Write([]byte("message : id must be &gt; 0"))
+                log.Println("[ERROR] transaction id must be &gt; 0:", err.Error())
+                return
+        }</span>
+
+        <span class="cov0" title="0">result, err := handler.repo.GetTransactionByNumber(transactionNumber)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] get transaction by number :", err.Error())
+                return
+        }</span>
+
+        <span class="cov0" title="0">jsonData, err := json.Marshal(result)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] marshal list transaction :", err.Error())
+                return
+        }</span>
+        <span class="cov0" title="0">w.WriteHeader(http.StatusOK)
+        w.Write([]byte(jsonData))</span>
+}
+
+func (handler *jsonhttphandler) CreateBulkTransactionDetail(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        req := model.TransactionDetailBulkRequest{}
+        err := json.NewDecoder(r.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] decode request :", err.Error())
+                return
+        }</span>
+
+        <span class="cov0" title="0">listTransactionDetail := []model.TransactionDetail{}
+        for _, v := range req.Items </span><span class="cov0" title="0">{
+                product, err := handler.productrepo.GetProductByName(v.Item)
+                if err != nil </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusBadRequest)
+                        w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                        log.Println("[ERROR] get product by name :", err.Error())
+                        return
+                }</span>
+        
+                <span class="cov0" title="0">if v.Quantity &lt; 1 </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusBadRequest)
+                        w.Write([]byte("[ERROR] quantity should not negative."))
+                        log.Println("[ERROR] quantity should not negative.")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">listTransactionDetail = append(listTransactionDetail, model.TransactionDetail{
+                        Item:     v.Item,
+                        Price:    product.Price,
+                        Quantity: v.Quantity,
+                        Total:    product.Price * float64(v.Quantity),
+                })</span>
+        }
+
+        <span class="cov0" title="0">voucherData := model.VoucherRequest{}
+        voucherCode := r.URL.Query().Get("voucher_code")
+        if voucherCode != "" </span><span class="cov0" title="0">{
+                voucher, err := handler.voucherrepo.GetVoucherByCode(voucherCode)
+                if err != nil </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusBadRequest)
+                        w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                        log.Println("[ERROR] get voucher by code :", err.Error())
+                        return
+                }</span> else<span class="cov0" title="0"> if err == nil </span><span class="cov0" title="0">{
+                        voucherData = model.VoucherRequest{
+                                Code:   voucher.Code,
+                                Persen: voucher.Persen,
+                        }
+                }</span>
+        }
+
+        // input transaction detail to transaction slice
+        <span class="cov0" title="0">res, err := handler.repo.CreateBulkTransactionDetail(voucherData, listTransactionDetail, req)
+        if err != nil </span><span class="cov0" title="0">{
+                if strings.EqualFold(err.Error(), "pay must be &gt; total") </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusBadRequest)
+                        w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                        log.Println("[ERROR] create bulk transaction :", err.Error())
+                        return
+                }</span>
+                <span class="cov0" title="0">w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] create bulk transaction :", err.Error())
+                return</span>
+        }
+
+        <span class="cov0" title="0">var ids []int
+        for _, v := range res </span><span class="cov0" title="0">{
+                ids = append(ids, v.Id)
+        }</span>
+        <span class="cov0" title="0">w.WriteHeader(http.StatusCreated)
+        w.Write([]byte(fmt.Sprintf("Created new transaction with ids : %d", ids)))</span>
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package voucher
+
+import (
+        "fmt"
+        "net/http"
+        "sales-go/model"
+        "sales-go/repository/voucher"
+)
+
+type handler struct {
+        repo voucher.Repositorier
+}
+
+func NewHandler(repositorier voucher.Repositorier) *handler <span class="cov0" title="0">{
+        return &amp;handler{
+                repo: repositorier,
+        }
+}</span>
+
+func (handler *handler) GetList(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        result, err := handler.repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Println(err)
+        }</span>
+        
+        <span class="cov0" title="0">fmt.Printf("\nId\t\t|Code\t\t\t|Persen\t\t")
+        for _, v := range result </span><span class="cov0" title="0">{
+                if len(v.Code) &gt; 13 </span><span class="cov0" title="0">{
+                        fmt.Printf("\n%d\t\t|%s\t|%0.2f", v.Id, v.Code, v.Persen)
+                }</span> else<span class="cov0" title="0"> if len(v.Code) &gt; 5 &amp;&amp; len(v.Code) &lt; 13 </span><span class="cov0" title="0">{
+                        fmt.Printf("\n%d\t\t|%s\t\t|%0.2f", v.Id, v.Code, v.Persen)
+                }</span> else<span class="cov0" title="0"> {
+                        fmt.Printf("\n%d\t\t|%s\t\t\t|%0.2f", v.Id, v.Code, v.Persen)
+                }</span>
+        }
+}
+
+func (handler *handler) Create(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{        
+        var code string
+        var persen float64
+        fmt.Println("\nInput code data : ")
+        fmt.Scanln(&amp;code)
+        fmt.Println("\nInput persen data : ")
+        fmt.Scanln(&amp;persen)
+
+        
+        data := model.VoucherRequest{
+                Code:   code,
+                Persen: persen,
+        }
+        result, err := handler.repo.Create([]model.VoucherRequest{data})
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Println(err)
+                handler.Create(w, r)
+        }</span>
+
+        <span class="cov0" title="0">fmt.Println("Voucher has been added : ", result)</span>
+}</pre>
+		
+		<pre class="file" id="file11" style="display: none">package voucher
+
+import (
+        "net/http"
+        "sales-go/helpers/gin-rest"
+        "sales-go/model"
+        "sales-go/usecase/voucher"
+
+        "github.com/gin-gonic/gin"
+)
+
+type gindbhttphandler struct {
+        usecase voucher.VoucherUseCase
+}
+
+func NewGinDBHTTPHandler(usecase voucher.VoucherUseCase) *gindbhttphandler <span class="cov0" title="0">{
+        return &amp;gindbhttphandler{
+                usecase: usecase,
+        }
+}</span>
+
+func (handler gindbhttphandler) GetList(ctx *gin.Context) <span class="cov0" title="0">{
+        res, err := handler.usecase.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                return
+        }</span>
+        <span class="cov0" title="0">rest.ResponseData(ctx, http.StatusOK, res)</span>
+}
+
+func (handler gindbhttphandler) Create(ctx *gin.Context) <span class="cov0" title="0">{
+        req := []model.VoucherRequest{}
+
+        err := ctx.ShouldBind(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := handler.usecase.Create(req)
+        if err != nil </span><span class="cov0" title="0">{
+                if err.Error() == "name should not be empty" || err.Error() == "price should be &gt; 0" </span><span class="cov0" title="0">{
+                        rest.ResponseError(ctx, http.StatusBadRequest, err)
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        rest.ResponseError(ctx, http.StatusInternalServerError, err)
+                        return
+                }</span>
+        }
+
+        <span class="cov0" title="0">rest.ResponseData(ctx, http.StatusCreated, res)</span>
+}</pre>
+		
+		<pre class="file" id="file12" style="display: none">package voucher
+
+import (
+        "encoding/json"
+        "net/http"
+        "sales-go/helpers/rest"
+        "sales-go/model"
+        "sales-go/usecase/voucher"
+)
+
+type dbhttphandler struct {
+        usecase voucher.VoucherUseCase
+}
+
+func NewDBHTTPHandler(usecase voucher.VoucherUseCase) *dbhttphandler <span class="cov0" title="0">{
+        return &amp;dbhttphandler{
+                usecase: usecase,
+        }
+}</span>
+
+func (handler *dbhttphandler) GetList(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        res, err := handler.usecase.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                return
+        }</span>
+        <span class="cov0" title="0">rest.ResponseData(w, r, http.StatusOK, res)</span>
+}
+
+func (handler *dbhttphandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{        
+        req := []model.VoucherRequest{}
+        err := json.NewDecoder(r.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := handler.usecase.Create(req)
+        if err != nil </span><span class="cov0" title="0">{
+                if err.Error() == "code should not be empty" || err.Error() == "persen should be &gt; 0" </span><span class="cov0" title="0">{
+                        rest.ResponseError(w, r, http.StatusBadRequest, err)
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        rest.ResponseError(w, r, http.StatusInternalServerError, err)
+                        return
+                }</span>
+        }
+        <span class="cov0" title="0">rest.ResponseData(w, r, http.StatusOK, res)</span>
+}</pre>
+		
+		<pre class="file" id="file13" style="display: none">package voucher
+
+import (
+        "encoding/json"
+        "fmt"
+        "log"
+        "net/http"
+        "sales-go/model"
+        "sales-go/repository/voucher"
+)
+
+type jsonhttphandler struct {
+        repo voucher.Repositorier
+}
+
+func NewJsonHTTPHandler(repositorier voucher.Repositorier) *jsonhttphandler <span class="cov0" title="0">{
+        return &amp;jsonhttphandler{
+                repo: repositorier,
+        }
+}</span>
+
+func (handler *jsonhttphandler) GetList(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        result, err := handler.repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] get list voucher :", err.Error())
+                return
+        }</span>
+
+        <span class="cov0" title="0">jsonData, err := json.Marshal(result)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] marshal list voucher :", err.Error())
+                return
+        }</span>
+        <span class="cov0" title="0">w.WriteHeader(http.StatusOK)
+        w.Write(jsonData)</span>
+}
+
+func (handler *jsonhttphandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{        
+        req := []model.VoucherRequest{}
+        err := json.NewDecoder(r.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] decode request :", err.Error())
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, req := range req </span><span class="cov0" title="0">{
+                _, err = handler.repo.GetVoucherByCode(req.Code)
+                if err != nil </span><span class="cov0" title="0">{
+                        continue</span>
+                } else<span class="cov0" title="0"> if err == nil </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusConflict)
+                        w.Write([]byte("message : voucher already exist, pelase input another voucher code."))
+                        return
+                }</span>
+
+                <span class="cov0" title="0">if req.Persen &lt;= 0 </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusBadRequest)
+                        w.Write([]byte("message : persen must be &gt; 0"))
+                        return
+                }</span>
+        }
+
+        <span class="cov0" title="0">result, err := handler.repo.Create(req)
+        if err != nil </span><span class="cov0" title="0">{
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                log.Println("[ERROR] create voucher :", err.Error())
+                return
+        }</span> else<span class="cov0" title="0"> {
+                jsonData, err := json.Marshal(result)
+                if err != nil </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusInternalServerError)
+                        w.Write([]byte(fmt.Sprintf("message : %s", err.Error())))
+                        log.Println("[ERROR] marshal result create voucher :", err.Error())
+                        return
+                }</span>
+                <span class="cov0" title="0">w.WriteHeader(http.StatusCreated)
+                w.Write(jsonData)
+                return</span>
+        }
+}</pre>
+		
+		<pre class="file" id="file14" style="display: none">package bcrypt
+
+import (
+        "golang.org/x/crypto/bcrypt"
+)
+
+func HashPassword(password string) (hashedPassword string, err error) <span class="cov0" title="0">{
+        bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+        <span class="cov0" title="0">hashedPassword = string(bytes)
+        return hashedPassword, nil</span>
+}
+
+func ComparePassword(hashedPassword string, password string) (err error) <span class="cov0" title="0">{
+        return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+}</pre>
+		
+		<pre class="file" id="file15" style="display: none">package clearscreen
+
+import (
+        "fmt"
+        "os"
+        "os/exec"
+)
+
+func ClearScreeen() <span class="cov0" title="0">{
+        var enter string
+        fmt.Println("\nPilih menu lain tekan enter")
+        fmt.Scanln(&amp;enter)
+
+        clearScreen := exec.Command("cmd", "/c", "cls")
+        clearScreen.Stdout = os.Stdout
+        clearScreen.Run()
+}</pre>
+		
+		<pre class="file" id="file16" style="display: none">package rest
+
+import (
+        "github.com/gin-gonic/gin"
+)
+
+
+func ResponseData(ctx *gin.Context, status int, data interface{}) <span class="cov0" title="0">{
+        ctx.JSON(status, map[string]interface{}{
+                "status": status,
+                "data"  : data,
+        })
+}</span>
+
+func ResponseError(ctx *gin.Context, status int, err error) <span class="cov0" title="0">{
+        ctx.JSON(status, map[string]interface{}{
+                "status": status,
+                "error":  err.Error(),
+        })
+}</pre>
+		
+		<pre class="file" id="file17" style="display: none">package logging
+
+import (
+        "fmt"
+        "net/http"
+        "github.com/sirupsen/logrus"
+)
+
+var log *logrus.Logger
+
+func newLoggrus() <span class="cov0" title="0">{
+        log = logrus.New()
+        // Will log anything that is info or above (warn, error, fatal, panic)
+        log.SetLevel(logrus.InfoLevel)
+        log.SetFormatter(&amp;logrus.TextFormatter{
+                FullTimestamp: true,
+                ForceColors:   true,
+                DisableQuote:  true,
+        })
+}</span>
+
+func Infof(infoMsg string, r *http.Request) <span class="cov0" title="0">{
+        fields := logrus.Fields{}
+        if r.Method != "" </span><span class="cov0" title="0">{
+                fields["Host"] = r.Host
+                fields["Method"] = r.Method
+                fields["URL"] = r.RequestURI
+        }</span>
+
+        <span class="cov0" title="0">newLoggrus()
+        log.WithFields(fields).Info(infoMsg)</span>
+}
+
+func Errorf(err error, r *http.Request) <span class="cov0" title="0">{
+        fields := logrus.Fields{}
+        if r.Method != "" </span><span class="cov0" title="0">{
+                fields["Host"] = r.Host
+                fields["Method"] = r.Method
+                fields["URL"] = r.RequestURI
+        }</span>
+        <span class="cov0" title="0">if r.Body != nil </span><span class="cov0" title="0">{
+                fields["Params"] = r.Body
+        }</span>
+
+        <span class="cov0" title="0">newLoggrus()
+        log.WithFields(fields).Errorf(fmt.Sprintf("Error : %s", err.Error()))</span>
+}
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package middleware
+
+import (
+        "context"
+        "encoding/json"
+        "fmt"
+        "io"
+        "net/http"
+        //"net/httptest"
+        "time"
+
+        "sales-go/helpers/gin-rest"
+        logger "sales-go/helpers/logging"
+
+        "github.com/gin-gonic/gin"
+)
+
+func CORSMiddleware() http.Handler <span class="cov0" title="0">{
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                w.Header().Set("Access-Control-Allow-Origin", "*")
+                w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+                w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, x-location-lat, x-location-long, x-unique-id")
+                w.Header().Set("Access-Control-Expose-Headers", "Content-Length")
+                w.Header().Set("Access-Control-Allow-Credentials", "true")
+                w.Header().Set("Content-Type", "application/json")
+        if r.Method == "OPTIONS" </span><span class="cov0" title="0">{
+            w.Write([]byte("allowed"))
+            return
+        }</span>
+        })
+}
+
+func HeaderVerificationMiddleware(ginCtx *gin.Context) <span class="cov0" title="0">{
+        hashKeyStr := ginCtx.GetHeader("key")
+
+        ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+        defer cancel()
+
+        req, err := http.NewRequestWithContext(ctx, http.MethodGet, "http://localhost:8080/verification", nil)
+        if err != nil </span><span class="cov0" title="0">{
+                ginCtx.AbortWithStatus(http.StatusInternalServerError)
+                rest.ResponseError(ginCtx, http.StatusInternalServerError, err)
+                return
+        }</span>
+        <span class="cov0" title="0">req.Header.Add("key", hashKeyStr)
+
+        res, err := http.DefaultClient.Do(req)
+        if err != nil </span><span class="cov0" title="0">{
+                ginCtx.AbortWithStatus(http.StatusInternalServerError)
+                rest.ResponseError(ginCtx, http.StatusInternalServerError, err)
+                return
+        }</span>
+        <span class="cov0" title="0">defer res.Body.Close()
+
+        body, err := io.ReadAll(res.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                ginCtx.AbortWithStatus(http.StatusInternalServerError)
+                rest.ResponseError(ginCtx, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">var response map[string]interface{}
+        err = json.Unmarshal(body, &amp;response)
+        if err != nil </span><span class="cov0" title="0">{
+                ginCtx.AbortWithStatus(http.StatusInternalServerError)
+                rest.ResponseError(ginCtx, http.StatusInternalServerError, err)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if response["message"] == "Unauthorized" </span><span class="cov0" title="0">{
+                ginCtx.AbortWithStatus(http.StatusUnauthorized)
+                rest.ResponseError(ginCtx, http.StatusBadRequest, fmt.Errorf("key is empty or not authorized"))
+                return
+        }</span>
+}
+
+func LoggingMiddleware(mux http.Handler) http.Handler <span class="cov0" title="0">{
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                w.Header().Set("Access-Control-Allow-Origin", "*")
+                w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+                w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, x-location-lat, x-location-long, x-unique-id")
+                w.Header().Set("Access-Control-Expose-Headers", "Content-Length")
+                w.Header().Set("Access-Control-Allow-Credentials", "true")
+                w.Header().Set("Content-Type", "application/json")
+        if r.Method == "OPTIONS" </span><span class="cov0" title="0">{
+            w.Write([]byte("allowed"))
+            return
+        }</span>
+
+                <span class="cov0" title="0">logger.Infof(fmt.Sprintf("Started %s localhost:5000%s", r.Method, r.URL.Path), r)
+
+                mux.ServeHTTP(w, r)
+
+                // handle panic error middleware
+                defer func() </span><span class="cov0" title="0">{
+                        fmt.Println("MIDDLEWARE PASS 1")
+                        err := recover()
+                        if err != nil </span><span class="cov0" title="0">{
+                                fmt.Println("MIDDLEWARE PASS 2")
+                                w.WriteHeader(http.StatusInternalServerError)
+                                logger.Errorf(err.(error), r)
+                        }</span> else<span class="cov0" title="0"> {
+                                logger.Infof(fmt.Sprintf("Completed %s localhost:5000%s in %v", r.Method, r.URL.Path, time.Since(time.Now())), r)
+                        }</span>
+                }()
+        })
+}
+
+func Use(middleware ...http.Handler) []http.Handler <span class="cov0" title="0">{
+        var handlers []http.Handler
+        handlers = append(handlers, middleware...)
+        return handlers
+}</span>
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package random
+
+import (
+        "math/rand"
+        "strconv"
+        "time"
+)
+
+type random struct {
+}
+
+func NewRandom() *random <span class="cov0" title="0">{
+        return &amp;random{}
+}</span>
+
+type RandomInterface interface {
+        RandomString(length int) (int, error)
+}
+
+func (r *random) RandomString(length int) (int, error) <span class="cov0" title="0">{
+        randomizer := rand.New(rand.NewSource(time.Now().Unix()))
+        letters := []rune("1234567890")
+
+        b := make([]rune, length)
+        for i := range b </span><span class="cov0" title="0">{
+                b[i] = letters[randomizer.Intn(len(letters))]
+        }</span>
+
+        <span class="cov0" title="0">integer, err := strconv.Atoi(string(b))
+        if err != nil </span><span class="cov0" title="0">{
+                return 0, err
+        }</span>
+
+        <span class="cov0" title="0">return integer, nil</span>
+}</pre>
+		
+		<pre class="file" id="file20" style="display: none">package rest
+
+import (
+        "encoding/json"
+        "net/http"
+
+        logger "sales-go/helpers/logging"
+)
+
+type RestError struct {
+        Status  int                        `json:"status"`
+        Message string                `json:"message"`
+        Error        string                `json:"error"`
+}
+
+func ResponseError(w http.ResponseWriter, r *http.Request, status int, err error) <span class="cov0" title="0">{
+        logger.Errorf(err, r)
+
+        response := RestError{
+                Status:  status,
+                Message: http.StatusText(status),
+                Error:         err.Error(),
+        }
+
+        jsonData, err := json.Marshal(response)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        <span class="cov0" title="0">w.WriteHeader(status)
+        w.Write(jsonData)</span>
+}
+
+type RestData struct {
+        Status  int                        `json:"status"`
+        Message string                `json:"message"`
+        Data        interface{}        `json:"data"`
+}
+
+func ResponseData(w http.ResponseWriter, r *http.Request, status int, data interface{}) <span class="cov0" title="0">{
+        response := RestData{
+                Status:  status,
+                Message: http.StatusText(status),
+                Data:         data,
+        }
+
+        jsonData, err := json.Marshal(response)
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err)</span>
+        }
+
+        <span class="cov0" title="0">w.WriteHeader(status)
+        w.Write(jsonData)</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package main
+
+import (
+        "fmt"
+        "net/http"
+        "os"
+
+        "github.com/joho/godotenv"
+        "github.com/gin-gonic/gin"
+        // "github.com/swaggest/swgui/v3emb"
+
+        "sales-go/db"
+        "sales-go/config"
+        "sales-go/helpers/clearscreen"
+        "sales-go/helpers/middleware"
+        "sales-go/helpers/random"
+        "sales-go/publisher"
+
+        // handler
+        "sales-go/handler/product"
+        "sales-go/handler/transaction"
+        "sales-go/handler/voucher"
+
+        // usecase
+        productUsecase "sales-go/usecase/product"
+        transactionUsecase "sales-go/usecase/transaction"
+        voucherUsecase "sales-go/usecase/voucher"
+
+        // repo
+        productRepo "sales-go/repository/product"
+        transactionRepo "sales-go/repository/transaction"
+        voucherRepo "sales-go/repository/voucher"
+)
+
+func main() <span class="cov0" title="0">{
+        godotenv.Load()
+
+        config, err := config.LoadConfig()
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err.Error())</span>
+        }
+
+        <span class="cov0" title="0">switch config.App </span>{
+        case "postgresql-gin-gorm":<span class="cov0" title="0">                
+                db, err := client.NewConnection(client.Database).GetDBGormConnection()
+                if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+
+                <span class="cov0" title="0">DB, err := db.DB()
+                if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+
+                <span class="cov0" title="0">publisher := publisher.NewPublisher()
+                random := random.NewRandom()
+
+                productRepository := productRepo.NewPostgreSQLHTTPRepository(DB)
+                transactionRepository := transactionRepo.NewPostgreSQLHTTPRepository(DB, publisher, random)
+                voucherRepository := voucherRepo.NewPostgreSQLHTTPRepository(DB)
+
+                productUsecase := productUsecase.NewDBHTTPUsecase(productRepository)
+                transactionUsecase := transactionUsecase.NewDBHTTPUsecase(transactionRepository, productRepository, voucherRepository)
+                voucherUsecase := voucherUsecase.NewDBHTTPUsecase(voucherRepository)
+
+                productHandler := product.NewGinDBHTTPHandler(productUsecase)
+                transactionHandler := transaction.NewGinDBHTTPHandler(transactionUsecase)
+                voucherHandler := voucher.NewGinDBHTTPHandler(voucherUsecase)
+
+                DBGinHTTPServer(config, productHandler, transactionHandler, voucherHandler)</span>
+        case "postgresql-gin":<span class="cov0" title="0">                
+                db, err := client.NewConnection(client.Database).GetDBConnection()
+                if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+
+                <span class="cov0" title="0">publisher := publisher.NewPublisher()
+                random := random.NewRandom()
+
+                productRepository := productRepo.NewPostgreSQLHTTPRepository(db)
+                transactionRepository := transactionRepo.NewPostgreSQLHTTPRepository(db, publisher, random)
+                voucherRepository := voucherRepo.NewPostgreSQLHTTPRepository(db)
+
+                productUsecase := productUsecase.NewDBHTTPUsecase(productRepository)
+                transactionUsecase := transactionUsecase.NewDBHTTPUsecase(transactionRepository, productRepository, voucherRepository)
+                voucherUsecase := voucherUsecase.NewDBHTTPUsecase(voucherRepository)
+
+                productHandler := product.NewGinDBHTTPHandler(productUsecase)
+                transactionHandler := transaction.NewGinDBHTTPHandler(transactionUsecase)
+                voucherHandler := voucher.NewGinDBHTTPHandler(voucherUsecase)
+
+                DBGinHTTPServer(config, productHandler, transactionHandler, voucherHandler)</span>
+        case "mysql" :<span class="cov0" title="0">
+                db, err := client.NewConnection(client.Database).GetDBConnection()
+                if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+
+                <span class="cov0" title="0">random := random.NewRandom()
+
+                productRepository := productRepo.NewMySQLHTTPRepository(db)
+                transactionRepository := transactionRepo.NewMySQLHTTPRepository(db, random)
+                voucherRepository := voucherRepo.NewMySQLHTTPRepository(db)
+                
+                productUsecase := productUsecase.NewDBHTTPUsecase(productRepository)
+                transactionUsecase := transactionUsecase.NewDBHTTPUsecase(transactionRepository, productRepository, voucherRepository)
+                voucherUsecase := voucherUsecase.NewDBHTTPUsecase(voucherRepository)
+
+                productHandler := product.NewDBHTTPHandler(productUsecase)
+                transactionHandler := transaction.NewDBHTTPHandler(transactionUsecase)
+                voucherHandler := voucher.NewDBHTTPHandler(voucherUsecase)
+
+                DBHTTPServer(config, productHandler, transactionHandler, voucherHandler)</span>
+        case "postgresql" :<span class="cov0" title="0">
+                db, err := client.NewConnection(client.Database).GetDBConnection()
+                if err != nil </span><span class="cov0" title="0">{
+                        panic(err)</span>
+                }
+                
+                <span class="cov0" title="0">publisher := publisher.NewPublisher()
+                random := random.NewRandom()
+
+                productRepository := productRepo.NewPostgreSQLHTTPRepository(db)
+                transactionRepository := transactionRepo.NewPostgreSQLHTTPRepository(db, publisher, random)
+                voucherRepository := voucherRepo.NewPostgreSQLHTTPRepository(db)
+                
+                productUsecase := productUsecase.NewDBHTTPUsecase(productRepository)
+                transactionUsecase := transactionUsecase.NewDBHTTPUsecase(transactionRepository, productRepository, voucherRepository)
+                voucherUsecase := voucherUsecase.NewDBHTTPUsecase(voucherRepository)
+
+                productHandler := product.NewDBHTTPHandler(productUsecase)
+                transactionHandler := transaction.NewDBHTTPHandler(transactionUsecase)
+                voucherHandler := voucher.NewDBHTTPHandler(voucherUsecase)
+
+                DBHTTPServer(config, productHandler, transactionHandler, voucherHandler)</span>
+        case "json":<span class="cov0" title="0">
+                productRepository := productRepo.NewJsonRepository()
+                transactionRepository := transactionRepo.NewJsonRepository()
+                voucherRepository := voucherRepo.NewJsonRepository()
+
+                productHandler := product.NewJsonHTTPHandler(productRepository)
+                transactionHandler := transaction.NewJsonHTTPHandler(transactionRepository, productRepository, voucherRepository)
+                voucherHandler := voucher.NewJsonHTTPHandler(voucherRepository)
+
+                JsonHTTPServer(config, productHandler, transactionHandler, voucherHandler)</span>
+        case "cli":<span class="cov0" title="0">
+                productRepository := productRepo.NewCLIRepository()
+                transactionRepository := transactionRepo.NewCLIRepository()
+                voucherRepository := voucherRepo.NewCLIRepository()
+
+                productHandler := product.NewJsonHTTPHandler(productRepository)
+                transactionHandler := transaction.NewJsonHTTPHandler(transactionRepository, productRepository, voucherRepository)
+                voucherHandler := voucher.NewJsonHTTPHandler(voucherRepository)
+
+                Menu(productHandler, transactionHandler, voucherHandler)</span>
+        }
+}
+
+func DBGinHTTPServer(config *config.Config,productHandler product.GinHandlerer, transactionHandler transaction.GinHandlerer, voucherHandler voucher.GinHandlerer) <span class="cov0" title="0">{
+        r := gin.Default()
+        r.Use(middleware.HeaderVerificationMiddleware)
+
+        r1 := r.Group("/product")
+        r1.GET("/", productHandler.GetList)
+        r1.POST("/", productHandler.Create)
+
+        r2 := r.Group("/transaction")
+        r2.GET("/", transactionHandler.GetTransactionByNumber)
+        r2.POST("/", transactionHandler.CreateBulkTransactionDetail)
+
+        r3 := r.Group("/voucher")
+        r3.GET("/", voucherHandler.GetList)
+        r3.POST("/", voucherHandler.Create)
+
+        r.Run(config.Port)
+}</span>
+
+func DBHTTPServer(config *config.Config, productHandler product.Handlerer, transactionHandler transaction.Handlerer, voucherHandler voucher.Handlerer) <span class="cov0" title="0">{
+        mux := http.NewServeMux()
+        mux.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                if r.Method == "GET" </span><span class="cov0" title="0">{
+                        productHandler.GetList(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == "POST" </span><span class="cov0" title="0">{
+                        productHandler.Create(w, r)
+                }</span>
+        })
+        <span class="cov0" title="0">mux.HandleFunc("/voucher", func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                if r.Method == http.MethodGet </span><span class="cov0" title="0">{
+                        voucherHandler.GetList(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == http.MethodPost </span><span class="cov0" title="0">{
+                        voucherHandler.Create(w, r)
+                }</span>
+        })
+        <span class="cov0" title="0">mux.HandleFunc("/transaction", func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                if r.Method == http.MethodGet </span><span class="cov0" title="0">{
+                        transactionHandler.GetTransactionByNumber(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == http.MethodPost </span><span class="cov0" title="0">{
+                        transactionHandler.CreateBulkTransactionDetail(w, r)
+                }</span>
+        })
+
+        <span class="cov0" title="0">middleware := middleware.Use(middleware.LoggingMiddleware(mux))
+
+        server := http.Server{
+                Addr: config.Port,
+                Handler: middleware[0],
+        }
+
+        fmt.Println("Server running on", server.Addr)
+        err := server.ListenAndServe()
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err.Error())</span>
+        } else<span class="cov0" title="0"> {
+                fmt.Println("Test")
+        }</span>
+}
+
+func JsonHTTPServer(config *config.Config, productHandler product.Handlerer, transactionHandler transaction.Handlerer, voucherHandler voucher.Handlerer) <span class="cov0" title="0">{
+        mux := http.NewServeMux()
+        mux.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                if r.Method == "GET" </span><span class="cov0" title="0">{
+                        productHandler.GetList(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == "POST" </span><span class="cov0" title="0">{
+                        productHandler.Create(w, r)
+                }</span>
+        })
+        <span class="cov0" title="0">mux.HandleFunc("/voucher", func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                if r.Method == "GET" </span><span class="cov0" title="0">{
+                        voucherHandler.GetList(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == "POST"</span><span class="cov0" title="0">{
+                        voucherHandler.Create(w, r)
+                }</span>
+        })
+        <span class="cov0" title="0">mux.HandleFunc("/transaction", func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                if r.Method == "GET" </span><span class="cov0" title="0">{
+                        transactionHandler.GetTransactionByNumber(w, r)
+                }</span> else<span class="cov0" title="0"> if r.Method == "POST" </span><span class="cov0" title="0">{
+                        transactionHandler.CreateBulkTransactionDetail(w, r)
+                }</span>
+        })
+
+        // create struct server
+        <span class="cov0" title="0">server := http.Server{
+                Addr: config.Port,
+                Handler: mux,
+        }
+
+        fmt.Println("Server running on", server.Addr)
+        err := server.ListenAndServe()
+        if err != nil </span><span class="cov0" title="0">{
+                panic(err.Error())</span>
+        } else<span class="cov0" title="0"> if err == nil </span><span class="cov0" title="0">{
+                fmt.Println("Server running on", server.Addr)
+        }</span>
+}
+
+func Menu(productHandler product.Handlerer, transactionHandler transaction.Handlerer, voucherHandler voucher.Handlerer) <span class="cov0" title="0">{
+        var menu int64
+        fmt.Println("Choose menu")
+        fmt.Println("1. Add New Product")
+        fmt.Println("2. Add New Voucher")
+        fmt.Println("3. Buy a Product")
+        fmt.Println("4. Show List of Product")
+        fmt.Println("5. Show List of Voucher")
+        fmt.Println("6. Show List of Transaction")
+        fmt.Println("7. Get Transaction Detail By Transaction Number")
+        fmt.Println("8. Exit")
+        fmt.Println("Input menu : ")
+        fmt.Scanln(&amp;menu)
+
+        w := new(http.ResponseWriter)
+        r := new(*http.Request)
+        switch menu </span>{
+        case 1:<span class="cov0" title="0">
+                productHandler.Create(*w, *r)
+                clearscreen.ClearScreeen()
+                Menu(productHandler, transactionHandler, voucherHandler)</span>
+        case 2:<span class="cov0" title="0">
+                voucherHandler.Create(*w, *r)
+                clearscreen.ClearScreeen()
+                Menu(productHandler, transactionHandler, voucherHandler)</span>
+        case 3:<span class="cov0" title="0">
+                transactionHandler.CreateBulkTransactionDetail(*w, *r)
+                clearscreen.ClearScreeen()
+                Menu(productHandler, transactionHandler, voucherHandler)</span>
+        case 4:<span class="cov0" title="0">
+                productHandler.GetList(*w, *r)
+                clearscreen.ClearScreeen()
+                Menu(productHandler, transactionHandler, voucherHandler)</span>
+        case 5:<span class="cov0" title="0">
+                voucherHandler.GetList(*w, *r)
+                clearscreen.ClearScreeen()
+                Menu(productHandler, transactionHandler, voucherHandler)</span>
+        case 6:<span class="cov0" title="0">
+                transactionHandler.GetTransactionByNumber(*w, *r)
+                clearscreen.ClearScreeen()
+                Menu(productHandler, transactionHandler, voucherHandler)</span>
+        case 7:<span class="cov0" title="0">
+                // Conventionally, code zero indicates success, non-zero an error.
+                os.Exit(1)</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package product
+
+import (
+        "sales-go/model"
+
+        "github.com/stretchr/testify/mock"
+)
+
+type RepoMock struct{
+        mock.Mock
+}
+
+func NewProductRepoMock() *RepoMock <span class="cov8" title="1">{
+        return &amp;RepoMock{}
+}</span>
+
+func (m *RepoMock) GetList() (listProduct []model.Product, err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called()
+        listProduct = ret.Get(0).([]model.Product)
+        err = ret.Error(1)
+        return listProduct, err
+}</span>
+
+func (m *RepoMock) GetProductByName(name string) (productData model.Product, err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(name)
+        productData = ret.Get(0).(model.Product)
+        err = ret.Error(1)
+        return productData, err
+}</span>
+
+func (m *RepoMock) Create(req []model.ProductRequest) (result []model.Product, err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(req)
+        result = ret.Get(0).([]model.Product)
+        err = ret.Error(1)
+        return result, err
+}</span>
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package publisher
+
+import (
+        "github.com/stretchr/testify/mock"
+)
+
+type PublisherMock struct {
+        mock.Mock
+}
+
+func NewPublisher() *PublisherMock <span class="cov8" title="1">{
+        return &amp;PublisherMock{}
+}</span>
+
+func (m *PublisherMock) Publish(body interface{}) (err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(body)
+        err = ret.Error(0)
+        return
+}</span>
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package random
+
+import (
+        "github.com/stretchr/testify/mock"
+)
+
+type RandomMock struct {
+        mock.Mock
+}
+
+func NewRandom() *RandomMock <span class="cov8" title="1">{
+        return &amp;RandomMock{}
+}</span>
+
+func (m *RandomMock) RandomString(length int) (int, error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(length)
+        randomNumber := ret.Get(0).(int)
+        err := ret.Error(1)
+        return randomNumber, err
+}</span>
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">package transaction
+
+import (
+        "sales-go/model"
+
+        "github.com/stretchr/testify/mock"
+)
+
+type RepoMock struct{
+        mock.Mock
+}
+
+func NewTransactionRepoMock() *RepoMock <span class="cov8" title="1">{
+        return &amp;RepoMock{}
+}</span>
+
+func (m *RepoMock) GetTransactionByNumber(transactionNumber int) (result []model.TransactionDetail, err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(transactionNumber)
+        result = ret.Get(0).([]model.TransactionDetail)
+        err = ret.Error(1)
+        return result, err
+}</span>
+
+func (m *RepoMock) CreateBulkTransactionDetail(voucher model.VoucherRequest, listTransactionDetail []model.TransactionDetail, req model.TransactionDetailBulkRequest) (res []model.TransactionDetail, err error) <span class="cov8" title="1">{// sebagai indikator parameter diperoleh
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(voucher, listTransactionDetail, req)
+        res = ret.Get(0).([]model.TransactionDetail)
+        err = ret.Error(1)
+        return res, err
+}</span>
+</pre>
+		
+		<pre class="file" id="file26" style="display: none">package voucher
+
+import (
+        "sales-go/model"
+
+        "github.com/stretchr/testify/mock"
+)
+
+type RepoMock struct{
+        mock.Mock
+}
+
+func NewVoucherRepoMock() *RepoMock <span class="cov8" title="1">{
+        return &amp;RepoMock{}
+}</span>
+
+
+func (m *RepoMock) GetList() (listVoucher []model.Voucher, err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called()
+        listVoucher = ret.Get(0).([]model.Voucher)
+        err = ret.Error(1)
+        return listVoucher, err
+}</span>
+
+func (m *RepoMock) GetVoucherByCode(code string) (voucherData model.Voucher, err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(code)
+        voucherData = ret.Get(0).(model.Voucher)
+        err = ret.Error(1)
+        return voucherData, err
+}</span>
+
+func (m *RepoMock) Create(req []model.VoucherRequest) (response []model.Voucher, err error) <span class="cov8" title="1">{
+        // sebagai indikator parameter diperoleh
+        ret := m.Called(req)
+        response = ret.Get(0).([]model.Voucher)
+        err = ret.Error(1)
+        return response, err
+}</span>
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">package publisher
+
+import (
+        "context"
+        "encoding/json"
+        "fmt"
+        "log"
+        "time"
+
+        "sales-go/config"
+        amqp "github.com/rabbitmq/amqp091-go"
+)
+
+type publisher struct {
+}
+
+func NewPublisher() *publisher <span class="cov0" title="0">{
+        return &amp;publisher{}
+}</span>
+
+type PublisherInterface interface {
+        Publish(body interface{}) (err error)
+}
+
+func (p *publisher) Publish(body interface{}) (err error) <span class="cov0" title="0">{
+        config, err := config.LoadConfig()
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("failed to load config")
+                return
+        }</span>
+
+        <span class="cov0" title="0">conn, err := amqp.Dial(config.RabbitMQURL)
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("failed to connect to RabbitMQ")
+                return
+        }</span>
+        <span class="cov0" title="0">defer conn.Close()
+
+        ch, err := conn.Channel()
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("failed to open a channel")
+                return
+        }</span>
+        <span class="cov0" title="0">defer ch.Close()
+
+        q, err := ch.QueueDeclare(
+                "create_transaction", // name
+                true,         // durable
+                false,        // auto delete queue when unused
+                false,        // exclusive
+                false,        // no-wait
+                nil,          // arguments
+        )
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("failed to declare a queue")
+                return
+        }</span>
+        <span class="cov0" title="0">ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+        defer cancel()
+
+        jsonByte, err := json.Marshal(body)
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("error marshal")
+                return
+        }</span>
+
+        <span class="cov0" title="0">err = ch.PublishWithContext(ctx,
+                "",             // exchange
+                q.Name,         // routing key
+                false,          // mandatory
+                false,                // immediate
+                amqp.Publishing{
+                        DeliveryMode: amqp.Persistent,
+                        ContentType:  "text/plain",
+                        Body:         jsonByte,
+                })
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("failed to publish a message")
+                return
+        }</span>
+
+        <span class="cov0" title="0">log.Printf(" [x] Sent %s", body)
+        return</span>
+}</pre>
+		
+		<pre class="file" id="file28" style="display: none">package product
+
+import (
+        "errors"
+        "sales-go/model"
+)
+
+type repositorycli struct {}
+
+func NewCLIRepository() *repositorycli <span class="cov0" title="0">{
+        return &amp;repositorycli{}
+}</span>
+
+func (repo *repositorycli) GetList() (listProduct []model.Product, err error) <span class="cov0" title="0">{
+        return model.ProductSlice, nil
+}</span>
+
+func (repo *repositorycli) GetProductByName(name string) (productData model.Product, err error) <span class="cov0" title="0">{
+        for _, v := range model.ProductSlice </span><span class="cov0" title="0">{
+                if v.Name == name </span><span class="cov0" title="0">{
+                        productData = v
+                }</span>
+        }
+
+        <span class="cov0" title="0">emptyStruct := model.Product{}
+        if productData == emptyStruct </span><span class="cov0" title="0">{
+                err = errors.New("product not found")
+                return
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositorycli) Create(req []model.ProductRequest) (result []model.Product, err error) <span class="cov0" title="0">{
+        for _, v := range req </span><span class="cov0" title="0">{
+                newData := model.Product{
+                        Id:    len(model.ProductSlice) + 1,
+                        Name:  v.Name,
+                        Price: v.Price,
+                }
+                model.ProductSlice = append(model.ProductSlice, newData)
+                result = append(result, newData)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}</pre>
+		
+		<pre class="file" id="file29" style="display: none">package product
+
+import (
+        "encoding/json"
+        "errors"
+        "fmt"
+        "os"
+        "sales-go/model"
+)
+
+type repositoryjson struct{}
+
+func NewJsonRepository() *repositoryjson <span class="cov0" title="0">{
+        return &amp;repositoryjson{}
+}</span>
+
+func (repo *repositoryjson) getLastID() (lastID int, err error) <span class="cov0" title="0">{
+        listProduct, err := repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">if len(listProduct) == 0 </span><span class="cov0" title="0">{
+                lastID = 0
+        }</span> else<span class="cov0" title="0"> {
+                lastID = len(listProduct)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryjson) GetList() (listProduct []model.Product, err error) <span class="cov0" title="0">{
+        reader, err := os.Open("data/product.json")
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("[ERROR] os open product json : %s", err.Error())
+                return
+        }</span>
+
+        <span class="cov0" title="0">decoder := json.NewDecoder(reader)
+        decoder.Decode(&amp;listProduct)
+
+        return</span>
+}
+
+func (repo *repositoryjson) updateJSON(listProduct []model.Product) (err error) <span class="cov0" title="0">{
+        writerJson, err := os.Create("data/product.json")
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("[ERROR] os create product json : %s", err.Error())
+                return
+        }</span>
+        <span class="cov0" title="0">encodeToJson := json.NewEncoder(writerJson)
+        encodeToJson.Encode(listProduct)
+
+        writeTxt, err := os.Create("data/product.txt")
+        if err != nil </span><span class="cov0" title="0">{
+                err = fmt.Errorf("[ERROR] os create product txt : %s", err.Error())
+                return
+        }</span>
+        <span class="cov0" title="0">encodeToTxt := json.NewEncoder(writeTxt)
+        encodeToTxt.Encode(listProduct)
+
+        return</span>
+}
+
+func (repo *repositoryjson) GetProductByName(name string) (productData model.Product, err error) <span class="cov0" title="0">{
+        listProduct, err := repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, v := range listProduct </span><span class="cov0" title="0">{
+                if v.Name == name </span><span class="cov0" title="0">{
+                        productData = v
+                }</span>
+        }
+
+        <span class="cov0" title="0">emptyStruct := model.Product{}
+        if productData == emptyStruct </span><span class="cov0" title="0">{
+                err = errors.New("product not found")
+                return
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryjson) Create(req []model.ProductRequest) (result []model.Product, err error) <span class="cov0" title="0">{
+        listProduct, err := repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">lastID, err := repo.getLastID()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for i, v := range req </span><span class="cov0" title="0">{
+                newProduct := model.Product{
+                        Id:    lastID + 1 + i,
+                        Name:  v.Name,
+                        Price: v.Price,
+                }
+                listProduct = append(listProduct, newProduct)
+                result = append(result, newProduct)
+        }</span>
+
+        <span class="cov0" title="0">err = repo.updateJSON(listProduct)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">return</span>
+}
+</pre>
+		
+		<pre class="file" id="file30" style="display: none">package product
+
+import (
+        "context"
+        "database/sql"
+        "sales-go/model"
+        "time"
+)
+
+type repositoryhttpmysql struct {
+        db *sql.DB        
+}
+
+func NewMySQLHTTPRepository(db *sql.DB) *repositoryhttpmysql <span class="cov0" title="0">{
+        return &amp;repositoryhttpmysql{
+                db: db,
+        }
+}</span>
+
+func (repo *repositoryhttpmysql) GetList() (listProduct []model.Product, err error) <span class="cov0" title="0">{
+        defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+        defer cancel()
+
+        query := `SELECT id, name, price FROM product`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := stmt.QueryContext(ctx)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for res.Next() </span><span class="cov0" title="0">{
+                var temp model.Product
+                res.Scan(&amp;temp.Id, &amp;temp.Name, &amp;temp.Price)
+
+                listProduct = append(listProduct, temp)
+        }</span>
+
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryhttpmysql) GetProductByName(name string) (productData model.Product, err error) <span class="cov0" title="0">{
+        defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+        defer cancel()
+
+        query := `SELECT id, name, price FROM product WHERE name = ?`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := stmt.QueryContext(ctx, name)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for res.Next() </span><span class="cov0" title="0">{
+                res.Scan(&amp;productData.Id, &amp;productData.Name, &amp;productData.Price)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryhttpmysql) Create(req []model.ProductRequest) (result []model.Product, err error) <span class="cov0" title="0">{
+        defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        trx, err := repo.db.BeginTx(ctx, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">query := `INSERT INTO product (name, price) VALUES (?, ?)`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+        
+        <span class="cov0" title="0">for _, v := range req </span><span class="cov0" title="0">{
+                res, err := stmt.ExecContext(ctx, v.Name, v.Price)
+                if err != nil </span><span class="cov0" title="0">{
+                        trx.Rollback()
+                        return []model.Product{}, err
+                }</span>
+
+                <span class="cov0" title="0">lastID, err := res.LastInsertId()
+                if err != nil </span><span class="cov0" title="0">{
+                        return []model.Product{}, err
+                }</span>
+
+                <span class="cov0" title="0">result = append(result, model.Product{
+                        Id:    int(lastID),
+                        Name:  v.Name,
+                        Price: v.Price,
+                })</span>
+        }
+
+        <span class="cov0" title="0">trx.Commit()
+
+        return</span>
+}
+</pre>
+		
+		<pre class="file" id="file31" style="display: none">package product
+
+import (
+        "context"
+        "database/sql"
+        "sales-go/model"
+        "time"
+)
+
+type repositoryhttppostgresql struct {
+        db *sql.DB
+}
+
+func NewPostgreSQLHTTPRepository(db *sql.DB) *repositoryhttppostgresql <span class="cov8" title="1">{
+        return &amp;repositoryhttppostgresql{
+                db: db,
+        }
+}</span>
+
+func (repo *repositoryhttppostgresql) GetList() (listProduct []model.Product, err error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+        defer cancel()
+
+        query := `SELECT id, name, price FROM product`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">res, err := stmt.QueryContext(ctx)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">for res.Next() </span><span class="cov8" title="1">{
+                var temp model.Product
+                res.Scan(&amp;temp.Id, &amp;temp.Name, &amp;temp.Price)
+
+                listProduct = append(listProduct, temp)
+        }</span>
+
+        <span class="cov8" title="1">return</span>
+}
+
+func (repo *repositoryhttppostgresql) GetProductByName(name string) (productData model.Product, err error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+        defer cancel()
+
+        query := `SELECT id, name, price FROM product WHERE name = $1`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">res, err := stmt.QueryContext(ctx, name)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">for res.Next() </span><span class="cov8" title="1">{
+                res.Scan(&amp;productData.Id, &amp;productData.Name, &amp;productData.Price)
+        }</span>
+        <span class="cov8" title="1">return</span>
+}
+
+func (repo *repositoryhttppostgresql) Create(req []model.ProductRequest) (result []model.Product, err error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        trx, err := repo.db.BeginTx(ctx, nil)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">query := `INSERT INTO product (name, price) VALUES ($1, $2) RETURNING id, name, price`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+        
+        <span class="cov8" title="1">for _, v := range req </span><span class="cov8" title="1">{
+                var temp model.Product
+                err = stmt.QueryRowContext(ctx, v.Name, v.Price).Scan(&amp;temp.Id, &amp;temp.Name, &amp;temp.Price)
+                if err != nil </span><span class="cov8" title="1">{
+                        trx.Rollback()
+                        return []model.Product{}, err
+                }</span>
+                <span class="cov8" title="1">result = append(result, temp)</span>
+        }
+
+        <span class="cov8" title="1">trx.Commit()
+
+        return</span>
+}
+</pre>
+		
+		<pre class="file" id="file32" style="display: none">package transaction
+
+import (
+        "errors"
+        "math/rand"
+        "sales-go/model"
+        "time"
+)
+
+type repositorycli struct {}
+
+func NewCLIRepository() *repositorycli <span class="cov0" title="0">{
+        return &amp;repositorycli{}
+}</span>
+
+func (repo *repositorycli) getLastID() (lastID int, err error) <span class="cov0" title="0">{
+        if len(model.TransactionDetailSlice) == 0 </span><span class="cov0" title="0">{
+                lastID = 0
+        }</span> else<span class="cov0" title="0"> {
+                lastID = len(model.TransactionDetailSlice)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositorycli) GetTransactionByNumber(transactionNumber int) (listSelectedTransaction []model.TransactionDetail, err error) <span class="cov0" title="0">{
+        for _, v := range model.TransactionDetailSlice </span><span class="cov0" title="0">{
+                if  v.Transaction.TransactionNumber == transactionNumber </span><span class="cov0" title="0">{
+                        listSelectedTransaction = append(listSelectedTransaction, v)
+                }</span>
+        }
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositorycli) CreateBulkTransactionDetail(voucher model.VoucherRequest, listTransactionDetail []model.TransactionDetail, req model.TransactionDetailBulkRequest) (res []model.TransactionDetail, err error) <span class="cov0" title="0">{
+        lastID, err := repo.getLastID()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        // sum all quantity and total
+        <span class="cov0" title="0">var quantity int
+        var total float64
+        for _, item := range listTransactionDetail </span><span class="cov0" title="0">{
+                quantity = quantity + item.Quantity
+                total = total + item.Total
+        }</span>
+
+        // discount calculation
+        <span class="cov0" title="0">var discount float64
+        if total &gt; 300000 &amp;&amp; voucher.Persen &gt; 0 </span><span class="cov0" title="0">{
+                discount = voucher.Persen/100
+                total = total*(1-discount)
+        }</span>
+
+        <span class="cov0" title="0">if req.Pay &lt; total </span><span class="cov0" title="0">{
+                err = errors.New("pay must be &gt; total")
+                return
+        }</span>
+
+        // generate random integer
+        <span class="cov0" title="0">rand.Seed(time.Now().UnixNano())
+        randomInteger := rand.Intn(10000000000)        
+
+        for i, v := range listTransactionDetail </span><span class="cov0" title="0">{
+                newTransaction := model.TransactionDetail{
+                        Id:       lastID+i+1,
+                        Item:          v.Item,
+                        Price:          v.Price,
+                        Quantity: v.Quantity,
+                        Total:          v.Total,
+                        Transaction: model.Transaction{
+                                Id:                              lastID+1,
+                                TransactionNumber: randomInteger,
+                                Name:                             req.Name,
+                                Quantity:                    quantity,
+                                Discount:                    discount,
+                                Total:                             total,
+                                Pay:                             req.Pay,
+                        },
+                }
+                model.TransactionDetailSlice = append(model.TransactionDetailSlice, newTransaction)
+                res = append(res, newTransaction)
+        }</span>
+
+        <span class="cov0" title="0">return</span>
+}
+</pre>
+		
+		<pre class="file" id="file33" style="display: none">package transaction
+
+import (
+        "encoding/json"
+        "errors"
+        "fmt"
+        "math/rand"
+        "os"
+        "sales-go/model"
+        "time"
+)
+
+type repositoryjson struct {}
+
+func NewJsonRepository() *repositoryjson <span class="cov0" title="0">{
+        return &amp;repositoryjson{}
+}</span>
+
+func (repo *repositoryjson) getLastID() (lastID int, err error) <span class="cov0" title="0">{
+        listTransaction, err := repo.GetListTransactionDetail()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">if len(listTransaction) == 0 </span><span class="cov0" title="0">{
+                lastID = 0
+        }</span> else<span class="cov0" title="0"> {
+                lastID = len(listTransaction)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryjson) GetListTransactionDetail() (res []model.TransactionDetail, err error) <span class="cov0" title="0">{
+        reader, err := os.Open("data/transaction.json")
+        if err != nil </span><span class="cov0" title="0">{
+                err = errors.New(fmt.Sprintf("[ERROR] os open transaction detail json %s", err.Error()))
+                return
+        }</span>
+
+        <span class="cov0" title="0">decoder := json.NewDecoder(reader)
+        decoder.Decode(&amp;res)
+
+        return</span>
+}
+
+func (repo *repositoryjson) UpdateJSONTransactionDetail(req []model.TransactionDetail) (err error) <span class="cov0" title="0">{
+        writerJson, err := os.Create("data/transaction.json")
+        if err != nil </span><span class="cov0" title="0">{
+                err = errors.New(fmt.Sprintf("[ERROR] os create transaction json %s", err.Error()))
+                return
+        }</span>
+        <span class="cov0" title="0">encodeToJson := json.NewEncoder(writerJson)
+        encodeToJson.Encode(req)
+
+        writerTxt, err := os.Create("data/transaction.txt")
+        if err != nil </span><span class="cov0" title="0">{ 
+                err = errors.New(fmt.Sprintf("[ERROR] os create transaction txt %s", err.Error()))
+                return
+        }</span>
+        <span class="cov0" title="0">encodeToTxt := json.NewEncoder(writerTxt)
+        encodeToTxt.Encode(req)
+
+        return</span>
+}
+
+func (repo *repositoryjson) GetTransactionByNumber(transactionNumber int) (listSelectedTransaction []model.TransactionDetail, err error) <span class="cov0" title="0">{
+        listTransaction, err := repo.GetListTransactionDetail()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, v := range listTransaction </span><span class="cov0" title="0">{
+                if  v.Transaction.TransactionNumber == transactionNumber </span><span class="cov0" title="0">{
+                        listSelectedTransaction = append(listSelectedTransaction, v)
+                }</span>
+        }
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryjson) CreateBulkTransactionDetail(voucher model.VoucherRequest, listTransactionDetail []model.TransactionDetail, req model.TransactionDetailBulkRequest) (res []model.TransactionDetail, err error) <span class="cov0" title="0">{
+        listTransaction, err := repo.GetListTransactionDetail()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">lastID, err := repo.getLastID()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        // sum all quantity and total
+        <span class="cov0" title="0">var quantity int
+        var total float64
+        for _, item := range listTransactionDetail </span><span class="cov0" title="0">{
+                quantity = quantity + item.Quantity
+                total = total + item.Total
+        }</span>
+
+        // discount calculation
+        <span class="cov0" title="0">var discount float64
+        if total &gt; 300000 &amp;&amp; voucher.Persen &gt; 0 </span><span class="cov0" title="0">{
+                discount = voucher.Persen/100
+                total = total*(1-discount)
+        }</span>
+
+        <span class="cov0" title="0">if req.Pay &lt; total </span><span class="cov0" title="0">{
+                err = errors.New("pay must be &gt; total")
+                return
+        }</span>
+
+        // generate random integer
+        <span class="cov0" title="0">rand.Seed(time.Now().UnixNano())
+        randomInteger := rand.Intn(10000000000)        
+
+        for i, v := range listTransactionDetail </span><span class="cov0" title="0">{
+                newTransaction := model.TransactionDetail{
+                        Id:       lastID+i+1,
+                        Item:          v.Item,
+                        Price:          v.Price,
+                        Quantity: v.Quantity,
+                        Total:          v.Total,
+                        Transaction: model.Transaction{
+                                Id:                              lastID+1,
+                                TransactionNumber: randomInteger,
+                                Name:                             req.Name,
+                                Quantity:                    quantity,
+                                Discount:                    discount,
+                                Total:                             total,
+                                Pay:                             req.Pay,
+                        },
+                }
+                listTransaction = append(listTransaction, newTransaction)
+                res = append(res, newTransaction)
+
+                err = repo.UpdateJSONTransactionDetail(listTransaction)
+                if err != nil </span><span class="cov0" title="0">{
+                        return
+                }</span>
+        }
+
+        <span class="cov0" title="0">return</span>
+}
+</pre>
+		
+		<pre class="file" id="file34" style="display: none">package transaction
+
+import (
+        "context"
+        "database/sql"
+        "errors"
+        "fmt"
+        "time"
+
+        "sales-go/helpers/random"
+        "sales-go/model"
+)
+
+type repositoryhttpmysql struct {
+        db                 *sql.DB
+        random        random.RandomInterface
+}
+
+func NewMySQLHTTPRepository(db *sql.DB, random random.RandomInterface) *repositoryhttpmysql <span class="cov0" title="0">{
+        return &amp;repositoryhttpmysql{
+                db:         db,
+                random: random,
+        }
+}</span>
+
+func (repo *repositoryhttpmysql) GetTransactionByNumber(transactionNumber int) (result []model.TransactionDetail, err error) <span class="cov0" title="0">{
+        defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+        
+        query := `SELECT id, transaction_number, name, quantity, discount, total, pay FROM transaction WHERE transaction_number = ?`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := stmt.QueryContext(ctx, transactionNumber)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">var transaction model.Transaction
+        for res.Next() </span><span class="cov0" title="0">{
+                res.Scan(&amp;transaction.Id, &amp;transaction.TransactionNumber, &amp;transaction.Name, &amp;transaction.Quantity, &amp;transaction.Discount, &amp;transaction.Total, &amp;transaction.Pay)
+        }</span>
+
+        // GetTransactionDetail
+        <span class="cov0" title="0">query2 := `SELECT id, item, price, quantity, total FROM transaction_detail WHERE transaction_id = ?`
+        stmt2, err := repo.db.PrepareContext(ctx, query2)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">res2, err := stmt2.QueryContext(ctx, transaction.Id)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for res2.Next() </span><span class="cov0" title="0">{
+                var temp model.TransactionDetail
+                res2.Scan(&amp;temp.Id, &amp;temp.Item, &amp;temp.Price, &amp;temp.Quantity, &amp;temp.Total)
+                // append transaction in each of transaction detail
+                temp.Transaction = transaction
+                result = append(result, temp)
+        }</span>
+
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryhttpmysql) CreateBulkTransactionDetail(voucher model.VoucherRequest, listTransactionDetail []model.TransactionDetail, req model.TransactionDetailBulkRequest) (res []model.TransactionDetail, err error) <span class="cov0" title="0">{
+        // sum all quantity and total
+        var quantity int
+        var total float64
+        for _, item := range listTransactionDetail </span><span class="cov0" title="0">{
+                quantity = quantity + item.Quantity
+                total = total + item.Total
+        }</span>
+
+        // discount calculation
+        <span class="cov0" title="0">var discount float64
+        if total &gt; 300000 &amp;&amp; voucher.Persen &gt; 0 </span><span class="cov0" title="0">{
+                discount = voucher.Persen/100
+                total = total*(1-discount)
+        }</span>
+
+        <span class="cov0" title="0">if req.Pay &lt; total </span><span class="cov0" title="0">{
+                err = errors.New("pay must be &gt; total")
+                return
+        }</span>
+
+        // generate random integer
+        <span class="cov0" title="0">randomInteger, err := repo.random.RandomString(9)
+    if err != nil </span><span class="cov0" title="0">{
+        return
+    }</span>
+
+        <span class="cov0" title="0">defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        trx, err := repo.db.BeginTx(ctx, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">fmt.Println("PASS 1")
+        query := `INSERT INTO transaction (transaction_number, name, quantity, discount, total, pay) values (?, ?, ?, ?, ?, ?)`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">resInsert, err := stmt.ExecContext(ctx, randomInteger, req.Name, quantity, discount, total, req.Pay)
+        if err != nil </span><span class="cov0" title="0">{
+                trx.Rollback()
+                return
+        }</span>
+
+        <span class="cov0" title="0">lastIDTransaction, err := resInsert.LastInsertId()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">query2 := `INSERT INTO transaction_detail (transaction_id, item, price, quantity, total) values (?, ?, ?, ?, ?)`
+        stmt2, err := repo.db.PrepareContext(ctx, query2)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, v := range listTransactionDetail </span><span class="cov0" title="0">{
+                res2, err := stmt2.ExecContext(ctx, lastIDTransaction, v.Item, v.Price, v.Quantity, v.Total)
+                if err != nil </span><span class="cov0" title="0">{
+                        trx.Rollback()
+                        return []model.TransactionDetail{}, err
+                }</span>
+
+                <span class="cov0" title="0">lastID, err := res2.LastInsertId()
+                if err != nil </span><span class="cov0" title="0">{
+                        return []model.TransactionDetail{}, err
+                }</span>
+
+                <span class="cov0" title="0">newTransaction := model.TransactionDetail{
+                        Id:       int(lastID),
+                        Item:          v.Item,
+                        Price:          v.Price,
+                        Quantity: v.Quantity,
+                        Total:          v.Total,
+                        Transaction: model.Transaction{
+                                Id:                              int(lastIDTransaction),
+                                TransactionNumber: randomInteger,
+                                Name:                             req.Name,
+                                Quantity:                    quantity,
+                                Discount:                    discount,
+                                Total:                             total,
+                                Pay:                             req.Pay,
+                        },
+                }
+                res = append(res, newTransaction)</span>
+        }
+
+        <span class="cov0" title="0">trx.Commit()
+
+        return</span>
+}
+</pre>
+		
+		<pre class="file" id="file35" style="display: none">package transaction
+
+import (
+        "context"
+        "database/sql"
+        "fmt"
+        "errors"
+        "time"
+
+        "sales-go/helpers/random"
+        "sales-go/model"
+        "sales-go/publisher"
+)
+
+type repositoryhttppostgresql struct {        
+        db                         *sql.DB
+        publisher        publisher.PublisherInterface
+        random                random.RandomInterface
+}
+
+func NewPostgreSQLHTTPRepository(db *sql.DB, publisher publisher.PublisherInterface, random random.RandomInterface) *repositoryhttppostgresql <span class="cov8" title="1">{
+        return &amp;repositoryhttppostgresql{
+                db:                 db,
+                publisher:        publisher,
+                random:         random,
+        }
+}</span>
+
+func (repo *repositoryhttppostgresql) GetTransactionByNumber(transactionNumber int) (result []model.TransactionDetail, err error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        // GetTransaction
+        query := `SELECT id, transaction_number, name, quantity, discount, total, pay FROM transaction WHERE transaction_number = $1`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">res, err := stmt.QueryContext(ctx, transactionNumber)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">var transaction model.Transaction
+        for res.Next() </span><span class="cov8" title="1">{
+                res.Scan(&amp;transaction.Id, &amp;transaction.TransactionNumber, &amp;transaction.Name, &amp;transaction.Quantity, &amp;transaction.Discount, &amp;transaction.Total, &amp;transaction.Pay)
+        }</span>
+
+        // GetTransactionDetail
+        <span class="cov8" title="1">query2 := `SELECT id, item, price, quantity, total FROM transaction_detail WHERE transaction_id = $1`
+        stmt2, err := repo.db.PrepareContext(ctx, query2)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">res2, err := stmt2.QueryContext(ctx, transaction.Id)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">for res2.Next() </span><span class="cov8" title="1">{
+                var temp model.TransactionDetail
+                res2.Scan(&amp;temp.Id, &amp;temp.Item, &amp;temp.Price, &amp;temp.Quantity, &amp;temp.Total)
+                // append transaction in each of transaction detail
+                temp.Transaction = transaction
+                result = append(result, temp)
+        }</span>
+
+        <span class="cov8" title="1">return</span>
+}
+
+func (repo *repositoryhttppostgresql) CreateBulkTransactionDetail(voucher model.VoucherRequest, listTransactionDetail []model.TransactionDetail, req model.TransactionDetailBulkRequest) (res []model.TransactionDetail, err error) <span class="cov8" title="1">{
+        // generate random integer
+        randomInteger, err := repo.random.RandomString(9)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+        <span class="cov8" title="1">fmt.Println("RANDOM : ", randomInteger)
+
+        // sum all quantity and total
+        var quantity int
+        var total float64
+        for _, item := range listTransactionDetail </span><span class="cov8" title="1">{
+                quantity = quantity + item.Quantity
+                total = total + item.Total
+        }</span>
+
+        // discount calculation
+        <span class="cov8" title="1">var discount float64
+        if total &gt; 300000 &amp;&amp; voucher.Persen &gt; 0 </span><span class="cov8" title="1">{
+                discount = voucher.Persen/100
+                total = total*(1-discount)
+        }</span>
+
+        <span class="cov8" title="1">if req.Pay &lt; total </span><span class="cov8" title="1">{
+                err = errors.New("pay must be &gt; total")
+                return
+        }</span>
+        
+        <span class="cov8" title="1">data := model.TransactionRabbitMQData{
+                Name:                                        req.Name,
+                RandomInteger:                        randomInteger,
+                Quantity:                                quantity,
+                Total:                                        total,
+                Discount:                                discount,
+                Pay:                                        req.Pay,
+                ListTransactionDetail:        listTransactionDetail,
+        }
+
+        // publish data to RabbitMQ
+        err = repo.publisher.Publish(data)
+        if err != nil </span><span class="cov8" title="1">{
+                err = fmt.Errorf("error publish data to RabbitMQ : %s", err.Error())
+                return
+        }</span>
+
+        <span class="cov8" title="1">for _, v := range data.ListTransactionDetail </span><span class="cov8" title="1">{
+                res = append(res,  model.TransactionDetail{
+                        Item:          v.Item,
+                        Price:          v.Price,
+                        Quantity: v.Quantity,
+                        Total:          v.Total,
+                        Transaction: model.Transaction{
+                                TransactionNumber: data.RandomInteger,
+                                Name:                             data.Name,
+                                Quantity:                    data.Quantity,
+                                Discount:                    data.Discount,
+                                Total:                             data.Total,
+                                Pay:                             data.Pay,
+                        },
+                })
+        }</span>
+
+        <span class="cov8" title="1">return</span>
+}
+</pre>
+		
+		<pre class="file" id="file36" style="display: none">package voucher
+
+import (
+        "errors"
+        "sales-go/model"
+)
+
+type repositorycli struct {}
+
+func NewCLIRepository() *repositorycli <span class="cov0" title="0">{
+        return &amp;repositorycli{}
+}</span>
+
+func (repo *repositorycli) GetList() (listVoucher []model.Voucher, err error) <span class="cov0" title="0">{
+        return model.VoucherSlice, nil
+}</span>
+
+func (repo *repositorycli) GetVoucherByCode(code string) (voucherData model.Voucher, err error) <span class="cov0" title="0">{
+        for _, v := range model.VoucherSlice </span><span class="cov0" title="0">{
+                if v.Code == code </span><span class="cov0" title="0">{
+                        voucherData = v
+                }</span>
+        }
+
+        <span class="cov0" title="0">emptyStruct := model.Voucher{}
+        if voucherData == emptyStruct </span><span class="cov0" title="0">{
+                err = errors.New("voucher not found")
+                return
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositorycli) Create(req []model.VoucherRequest) (response []model.Voucher, err error) <span class="cov0" title="0">{
+        for _, v := range req </span><span class="cov0" title="0">{
+                newData := model.Voucher{
+                        Id:     len(model.VoucherSlice) + 1,
+                        Code:   v.Code,
+                        Persen: v.Persen,
+                }
+                model.VoucherSlice = append(model.VoucherSlice, newData)
+                response = append(response, newData)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}</pre>
+		
+		<pre class="file" id="file37" style="display: none">package voucher
+
+import (
+        "encoding/json"
+        "errors"
+        "fmt"
+        "os"
+        "sales-go/model"
+)
+
+type repositoryjson struct {}
+
+func NewJsonRepository() *repositoryjson <span class="cov0" title="0">{
+        return &amp;repositoryjson{}
+}</span>
+
+func (repo *repositoryjson) getLastID() (lastID int, err error) <span class="cov0" title="0">{
+        listVoucher, err := repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">if len(listVoucher) == 0 </span><span class="cov0" title="0">{
+                lastID = 0
+        }</span> else<span class="cov0" title="0"> {
+                lastID = len(listVoucher)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryjson) GetList() (listVoucher []model.Voucher, err error) <span class="cov0" title="0">{
+        reader, err := os.Open("data/voucher.json")
+        if err != nil </span><span class="cov0" title="0">{
+                err = errors.New(fmt.Sprintf("[ERROR] os open voucher json : %s", err.Error()))
+                return
+        }</span>
+        // Create new struct decoder
+        <span class="cov0" title="0">decoder := json.NewDecoder(reader)
+        // Decode reads the next JSON-encoded value from its, input and stores it in the value pointed to by v.
+        decoder.Decode(&amp;listVoucher)
+
+        return</span>
+}
+
+func (repo *repositoryjson) updateJSON(listVoucher []model.Voucher) (err error) <span class="cov0" title="0">{
+        writerJson, err := os.Create("data/voucher.json")
+        if err != nil </span><span class="cov0" title="0">{
+                err = errors.New(fmt.Sprintf("[ERROR] os create voucher txt : %s", err.Error()))
+                return
+        }</span>
+        <span class="cov0" title="0">encode := json.NewEncoder(writerJson)
+        encode.Encode(listVoucher)
+
+        writeTxt, err := os.Create("data/voucher.txt")
+        if err != nil </span><span class="cov0" title="0">{
+                err = errors.New(fmt.Sprintf("[ERROR] os create voucher txt : %s", err.Error()))
+                return
+        }</span>
+        <span class="cov0" title="0">encodeToTxt := json.NewEncoder(writeTxt)
+        encodeToTxt.Encode(listVoucher)
+
+        return</span>
+}
+
+func (repo *repositoryjson) GetVoucherByCode(code string) (voucherData model.Voucher, err error) <span class="cov0" title="0">{
+        listVoucher, err := repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, v := range listVoucher </span><span class="cov0" title="0">{
+                if v.Code == code </span><span class="cov0" title="0">{
+                        voucherData = v
+                }</span>
+        }
+
+        <span class="cov0" title="0">emptyStruct := model.Voucher{}
+        if voucherData == emptyStruct </span><span class="cov0" title="0">{
+                err = errors.New("voucher not found")
+                return
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryjson) Create(req []model.VoucherRequest) (response []model.Voucher, err error) <span class="cov0" title="0">{
+        listVoucher, err := repo.GetList()
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, v := range req </span><span class="cov0" title="0">{
+                lastID, err := repo.getLastID()
+                if err != nil </span><span class="cov0" title="0">{
+                        return []model.Voucher{}, err
+                }</span>
+
+                <span class="cov0" title="0">newData := model.Voucher{
+                        Id:     lastID + 1,
+                        Code:   v.Code,
+                        Persen: v.Persen,
+                }
+
+                listVoucher = append(listVoucher, newData)
+                response = listVoucher
+                
+                err = repo.updateJSON(listVoucher)
+                if err != nil </span><span class="cov0" title="0">{
+                        return []model.Voucher{}, err
+                }</span>
+        }
+
+        <span class="cov0" title="0">return</span>
+}
+</pre>
+		
+		<pre class="file" id="file38" style="display: none">package voucher
+
+import (
+        "fmt"
+        "context"
+        "database/sql"
+        "sales-go/model"
+        "time"
+)
+
+type repositoryhttpmysql struct {
+        db *sql.DB
+}
+
+func NewMySQLHTTPRepository(db *sql.DB) *repositoryhttpmysql <span class="cov0" title="0">{
+        return &amp;repositoryhttpmysql{
+                db: db,
+        }
+}</span>
+
+func (repo *repositoryhttpmysql) GetList() (listVoucher []model.Voucher, err error) <span class="cov0" title="0">{
+        defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        query := `SELECT id, code, persen FROM voucher`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := stmt.QueryContext(ctx)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for res.Next() </span><span class="cov0" title="0">{
+                var voucher model.Voucher
+                res.Scan(&amp;voucher.Id, &amp;voucher.Code, &amp;voucher.Persen)
+                fmt.Println(voucher)
+                listVoucher = append(listVoucher, voucher)
+        }</span>
+
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryhttpmysql) GetVoucherByCode(code string) (voucherData model.Voucher, err error) <span class="cov0" title="0">{
+        defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        query := `SELECT id, code, persen FROM voucher WHERE code = ?`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">res, err := stmt.QueryContext(ctx, code)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for res.Next() </span><span class="cov0" title="0">{
+                res.Scan(&amp;voucherData.Id, &amp;voucherData.Code, &amp;voucherData.Persen)
+        }</span>
+        <span class="cov0" title="0">return</span>
+}
+
+func (repo *repositoryhttpmysql) Create(req []model.VoucherRequest) (response []model.Voucher, err error) <span class="cov0" title="0">{
+        defer repo.db.Close()
+
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        trx, err := repo.db.BeginTx(ctx, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">query := `INSERT INTO voucher (code, persen) values (?, ?)`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+
+        <span class="cov0" title="0">for _, v := range req </span><span class="cov0" title="0">{
+                res, err := stmt.ExecContext(ctx, v.Code, v.Persen)
+                if err != nil </span><span class="cov0" title="0">{
+                        trx.Rollback()
+                        return []model.Voucher{}, err
+                }</span>
+
+                <span class="cov0" title="0">lastID, err := res.LastInsertId()
+                if err != nil </span><span class="cov0" title="0">{
+                        return []model.Voucher{}, err
+                }</span>
+
+                <span class="cov0" title="0">response = append(response, model.Voucher{
+                        Id:     int(lastID),
+                        Code:   v.Code,
+                        Persen: v.Persen,
+                })</span>
+        }
+
+        <span class="cov0" title="0">trx.Commit()
+
+        return</span>
+}
+</pre>
+		
+		<pre class="file" id="file39" style="display: none">package voucher
+
+import (
+        "context"
+        "database/sql"
+        "sales-go/model"
+        "time"
+)
+
+type repositoryhttppostgresql struct {
+        db *sql.DB
+}
+
+func NewPostgreSQLHTTPRepository(db *sql.DB) *repositoryhttppostgresql <span class="cov8" title="1">{
+        return &amp;repositoryhttppostgresql{
+                db: db,
+        }
+}</span>
+
+func (repo *repositoryhttppostgresql) GetList() (listVoucher []model.Voucher, err error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        query := `SELECT id, code, persen FROM voucher`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">res, err := stmt.QueryContext(ctx)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">for res.Next() </span><span class="cov8" title="1">{
+                var voucher model.Voucher
+                res.Scan(&amp;voucher.Id, &amp;voucher.Code, &amp;voucher.Persen)
+                listVoucher = append(listVoucher, voucher)
+        }</span>
+
+        <span class="cov8" title="1">return</span>
+}
+
+func (repo *repositoryhttppostgresql) GetVoucherByCode(code string) (voucherData model.Voucher, err error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        query := `SELECT id, code, persen FROM voucher WHERE code = $1`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">res, err := stmt.QueryContext(ctx, code)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">for res.Next() </span><span class="cov8" title="1">{
+                res.Scan(&amp;voucherData.Id, &amp;voucherData.Code, &amp;voucherData.Persen)
+        }</span>
+        <span class="cov8" title="1">return</span>
+}
+
+func (repo *repositoryhttppostgresql) Create(req []model.VoucherRequest) (response []model.Voucher, err error) <span class="cov8" title="1">{
+        ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+        defer cancel()
+
+        trx, err := repo.db.BeginTx(ctx, nil)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">query := `INSERT INTO voucher (code, persen) VALUES ($1, $2) RETURNING id, code, persen`
+        stmt, err := repo.db.PrepareContext(ctx, query)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">for _, v := range req </span><span class="cov8" title="1">{
+                var temp model.Voucher
+                err = stmt.QueryRowContext(ctx, v.Code, v.Persen).Scan(&amp;temp.Id, &amp;temp.Code, &amp;temp.Persen)
+                if err != nil </span><span class="cov8" title="1">{
+                        trx.Rollback()
+                        return []model.Voucher{}, err
+                }</span>
+                <span class="cov8" title="1">response = append(response, temp)</span>
+        }
+
+        <span class="cov8" title="1">trx.Commit()
+
+        return</span>
+}
+</pre>
+		
+		<pre class="file" id="file40" style="display: none">package product
+
+import (
+        "fmt"
+        "errors"
+        "sales-go/model"
+        "sales-go/repository/product"
+)
+
+type usecase struct {
+        repo product.Repositorier
+}
+
+func NewDBHTTPUsecase(repository product.Repositorier) *usecase <span class="cov8" title="1">{
+        return &amp;usecase{
+                repo: repository,
+        }
+}</span>
+
+func (uc *usecase) GetList() (response []model.Product, err error) <span class="cov8" title="1">{
+        return uc.repo.GetList()
+}</span>
+
+func (uc *usecase) GetProductByName(name string) (response model.Product, err error) <span class="cov8" title="1">{
+        response, err = uc.repo.GetProductByName(name)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">emptyStruct := model.Product{}
+        if response == emptyStruct </span><span class="cov8" title="1">{
+                err = errors.New("product not found")
+                return
+        }</span>
+        <span class="cov8" title="1">return</span>
+}
+
+func (uc *usecase) Create(req []model.ProductRequest) (response []model.Product, err error) <span class="cov8" title="1">{
+        for _, product := range req </span><span class="cov8" title="1">{
+                if product.Name == "" </span><span class="cov8" title="1">{
+                        err = fmt.Errorf("product %s : name should not be empty", product.Name)
+                        return
+                }</span> else<span class="cov8" title="1"> if product.Price &lt;= 0 </span><span class="cov8" title="1">{
+                        err = fmt.Errorf("product %s : price should be &gt; 0", product.Name)
+                        return
+                }</span> else<span class="cov8" title="1"> {
+                        _, err = uc.GetProductByName(product.Name)
+                        if err != nil </span><span class="cov8" title="1">{
+                                // product not found
+                                err = nil
+                                continue</span>
+                        } else<span class="cov8" title="1"> {
+                                fmt.Println("product already exist")
+                                err = fmt.Errorf("product %s already exist", product.Name)
+                                return
+                        }</span>
+                }
+        }
+
+        <span class="cov8" title="1">response, err = uc.repo.Create(req)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+        <span class="cov8" title="1">return</span>
+}</pre>
+		
+		<pre class="file" id="file41" style="display: none">package transaction
+
+import (
+        "errors"
+        "fmt"
+        "sales-go/model"
+        "sales-go/repository/product"
+        "sales-go/repository/transaction"
+        "sales-go/repository/voucher"
+)
+
+type usecase struct {
+        repo transaction.Repositorier
+        productrepo product.Repositorier
+        voucherrepo voucher.Repositorier
+}
+
+func NewDBHTTPUsecase(
+        repository transaction.Repositorier,
+        productrepository product.Repositorier,
+        voucherrepository voucher.Repositorier,
+) *usecase <span class="cov8" title="1">{
+        return &amp;usecase{
+                repo: repository,
+                productrepo: productrepository,
+                voucherrepo: voucherrepository,
+        }
+}</span>
+
+func (uc *usecase) GetTransactionByNumber(number int) (response []model.TransactionDetail, err error) <span class="cov8" title="1">{
+        if number &lt; 0 </span><span class="cov8" title="1">{
+                err = errors.New("id must be &gt; 0")
+                return
+        }</span>
+
+        <span class="cov8" title="1">response, err = uc.repo.GetTransactionByNumber(number)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+        <span class="cov8" title="1">return</span>
+}
+
+func (uc *usecase) CreateBulkTransactionDetail(voucherCode string, req model.TransactionDetailBulkRequest) (response []model.TransactionDetail, err error) <span class="cov8" title="1">{
+        listTransactionDetail := []model.TransactionDetail{}
+        for _, transaction := range req.Items </span><span class="cov8" title="1">{                
+                if transaction.Item == "" </span><span class="cov8" title="1">{
+                        err = fmt.Errorf("item transaction hould not be empty")
+                        return []model.TransactionDetail{}, err
+                }</span>
+
+                <span class="cov8" title="1">product, err := uc.productrepo.GetProductByName(transaction.Item)
+                if err != nil </span><span class="cov8" title="1">{
+                        return []model.TransactionDetail{}, err
+                }</span>
+        
+                <span class="cov8" title="1">if transaction.Quantity &lt; 1 </span><span class="cov8" title="1">{
+                        err = fmt.Errorf("quantity transaction should not be negative")
+                        return []model.TransactionDetail{}, err
+                }</span>
+
+                <span class="cov8" title="1">listTransactionDetail = append(listTransactionDetail, model.TransactionDetail{
+                        Item:     transaction.Item,
+                        Price:    product.Price,
+                        Quantity: transaction.Quantity,
+                        Total:    product.Price * float64(transaction.Quantity),
+                })</span>
+        }
+
+        <span class="cov8" title="1">var voucher model.VoucherRequest
+        if voucherCode != "" </span><span class="cov8" title="1">{
+                voucherData, err := uc.voucherrepo.GetVoucherByCode(voucherCode)
+                if err != nil </span><span class="cov8" title="1">{
+                        return []model.TransactionDetail{}, err
+                }</span> else<span class="cov8" title="1"> {
+                        voucher = model.VoucherRequest{
+                                Code:   voucherData.Code,
+                                Persen: voucherData.Persen,
+                        }
+                }</span>
+        }
+        
+        <span class="cov8" title="1">response, err = uc.repo.CreateBulkTransactionDetail(voucher, listTransactionDetail, req)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+        <span class="cov8" title="1">return</span>
+}</pre>
+		
+		<pre class="file" id="file42" style="display: none">package voucher
+
+import (
+        "errors"
+        "fmt"
+        "sales-go/model"
+        "sales-go/repository/voucher"
+)
+
+type usecase struct {
+        repo voucher.Repositorier
+}
+
+func NewDBHTTPUsecase(repository voucher.Repositorier) *usecase <span class="cov8" title="1">{
+        return &amp;usecase{
+                repo: repository,
+        }
+}</span>
+
+func (uc *usecase) GetList() (response []model.Voucher, err error) <span class="cov8" title="1">{
+        return uc.repo.GetList()
+}</span>
+
+func (uc *usecase) GetVoucherByCode(name string) (response model.Voucher, err error) <span class="cov8" title="1">{
+        response, err = uc.repo.GetVoucherByCode(name)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+
+        <span class="cov8" title="1">emptyStruct := model.Voucher{}
+        if response == emptyStruct</span><span class="cov8" title="1">{
+                err = errors.New("voucher not found")
+                return
+        }</span>
+        <span class="cov8" title="1">return</span>
+}
+
+func (uc *usecase) Create(req []model.VoucherRequest) (response []model.Voucher, err error) <span class="cov8" title="1">{
+        for _, voucher := range req </span><span class="cov8" title="1">{
+                if voucher.Code == "" </span><span class="cov8" title="1">{
+                        err = fmt.Errorf("voucher %s : code should not be empty", voucher.Code)
+                        return
+                }</span> else<span class="cov8" title="1"> if voucher.Persen &lt;= 0 </span><span class="cov8" title="1">{
+                        err = fmt.Errorf("voucher %s : persen should be &gt; 0", voucher.Code)
+                        return
+                }</span> else<span class="cov8" title="1"> {
+                        _, err = uc.GetVoucherByCode(voucher.Code)
+                        if err != nil </span><span class="cov8" title="1">{
+                                // product not found
+                                err = nil
+                                continue</span>
+                        } else<span class="cov8" title="1"> {
+                                fmt.Println(err)
+                                err = fmt.Errorf("voucher %s already exist", voucher.Code)
+                                return
+                        }</span>
+                }
+        }
+
+        <span class="cov8" title="1">response, err = uc.repo.Create(req)
+        if err != nil </span><span class="cov8" title="1">{
+                return
+        }</span>
+        <span class="cov8" title="1">return</span>
+}</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

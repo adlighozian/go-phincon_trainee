@@ -17,12 +17,13 @@ import (
 func main() {
 
 	db := db.GetConnection()
-	publish := publisher.NewPublisher()
 	random := helper.NewRandom()
+	publishPurchase := publisher.Newpurchase()
+	publishSales := publisher.NewSales()
 
 	repoProduct := product.NewProductRepository(db)
-	repoPurchase := purchase.NewPurchaseRepository(db, publish, random)
-	repoSales := sales.NewSalesRepository(db)
+	repoPurchase := purchase.NewPurchaseRepository(db, publishPurchase, random)
+	repoSales := sales.NewSalesRepository(db, publishSales, random)
 
 	purchase := service.NewPurchaseService(repoPurchase)
 	product := service.NewProductService(repoProduct)
@@ -40,8 +41,7 @@ func NewServer(controller controller.InventoryHandlerHttp) {
 	// middleware
 	r.Use(middleware.Logger())
 
-	r1 := r.Group("/inven")
-	r1.Use(middleware.CheckAuth())
+	r1 := r.Group("/inven", middleware.HeaderVerificationMiddleware)
 	// routes
 	r1.GET("/product", controller.ProductShow)
 	r1.POST("/purchase", controller.PurchaseInput)

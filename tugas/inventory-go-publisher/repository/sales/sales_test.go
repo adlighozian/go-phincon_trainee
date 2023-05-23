@@ -1,4 +1,4 @@
-package purchase
+package sales
 
 import (
 	"fmt"
@@ -20,8 +20,8 @@ type repoMock struct {
 	suite.Suite
 	mock          sqlmock.Sqlmock
 	DB            *gorm.DB
-	repo          PurchaseRepository
-	mockPubsliher *mocks.PurchaseMock
+	repo          SalesRepository
+	mockPubsliher *mocks.SalesMock
 	mockRandom    *mocks.RandomMock
 }
 
@@ -37,9 +37,9 @@ func (s *repoMock) SetupSuite() {
 	s.DB = gormDB
 
 	s.mockRandom = mocks.NewRandom()
-	s.mockPubsliher = mocks.NewPublisher()
+	s.mockPubsliher = mocks.NewSales()
 
-	s.repo = NewPurchaseRepository(s.DB, s.mockPubsliher, s.mockRandom)
+	s.repo = NewSalesRepository(s.DB, s.mockPubsliher, s.mockRandom)
 }
 
 // this function executes after all tests executed
@@ -59,11 +59,11 @@ func (s *repoMock) TearDownTest() {
 }
 
 // repository Product start
-func (s *repoMock) TestInputPurchase_Success() {
+func (s *repoMock) TestInputSales_Success() {
 	s.mockRandom.On("Randomizer").Return("548262741")
-	s.mockPubsliher.On("PubPurchase", mock.Anything).Return(nil)
+	s.mockPubsliher.On("PubSales", mock.Anything).Return(nil)
 
-	query := `select * from purchase p join purchase_detail pd on p.id = pd.purchase_id where order_number = $1`
+	query := `select * from sales p join sales_detail pd on p.id = pd.sales_id where order_number = $1`
 
 	row := sqlmock.NewRows([]string{"id"}).AddRow(1)
 
@@ -71,8 +71,8 @@ func (s *repoMock) TestInputPurchase_Success() {
 	s.mock.ExpectQuery(regexp.QuoteMeta(query)).WillReturnRows(row)
 	// s.mock.ExpectCommit()
 
-	res, err := s.repo.InputPurchase(
-		[]model.ReqPurchase{
+	res, err := s.repo.InputSales(
+		[]model.ReqSales{
 			{
 				Item:  "hp",
 				Price: 15000,
@@ -86,11 +86,11 @@ func (s *repoMock) TestInputPurchase_Success() {
 	require.NotEmpty(s.T(), res)
 }
 
-func (s *repoMock) TestInputPurchase_Error1() {
+func (s *repoMock) TestInputSales_Error1() {
 	s.mockRandom.On("Randomizer").Return("548262741")
-	s.mockPubsliher.On("PubPurchase", mock.Anything).Return(nil)
+	s.mockPubsliher.On("PubSales", mock.Anything).Return(nil)
 
-	query := `select * from purchase p join purchase_detail pd on p.id = pd.purchase_id where order_number = $1`
+	query := `select * from sales p join sales_detail pd on p.id = pd.sales_id where order_number = $1`
 
 	row := sqlmock.NewRows([]string{"id"}).AddRow(1)
 
@@ -98,8 +98,8 @@ func (s *repoMock) TestInputPurchase_Error1() {
 	s.mock.ExpectQuery(regexp.QuoteMeta(query)).WillReturnRows(row)
 	// s.mock.ExpectCommit()
 
-	res, err := s.repo.InputPurchase(
-		[]model.ReqPurchase{
+	res, err := s.repo.InputSales(
+		[]model.ReqSales{
 			{
 				Item:  "hp",
 				Price: 15000,
@@ -109,35 +109,35 @@ func (s *repoMock) TestInputPurchase_Error1() {
 		},
 	)
 
-	require.NoError(s.T(), err)
+	require.Error(s.T(), err)
 	require.Empty(s.T(), res)
 }
 
-func (s *repoMock) TestDetailPurchase_Success() {
+func (s *repoMock) TestDetailSales_Success() {
 
-	query := `select id from purchase where order_number = $1`
+	query := `select id from sales where order_number = $1`
 	row1 := sqlmock.NewRows([]string{"id"}).AddRow(1)
 
-	selectPurchaseDetail := `select * from purchase p join purchase_detail pd on p.id = pd.purchase_id where order_number = $1`
+	selectSalesDetail := `select * from sales p join sales_detail pd on p.id = pd.sales_id where order_number = $1`
 	row2 := sqlmock.NewRows([]string{"id"}).AddRow(1)
 
 	s.mock.ExpectQuery(regexp.QuoteMeta(query)).WillReturnRows(row1)
 
-	s.mock.ExpectQuery(regexp.QuoteMeta(selectPurchaseDetail)).WillReturnRows(row2)
+	s.mock.ExpectQuery(regexp.QuoteMeta(selectSalesDetail)).WillReturnRows(row2)
 
-	res, err := s.repo.DetailPurchase("1221")
+	res, err := s.repo.DetailSales("1221")
 	require.NoError(s.T(), err)
 	require.NotEmpty(s.T(), res)
 }
 
-func (s *repoMock) TestDetailPurchase_Error() {
+func (s *repoMock) TestDetailSales_Error() {
 
-	query := `select id from purchase where order_number = $1`
+	query := `select id from sales where order_number = $1`
 	row1 := sqlmock.NewRows([]string{"id"}).AddRow(0)
 
 	s.mock.ExpectQuery(regexp.QuoteMeta(query)).WillReturnRows(row1)
 
-	res, err := s.repo.DetailPurchase("1221")
+	res, err := s.repo.DetailSales("1221")
 	require.Error(s.T(), err)
 	require.Empty(s.T(), res)
 }

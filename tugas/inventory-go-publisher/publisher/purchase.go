@@ -10,18 +10,18 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-type publisher struct {
+type purchase struct {
 }
 
-func NewPublisher() *publisher {
-	return &publisher{}
+func Newpurchase() *purchase {
+	return &purchase{}
 }
 
-type PublisherInterface interface {
+type PurchaseInterface interface {
 	PubPurchase(body interface{}) error
 }
 
-func (p *publisher) PubPurchase(data interface{}) error {
+func (p *purchase) PubPurchase(data interface{}) error {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

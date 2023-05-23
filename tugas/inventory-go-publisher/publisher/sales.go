@@ -10,7 +10,18 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-func PubSales(data interface{}) {
+type sales struct {
+}
+
+func NewSales() *sales {
+	return &sales{}
+}
+
+type SalesInterface interface {
+	PubSales(body interface{}) error
+}
+
+func (r *sales) PubSales(data interface{}) error {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -53,4 +64,5 @@ func PubSales(data interface{}) {
 	middleware.FailError(err, "Failed to publish a message")
 	log.Printf(" [x] Sent")
 
+	return nil
 }

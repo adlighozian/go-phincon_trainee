@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"inventory/helper"
 	"inventory/helper/middleware"
 	"inventory/model"
 	"inventory/service"
@@ -25,13 +26,18 @@ func NewHandlerHttp(productService service.ProductService, purchaseService servi
 }
 
 func (handler *handlerHttp) Authentication(c *gin.Context) {
-	// token := "$2a$12$QUCKWQQYVLsvn663mnp9XuVnz7yei2qTsj/DhZkDDfH5qnf6Cfpti"
-	// c.Header("auth", token)
-	req := c.Request.Header.Get("auth")
-	if req != "adli" {
-		c.JSON(http.StatusOK, "gagal")
+
+	keyss := c.GetHeader("key")
+
+	err := helper.ComparePassword(keyss, "phincon")
+	if err != nil {
+		c.JSON(http.StatusOK, map[string]string{
+			"message": "Unauthorized",
+		})
 	} else {
-		c.JSON(http.StatusOK, "berhasil")
+		c.JSON(http.StatusOK, map[string]string{
+			"message": "authorized",
+		})
 	}
 
 }

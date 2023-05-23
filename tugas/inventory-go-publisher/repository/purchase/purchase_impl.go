@@ -14,11 +14,11 @@ import (
 
 type purchaseRepository struct {
 	db        *gorm.DB
-	publisher publisher.PublisherInterface
+	publisher publisher.PurchaseInterface
 	random    helper.RandomInterface
 }
 
-func NewPurchaseRepository(dbs *gorm.DB, publish publisher.PublisherInterface, randoms helper.RandomInterface) PurchaseRepository {
+func NewPurchaseRepository(dbs *gorm.DB, publish publisher.PurchaseInterface, randoms helper.RandomInterface) PurchaseRepository {
 	return &purchaseRepository{
 		db:        dbs,
 		publisher: publish,

@@ -13,12 +13,16 @@ import (
 )
 
 type salesRepository struct {
-	db *gorm.DB
+	db        *gorm.DB
+	publisher publisher.SalesInterface
+	random    helper.RandomInterface
 }
 
-func NewSalesRepository(dbs *gorm.DB) SalesRepository {
+func NewSalesRepository(dbs *gorm.DB, publish publisher.SalesInterface, randoms helper.RandomInterface) SalesRepository {
 	return &salesRepository{
-		db: dbs,
+		db:        dbs,
+		publisher: publish,
+		random:    randoms,
 	}
 }
 
@@ -37,12 +41,12 @@ func (r *salesRepository) InputSales(req []model.ReqSales) ([]model.SalesDetail,
 			Price:       v.Price,
 			From:        v.From,
 			Total:       v.Total,
-			OrderNumber: helper.NewRandom().Randomizer(),
+			OrderNumber: r.random.Randomizer(),
 		}
 		send = append(send, sending)
 	}
 
-	publisher.PubSales(send)
+	r.publisher.PubSales(send)
 
 	// get return
 	time.Sleep(1 * time.Second)
@@ -53,9 +57,9 @@ func (r *salesRepository) InputSales(req []model.ReqSales) ([]model.SalesDetail,
 		var returnP model.SalesReturn
 		r.db.Raw(selectSalesDetail, d.OrderNumber).Scan(&returnP)
 
-		if returnP.Id == 0 {
-			continue
-		}
+		// if returnP.Id == 0 {
+		// 	continue
+		// }
 
 		resultDetail := model.SalesDetail{
 			Id:       returnP.Id,

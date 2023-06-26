@@ -3,7 +3,6 @@ package service
 import (
 	"inventory/model"
 	"inventory/repository/sales"
-	"log"
 	"net/http"
 )
 
@@ -18,7 +17,6 @@ func NewSalesService(repo sales.SalesRepository) SalesService {
 }
 
 func (s *salesService) InputSales(req []model.ReqSales) (model.InventoryResponse, error) {
-	log.Println("sales service")
 	data, err := s.repository.InputSales(req)
 	if err != nil {
 		return model.InventoryResponse{
@@ -36,7 +34,6 @@ func (s *salesService) InputSales(req []model.ReqSales) (model.InventoryResponse
 }
 
 func (s *salesService) DetailSales(req string) (model.InventoryResponse, error) {
-	log.Println("sales service")
 	data, err := s.repository.DetailSales(req)
 	if err != nil {
 		return model.InventoryResponse{

@@ -1,0 +1,33 @@
+@startuml
+
+
+title User search product
+actor User
+hide footbox
+
+activate User
+User -> Home  ++ :search item or category
+Home -> Handler ++ : request data
+Handler -> Service ++ :ask for data specific item or category
+Service -> Repository ++ : do query to acquire data
+
+Repository --> Repository --++:validate
+
+Repository --> Service  : response success
+Service --> Handler  : return item from database
+Handler --> Home  : rerturn respons and data
+Home --> User   : respon status and data received
+
+Repository --> Service -- : response error
+Service --> Handler -- : return item from database
+Handler --> Home -- : rerturn respons and data
+Home --> User  -- : respon status and data received
+
+
+
+Repository -> User -- : retrive data success
+
+
+
+
+@enduml

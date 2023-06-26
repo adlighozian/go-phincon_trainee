@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func Logger() gin.HandlerFunc	 {
+func Logger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 
@@ -25,11 +25,11 @@ func Logger() gin.HandlerFunc	 {
 
 		// Proceed with the request handling
 		c.Next()
-
 		// Log the response information
 		logger.Info().
 			Int("statusCode", c.Writer.Status()).
 			Dur("responseTime", time.Since(start)).
 			Msg("Outgoing response")
+
 	}
 }

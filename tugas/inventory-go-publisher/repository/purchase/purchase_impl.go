@@ -27,8 +27,6 @@ func NewPurchaseRepository(dbs *gorm.DB, publish publisher.PurchaseInterface, ra
 }
 
 func (r *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.PurchaseDetail, error) {
-	log.Println("purchase repository")
-
 	var send []model.SendPurchase
 	var returns []model.PurchaseDetail
 
@@ -79,7 +77,6 @@ func (r *purchaseRepository) InputPurchase(req []model.ReqPurchase) ([]model.Pur
 }
 
 func (r *purchaseRepository) DetailPurchase(req string) (model.PurchaseDetail, error) {
-	log.Println("purchase repository")
 	log.Println(req)
 
 	var returnP model.PurchaseReturn

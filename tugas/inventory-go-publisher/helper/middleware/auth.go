@@ -59,7 +59,7 @@ func HeaderVerificationMiddleware(ginCtx *gin.Context) {
 		return
 	}
 
-	if response["message"] == "Unauthorized" {
+	if response["message"] == "Gagal" {
 		ginCtx.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}

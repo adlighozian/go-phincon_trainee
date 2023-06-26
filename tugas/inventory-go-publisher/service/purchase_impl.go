@@ -3,7 +3,6 @@ package service
 import (
 	"inventory/model"
 	"inventory/repository/purchase"
-	"log"
 	"net/http"
 )
 
@@ -18,7 +17,6 @@ func NewPurchaseService(repo purchase.PurchaseRepository) PurchaseService {
 }
 
 func (s *purchaseService) InputPurchase(req []model.ReqPurchase) (model.InventoryResponse, error) {
-	log.Println("purchase service")
 	data, err := s.repository.InputPurchase(req)
 	if err != nil {
 		return model.InventoryResponse{
@@ -36,7 +34,6 @@ func (s *purchaseService) InputPurchase(req []model.ReqPurchase) (model.Inventor
 }
 
 func (s *purchaseService) DetailPurchase(req string) (model.InventoryResponse, error) {
-	log.Println("purchase service")
 	data, err := s.repository.DetailPurchase(req)
 	if err != nil {
 		return model.InventoryResponse{

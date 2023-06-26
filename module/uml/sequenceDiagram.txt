@@ -1,0 +1,160 @@
+Get produuct
+@startuml
+actor User
+
+User-> App ++: Get Product by filter
+App -> Handler ++: Add filter request
+Handler -> Service ++: Request List of filter
+Service -> Repository ++: Request List of filter from Database
+
+Repository -> Service --: Return List of User Address
+Service -> Handler --: Return List of User Address
+Handler -> App --: List of product showed by filter
+
+deactivate App
+@enduml
+
+
+Product detail
+@startuml
+actor User
+
+User-> App ++: Get Product by product id
+App -> Handler ++: Add product id request
+Handler -> Service --++: Request product id
+
+Service -> Service --++: Validate
+Service --> App: Detail Product not Showed
+
+Service -> Repository ++: Request product id from Database
+
+Repository --> Service : Response Error
+Service --> Handler ++: Response Error
+Handler --> App : Detail Product not Showed
+
+Repository -> Service --: Return Detail Product
+Service -> Handler --: Return Detail Product
+Handler -> App --: Detail Product Showed
+
+deactivate App
+@enduml
+
+
+@startuml
+actor Admin
+
+Admin-> App ++: Add New Product
+App -> Handler ++: Request Create New Product
+Handler -> Service --++: Request Create New Product
+
+Service -> Service --++: Validate
+Service --> App: Create New Address Failed
+
+Service -> Repository ++: Request Create New Product from Database
+
+Repository --> Service : Response Error
+Service --> Handler ++: Response Error
+Handler --> App : Create New Address Failed
+
+Repository -> Service --: Return List of Detail Product
+Service -> Handler --: Return List of Detail Product
+Handler -> App --: List of Detail Product Showed
+
+deactivate App
+@enduml
+
+
+@startuml
+actor Admin
+
+Admin-> App ++: Update Product by Product id
+App -> Handler ++: Request Update Product by Product id
+Handler -> Service --++: Request update Product by Product id
+
+Service -> Service --++: Validate
+Service --> App: Update Product Failed
+
+Service -> Repository ++: Request Update Product by Product id from Database
+
+Repository --> Service : Response Error
+Service --> Handler ++: Response Error
+Handler --> App : Update Product Failed
+
+Repository -> Service --: Return Detail Product
+Service -> Handler --: Return Detail Product
+Handler -> App --: Detail Product Showed
+
+deactivate App
+@enduml
+
+@startuml
+actor Costuumer
+
+Costuumer-> App ++: Get Order by User id
+App -> Handler ++: Request Get Order by User id
+Handler -> Service --++: Request Get Order by User id
+
+Service -> Service --++: Validate
+Service --> Handler ++:
+Handler --> App : List of Get Order by User id not Showed
+
+Service -> Repository ++: Request Get Order by User id from Database
+
+Repository --> Service : Response Error
+Service --> Handler : Response Error
+Handler --> App : List of Get Order by User id not Showed
+
+Repository -> Service : Return List of Get Order by User id
+Service -> Handler --: Return List of Get Order by User id
+Handler -> App --: List of Get Order by User id Showed
+
+deactivate App
+@enduml
+
+@startuml
+actor Costuumer
+
+Costuumer-> App ++: Create New Order
+App -> Handler ++: Request Create New Order
+Handler -> Service --++: Request Create New Order
+
+Service -> Service --++: Validate
+Service --> Handler ++: Respon Error
+Handler --> App : Create New Order Failed
+
+Service -> Repository ++: Request Create New Order from Database
+
+Repository --> Service : Response Error
+Service --> Handler : Response Error
+Handler --> App : Create New Order Failed
+
+Repository -> Service --: Return Detail Order
+Service -> Handler --: Return Detail Order
+Handler -> App --: Create New Order Success
+
+deactivate App
+@enduml
+
+@startuml
+actor Admin
+
+Admin-> App ++: Update Order by Order Number
+App -> Handler ++: Request Update Order by Order Number
+Handler -> Service --++: Request Update Order by Order Number
+
+Service -> Service --++: Validate
+Service --> Handler ++: Respon Error
+Handler --> App : Create New Order Failed
+
+Service -> Repository ++: Request Update Order by Order Number from Database
+
+Repository --> Service : Response Error
+Service --> Handler : Response Error
+Handler --> App : Create New Order Failed
+
+Repository -> Service --: Return Detail Order
+Service -> Handler --: Return Detail Order
+Handler -> App --: Create New Order Success
+
+deactivate App
+@enduml

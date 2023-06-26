@@ -36,7 +36,8 @@ func main() {
 
 func NewServer(controller controller.InventoryHandlerHttp) {
 	// server
-	r := gin.Default()
+	// r := gin.Default()
+	r := gin.New()
 
 	// middleware
 	r.Use(middleware.Logger())

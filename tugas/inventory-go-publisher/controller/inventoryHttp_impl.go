@@ -5,7 +5,6 @@ import (
 	"inventory/helper/middleware"
 	"inventory/model"
 	"inventory/service"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -32,11 +31,11 @@ func (handler *handlerHttp) Authentication(c *gin.Context) {
 	err := helper.ComparePassword(keyss, "phincon")
 	if err != nil {
 		c.JSON(http.StatusOK, map[string]string{
-			"message": "Unauthorized",
+			"message": "Gagal",
 		})
 	} else {
 		c.JSON(http.StatusOK, map[string]string{
-			"message": "authorized",
+			"message": "Berhasil",
 		})
 	}
 
@@ -44,16 +43,12 @@ func (handler *handlerHttp) Authentication(c *gin.Context) {
 
 // product
 func (handler *handlerHttp) ProductShow(c *gin.Context) {
-	log.Println("product controller")
 	result, _ := handler.product.ShowProduct()
-
 	c.JSON(result.Status, result)
 }
 
 // purchase
 func (handler *handlerHttp) PurchaseInput(c *gin.Context) {
-	log.Println("purchase controller")
-
 	var data []model.ReqPurchase
 
 	err := c.ShouldBindJSON(&data)
@@ -65,8 +60,6 @@ func (handler *handlerHttp) PurchaseInput(c *gin.Context) {
 }
 
 func (handler *handlerHttp) PurchaseDetail(c *gin.Context) {
-	log.Println("purchase controller")
-
 	order := c.Param("order")
 
 	result, _ := handler.purchase.DetailPurchase(order)
@@ -75,8 +68,6 @@ func (handler *handlerHttp) PurchaseDetail(c *gin.Context) {
 
 // sales
 func (handler *handlerHttp) SalesInput(c *gin.Context) {
-	log.Println("sales controller")
-
 	var data []model.ReqSales
 
 	err := c.ShouldBindJSON(&data)
@@ -88,8 +79,6 @@ func (handler *handlerHttp) SalesInput(c *gin.Context) {
 }
 
 func (handler *handlerHttp) SalesDetail(c *gin.Context) {
-	log.Println("sales controller")
-
 	order := c.Param("order")
 
 	result, _ := handler.sales.DetailSales(order)

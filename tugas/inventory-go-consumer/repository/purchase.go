@@ -26,7 +26,7 @@ func TambahPurchase(req []model.SendPurchase) {
 		var err error
 		var idProduct uint
 		var stock int
-		var resultDetail model.PurchaseDetail
+		// var resultDetail model.PurchaseDetail
 
 		err = tx.Raw(checkProduct, d.Item).Scan(&idProduct).Error
 		if err != nil {
@@ -53,23 +53,6 @@ func TambahPurchase(req []model.SendPurchase) {
 			if err != nil {
 				tx.Rollback()
 			}
-
-			resultDetail = model.PurchaseDetail{
-				Id:          idPurchaseDetail,
-				Purchase_id: idPurchase,
-				Item:        d.Item,
-				Price:       d.Price,
-				Quantity:    d.Total,
-				Total:       d.Total,
-				Purchase: model.Purchase{
-					Id:          idPurchase,
-					OrderNumber: d.OrderNumber,
-					From:        d.From,
-					Total:       d.Total,
-				},
-			}
-
-			returns = append(returns, resultDetail)
 
 		} else {
 			fmt.Println("barang sudah ada")
@@ -98,23 +81,6 @@ func TambahPurchase(req []model.SendPurchase) {
 			if err != nil {
 				tx.Rollback()
 			}
-
-			resultDetail = model.PurchaseDetail{
-				Id:          idPurchaseDetail,
-				Purchase_id: idPurchase,
-				Item:        d.Item,
-				Price:       d.Price,
-				Quantity:    d.Total,
-				Total:       jumlahStock,
-				Purchase: model.Purchase{
-					Id:          idPurchase,
-					OrderNumber: d.OrderNumber,
-					From:        d.From,
-					Total:       d.Total,
-				},
-			}
-
-			returns = append(returns, resultDetail)
 		}
 
 	}

@@ -3,7 +3,6 @@ package product
 import (
 	"errors"
 	"inventory/model"
-	"log"
 
 	"gorm.io/gorm"
 )
@@ -19,8 +18,6 @@ func NewProductRepository(dbs *gorm.DB) ProductRepository {
 }
 
 func (repo *productRepository) ShowProduct() ([]model.Product, error) {
-	log.Println("product repository")
-
 	var productrepo []model.Product
 
 	query := "SELECT * FROM products"

@@ -3,7 +3,6 @@ package service
 import (
 	"inventory/model"
 	"inventory/repository/product"
-	"log"
 	"net/http"
 )
 
@@ -18,7 +17,6 @@ func NewProductService(repo product.ProductRepository) ProductService {
 }
 
 func (service *productService) ShowProduct() (model.InventoryResponse, error) {
-	log.Println("product service")
 	data, err := service.repository.ShowProduct()
 	if err != nil {
 		return model.InventoryResponse{

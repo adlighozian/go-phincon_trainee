@@ -13,7 +13,7 @@ type SendSales struct {
 	Price       int
 	From        string
 	Total       int
-	OrderNumber string
+	OrderNumber string `sql:"unique;field:order_number"`
 }
 
 type SalesDetail struct {

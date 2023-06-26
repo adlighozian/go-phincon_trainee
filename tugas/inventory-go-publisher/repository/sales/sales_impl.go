@@ -6,7 +6,6 @@ import (
 	"inventory/helper/middleware"
 	"inventory/model"
 	"inventory/publisher"
-	"log"
 	"time"
 
 	"gorm.io/gorm"
@@ -27,7 +26,6 @@ func NewSalesRepository(dbs *gorm.DB, publish publisher.SalesInterface, randoms 
 }
 
 func (r *salesRepository) InputSales(req []model.ReqSales) ([]model.SalesDetail, error) {
-	log.Println("sales repository")
 
 	var send []model.SendSales
 	var returns []model.SalesDetail
@@ -86,9 +84,6 @@ func (r *salesRepository) InputSales(req []model.ReqSales) ([]model.SalesDetail,
 }
 
 func (r *salesRepository) DetailSales(req string) (model.SalesDetail, error) {
-	log.Println("sales repository")
-	log.Println(req)
-
 	var returnP model.SalesReturn
 	var idOrder uint
 	var err error

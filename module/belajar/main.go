@@ -1,8 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"strings"
+)
 
 func main() {
 
-	fmt.Println("hello world")
+	val, msg := check("ada ada aja")
+
+	log.Println(val, msg)
+}
+
+func check(value string) (bool, string) {
+	res := len(TrimLTSpace(value))
+	
+	return res == 0, TrimLTSpace(value)
+}
+
+func TrimLTSpace(value string) string {
+	return strings.ReplaceAll(value, " ", "")
 }
